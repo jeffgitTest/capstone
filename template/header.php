@@ -8,7 +8,7 @@
                     <a href="index.php" class="app-bar-element branding">MUTYA<sup> -Publishing-</sup></a>
 
                     <ul class="app-bar-menu">
-					   <li>
+					               <li>
                             <a href="" class="dropdown-toggle">Book Library</a>
                             <ul class="d-menu" data-role="dropdown">
                                 <li><a href="catalog.php">List</a></li>
@@ -25,6 +25,29 @@
                ?>
                             </ul>
                         </li>
+
+                        <?php 
+
+                          $accesslevel = @$_SESSION['accesslevel'];
+                          $userid = $_SESSION['user_id'];
+
+                          if ($accesslevel == "author") {
+                            
+                            echo "
+                            <li>
+                            <a href='' class='dropdown-toggle'>Author</a>
+                            <ul class='d-menu' data-role='dropdown'>
+                                <li><a href='catalog.php'>Contract</a></li>
+                                 <li><a href='publishedbooks.php'>Published Book</a></li>
+                                 <li><a href=''>Bidding</a></li>
+                              </ul>
+                            </li>
+                            ";
+
+                          }
+
+                         ?>
+
                         <li><a href="about.php">About</a></li>
                         <li><a href="contact.php">Contact</a></li>
                         <!-- <li><a href="transactions.php">Transactions</a></li> -->

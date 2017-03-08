@@ -134,6 +134,7 @@ function ajax_contact(){
   <li><a href="#profile" data-toggle="tab">Change Password</a></li>
    <li><a href="#cancel" data-toggle="tab">Order</a></li>
    <li><a href="#board" data-toggle="tab">Message</a></li>
+   <li><a href="#transhistory" data-toggle="tab">Transaction History</a></li>
 </ul>
 <!-- Tab panes -->
 <div class="tab-content">
@@ -217,7 +218,6 @@ function ajax_contact(){
 <th width="15%">TXN : number</th>
     <th width="15%">Item</th>
     <th width="14%">Status</th>
-    <th width="14%">detail</th>
     <th width="22%">Date Purchased</th>
     <th width="13%">Payment</th>
 </tr>
@@ -229,11 +229,12 @@ function ajax_contact(){
   if (isset($_GET['status']))
 	{	
 	$stat=$_GET['status'];
-	$dstat=$_GET['status2'];
+  $userid = $_SESSION['user_id'];
+	// $dstat=$_GET['status2'];
 
 				//Run a select query to get my latest 5 items
 
-$sql = mysql_query("SELECT * FROM transactions WHERE payment_status='$stat', ORDER BY id DESC");
+$sql = mysql_query("SELECT * FROM transactions WHERE payment_status='$stat' AND user_id='$userid' , ORDER BY id DESC");
 $productCount = mysql_num_rows($sql); // count the output amount
 if ($productCount > 0) {
 	while($row = mysql_fetch_array($sql)){ 
@@ -252,7 +253,7 @@ if ($productCount > 0) {
 			  $country = $row["address_country"];
 			  $currency = $row["mc_currency"]; 
 			  $payment_status= $row["payment_status"]; 
-			  $status_detail= $row["status_detail"]; 
+			  // $status_detail= $row["status_detail"]; 
 			  $month= $row["month"];
 			   $day= $row["day"];
 			    $year= $row["year"];
@@ -260,11 +261,11 @@ if ($productCount > 0) {
 			 $datepayment = strftime("%b %d, %Y", strtotime($row["payment_date"]));
 			 if($payment_status=='Completed'){
 				 $stat=$payment_status;
-				 $dstat=$status_detail;
+				 // $dstat=$status_detail;
 				 }
 			 else{
 				 $stat=' '.$payment_status.' <a title="Update Status" href="transactions.php?transactid='.$id.'"><span class="icon-pencil"></span></a>';
-				 $dstat=' '.$status_detail.' <a title="Update Status" href="transactions.php?transactid='.$id.'"><span class="icon-pencil"></span></a>';
+				 // $dstat=' '.$status_detail.' <a title="Update Status" href="transactions.php?transactid='.$id.'"><span class="icon-pencil"></span></a>';
 				 }
 			 
 		
@@ -272,7 +273,6 @@ if ($productCount > 0) {
     <td height="29">'.$txn_id.'</td>
     <td><a  data-toggle="modal" href="#transaction'.$id.'">View</a></td>
     <td>'.$stat.'</td>
-    <td>'.$dstat.'</td>
 	 <td>'.$datepayment .'</td>
     <td> &#8369; '.$gross.'</td>
 	<td><a  data-toggle="modal" href="#transaction'.$id.'">View</a>| <a  data-toggle="modal" href="#status'.$id.'">Update Status</a></td>
@@ -370,12 +370,12 @@ if ($productCount > 0) {
                          <option value="Cancelled">Cancelled</option>
                          <option value="Returned">Returned</option></select>
 	
-	<select name="status2"><option value="'.$status_detail.'">'.$status_detail.'</option>
+	<!--<select name="status2"><option value="'.$status_detail.'">'.$status_detail.'</option>
                          <option value="Pending">Pending</option>
                          <option value="Completed">Completed</option>
                          <option value="Shipped">Shipping</option>
                          <option value="Cancelled">Cancelled</option>
-                         <option value="Defect">Defect</option></select>
+                         <option value="Defect">Defect</option></select>-->
 						 
     </div>
     <div class="form-group">
@@ -404,7 +404,9 @@ if ($productCount > 0) {
 	else{
 		//Run a select query to get my latest 5 items
 
-$sql = mysql_query("SELECT * FROM transactions ORDER BY id DESC");
+    $userid = $_SESSION['user_id'];
+
+$sql = mysql_query("SELECT * FROM transactions WHERE user_id='$userid' ORDER BY id DESC");
 $productCount = mysql_num_rows($sql); // count the output amount
 if ($productCount > 0) {
 	while($row = mysql_fetch_array($sql)){ 
@@ -423,7 +425,7 @@ if ($productCount > 0) {
 			  $country = $row["address_country"];
 			  $currency = $row["mc_currency"]; 
 			  $payment_status= $row["payment_status"]; 
-			  $status_detail= $row["status_detail"];
+			  // $status_detail= $row["status_detail"];
 			  $month= $row["month"];
 			   $day= $row["day"];
 			    $year= $row["year"];
@@ -440,12 +442,12 @@ if ($productCount > 0) {
 			 $datepayment = strftime("%b %d, %Y", strtotime($row["payment_date"]));
 			 if($payment_status=='Completed'){
 				 $stat=$payment_status;
-				 $dstat=$status_detail;
+				 // $dstat=$status_detail;
 				 }
 			 else{
 				 $stat=' '.$payment_status.' <a title="Update Status" href="transactions.php?transactid='.$id.'"><span class="icon-pencil"></span></a>';
 				 
-				 $dstat=' '.$status_detail.' <a title="Update Status" href="transactions.php?transactid='.$id.'"><span class="icon-pencil"></span></a>';
+				 // $dstat=' '.$status_detail.' <a title="Update Status" href="transactions.php?transactid='.$id.'"><span class="icon-pencil"></span></a>';
 				 }
 			 
 		
@@ -453,7 +455,7 @@ if ($productCount > 0) {
     <td height="29">'.$txn_id.'</td>
     <td><a  data-toggle="modal" href="#transaction'.$id.'">View</a></td>
     <td>'.$stat.'</td>
-    <td>'.$dstat.'</td>
+    
 	 <td>'.$datepayment .'</td>
     <td> &#8369; '.$gross.'</td>
 	<td><!-- Modal -->
@@ -550,12 +552,12 @@ if ($productCount > 0) {
                          <option value="Cancelled">Cancelled</option>
 						 <option value="Returned">Returned</option></select>
 						 
-		<select name="status2"><option value="'.$status_detail.'">'.$status_detail.'</option>
+		<!--<select name="status2"><option value="'.$status_detail.'">'.$status_detail.'</option>
                          <option value="Pending">Pending</option>
                          <option value="Completed">Completed</option>
                          <option value="Shipped">Shipping</option>
                          <option value="Cancelled">Cancelled</option>
-						 <option value="Defect">Defect</option></select>
+						 <option value="Defect">Defect</option></select> -->
     </div>
     <div class="form-group">
     <input name="txnid" type="hidden" value="'.$txn_id.'" />
@@ -653,6 +655,17 @@ if ($productCount2 > 0)
 ?>
  </tbody>
  </table>
+  </div>
+
+  <div class="tab-pane" id="transhistory">
+    
+    <table>
+      <thead>
+        <th>Transaction Number</th>
+        <th></th>
+      </thead>
+    </table>
+
   </div>
   
 
