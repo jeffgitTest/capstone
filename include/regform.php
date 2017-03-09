@@ -147,8 +147,13 @@ $mail->AddAddress($address, "M");
 									else 
 									{
 									//register into database
-					$register = mysql_query("INSERT INTO users VALUES ('','$usn','$fname','$lname','$birthday', '$address1', '$contact', '$email','$password', '0','$code','$date','0','','','')");
-					echo '<div class="alert alert-success"><span class="icon-check"></span>You have been registered succesfully!Please check your email to verify your account </div>';
+					$register = mysql_query("INSERT INTO users VALUES ('','$usn','$fname','$lname','$birthday', '$address1', '$contact', '$email','$password', '0','$code','$date','0','','','', '1')");
+					if ($register) {
+						echo '<div class="alert alert-success"><span class="icon-check"></span>You have been registered succesfully!Please check your email to verify your account </div>';
+					} else {
+						echo "Error!";
+					}
+					
 											
 									//} //email
 			

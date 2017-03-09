@@ -2,6 +2,21 @@
 
 	include "../include/connectdb.php";
 
+	if (isset($_POST['submit'])) {
+		
+		$name = $_POST['name'];
+		$amount = $_POST['amount'];
+
+		$query = mysql_query("INSERT INTO expenses (name, amount) VALUES ('$name', '$amount')");
+
+		if ($query) {
+			echo "Successfully added!";
+		} else {
+			echo "Error!";
+		}
+
+	}
+
  ?>
 List of expenses
  <table>
@@ -69,3 +84,14 @@ List of expenses
 
 
  </table>
+
+ <br>
+
+ Add expense <br>
+ <form action="expenses.php" method="post">
+ 	
+	Name: <input type="text" name="name" > <br>
+ 	Amount <input type="text" name="amount"> <br>
+	<input type="submit" name="submit">
+
+ </form>

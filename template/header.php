@@ -29,7 +29,7 @@
                         <?php 
 
                           $accesslevel = @$_SESSION['accesslevel'];
-                          $userid = $_SESSION['user_id'];
+                          $userid = @$_SESSION['user_id'];
 
                           if ($accesslevel == "author") {
                             
