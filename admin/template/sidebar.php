@@ -26,8 +26,8 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-caret-square-o-down"></i>ACCOUNTING<b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><a href="./accounting/sales.php">Sales</a></li>
-                <li><a href="./accounting/income.php">Income</a></li>
                 <li><a href="./accounting/expenses.php">Expenses</a></li>
+                <li><a href="./accounting/financialstatement.php">Financial Statement</a></li>
               </ul>
             </li>
            <li class="dropdown">
