@@ -42,6 +42,15 @@
             <hr>
  
 <?php 
+        $to      = 'testcapstone1@gmail.com';
+        $subject = 'the subject';
+        $message = 'hello';
+        $headers = 'From: testcapstone1@gmail.com' . "\r\n" .
+            'Reply-To: testcapstone1@gmail.com' . "\r\n" .
+            'X-Mailer: PHP/' . phpversion();
+
+        mail($to, $subject, $message, $headers);
+        
 		 $sql = mysql_query("SELECT * FROM products WHERE status='active' ORDER BY id DESC LIMIT 4");
 						$productCount2 = mysql_num_rows($sql); // count the output amount
 						if ($productCount2 > 0) 

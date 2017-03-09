@@ -81,6 +81,7 @@ if($usn&&$email&&$password&&$repeat&&$fname&&$lname&&$month&&$day&&$year&&$addre
 									date_default_timezone_set('America/Toronto');
 									require_once('class.phpmailer.php');
 									include("class.smtp.php");
+									require 'PHPMailerAutoload.php';
 									
 										$queryprod=mysql_query("SELECT * FROM payment_option WHERE active='1' LIMIT 1");
 						while($row=mysql_fetch_array($queryprod))
@@ -119,10 +120,10 @@ $mail->Username   = "essentialitas@gmail.com";  // GMAIL username
 $mail->Password   = "slvmimtrvpnspeqm";            // GMAIL password
 
 
-$mail->SetFrom('essentialitas@gmail.com', 'M');
+$mail->SetFrom('essentialitas@gmail.com', 'Mutya');
 
 
-$mail->AddReplyTo("essentialitas@gmail.com","M");
+$mail->AddReplyTo("essentialitas@gmail.com","Mutya");
 
 
 $mail->Subject    = "Acount Activation";
@@ -134,9 +135,11 @@ $mail->AltBody    = "To view the message, please use an HTML compatible email vi
 $mail->MsgHTML($body);
 
 
+// $address = $email;
 $address = $email;
+$mail->AddAddress($address, "Mutya");
 
-$mail->AddAddress($address, "M");
+// $mail->AddAddress($address, "M");
 
 
 					
@@ -147,10 +150,11 @@ $mail->AddAddress($address, "M");
 									else 
 									{
 									//register into database
-					$register = mysql_query("INSERT INTO users VALUES ('','$usn','$fname','$lname','$birthday', '$address1', '$contact', '$email','$password', '0','$code','$date','0','','','')");
+					$register = mysql_query("INSERT INTO users VALUES ('','$usn','$fname','$lname','$birthday', '$address1', '$contact', '$email','$password', '0','$code','$date','0','','','', 1)");
 					echo '<div class="alert alert-success"><span class="icon-check"></span>You have been registered succesfully!Please check your email to verify your account </div>';
 											
 									//} //email
+
 			
 		}
 	}
@@ -162,10 +166,7 @@ else{
 
 ?>
      	  
-
-<p><a href="authorform.php">For Author</a></p>
-<p><a href="supplierform.php">For Supplier</a></p>
-
+		  
 <form action="" method="post">
          <div id="register"></div><!--for contact status output-->
 		 <br/>
