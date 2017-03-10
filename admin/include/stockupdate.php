@@ -36,6 +36,7 @@ if(isset($_POST['update'])){
 			if($stock>1){$notice='stocks';}else{$notice='stock';}
 			
 			mysql_query("UPDATE products SET stock='$update_stock' WHERE id='$pid'");
+			mysql_query("INSERT INTO product_history VALUES('', '$pid', $update_stock', now()");
 		echo '<div class="alert alert-success"> '.$stock.' Products Added to '.$pnme.' | In-Stock '.$update_stock.' <a href="list.php">View </a></div>';
 		}
 	}
@@ -57,5 +58,6 @@ if(isset($_POST['update'])){
       <input type="hidden" required name="pid" id="pid" class="input-xlarge" value="<?php echo $targetID ?>">
       </div>
     </fieldset>       
-<input type="submit" name="update" class="btn btn-primary btn-lg pull-left" value="Update Stock">
+<input type="submit" name="update" class="btn btn-primary btn-lg pull-left" value="Add Stock">
+<input type="submit" name="update" class="btn btn-primary btn-lg pull-left" value="Add Stock">
 </form>

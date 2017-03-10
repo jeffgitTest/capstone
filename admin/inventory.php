@@ -79,25 +79,44 @@ if (!isset($_SESSION["manager"])) {
     <th>Stock Now</th>
     <th>Stock Before</th>
      <th>Status</th>
-     <th>Date</th>
+     <th>Action</th>
 	 		    </thead>
           <tbody>
   				   <?php 
 //Run a select query to get my latest 3 items
 
 include ('../include/connectdb.php');  
-$sql = mysql_query("SELECT * FROM inventory ORDER BY pname ASC");
+$sql = mysql_query("SELECT * FROM products ORDER BY product_name ASC");
 $productCount = mysql_num_rows($sql); // count the output amount
 if ($productCount > 0) {
 	while($row = mysql_fetch_array($sql)){ 
-			 $id = $row['id'];
-             $pname = $row["pname"];
-			 
-			
-			 $lessted_value= $row["lessted_value"];
-			  $current_stock = $row["current_stock"];
-			   $previous_stock = $row["previous stock"];
-			    $date = $row["date"];
+			$id = $row['id'];
+             $pname = $row["product_name"];
+			$stock_query = mysql_query("SELECT qty_added as stock, SUM(qty_added) as sold FROM product_history WHERE pid = $id ORDER BY Date asc limit 1");
+      $stock_query_count = mysql_num_rows($stock_query); // count the output amount
+		  $previous_stock='empty';
+      $lessted_value='empty';
+      if ($stock_query_count > 0) {
+      // output data of each row
+        while($stock_row = mysql_fetch_array($stock_query)) {
+          if(!empty($stock_row['stock'])){
+            $previous_stock = $stock_row['stock'];
+          }
+          if(!empty($stock_row['sold'])){
+            $lessted_value = $stock_row['sold'];
+          }
+        }
+      } 
+      // if(!empty($result->fetch_row()['stock'])){
+      //   $previous_stock = $stock_query->fetch_row()[0];
+      // }
+      // if(!empty($stock_query->fetch_row()['sold'])){
+      //   $lessted_value = $stock_query->fetch_row()[1];
+      // }
+			 // $lessted_value= $row["lessted_value"];
+			  $current_stock = $row["stock"];
+			   // $previous_stock = $row["previous stock"];
+			    // $date = $row["date"];
 			 
 	 if($current_stock < 10 && $current_stock >=40){
 				 $status = '<span style="color: #F00">Critical</span>';
@@ -117,7 +136,7 @@ if ($productCount > 0) {
     <td>'.$current_stock.'</td>
      <td >'.$previous_stock.'</td>
 	  <td>'.$status.'</td>
-	 <td>'.$date.'</td>
+	 <td>'.$date='empty'.'</td>
   </tr>
   ';
     }
