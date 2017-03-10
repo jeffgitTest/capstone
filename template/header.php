@@ -32,6 +32,8 @@
                           $userid = @$_SESSION['user_id'];
 
                           if ($accesslevel == "author") {
+
+                            $_SESSION['author_id'] = $userid;
                             
                             echo "
                             <li>
@@ -39,7 +41,7 @@
                             <ul class='d-menu' data-role='dropdown'>
                                 <li><a href='catalog.php'>Contract</a></li>
                                  <li><a href='publishedbooks.php'>Published Book</a></li>
-                                 <li><a href=''>Bidding</a></li>
+                                 <li><a href='authorbidform.php'>Bid Portal</a></li>
                               </ul>
                             </li>
                             ";
