@@ -162,7 +162,7 @@ if (isset($_POST['statupdate'])){
 					
 				$id_quantity_pair = explode("-", $value); // Uses Hyphen(-) as delimiter to separate product ID from its quantity
 				$product_id = $id_quantity_pair[0]; // Get the product ID
-				$product_quantity = $id_quantity_pair[1]; // Get the quantity
+				$product_quantity = @$id_quantity_pair[1]; // Get the quantity
 				$sql = mysql_query("SELECT * FROM products WHERE id='$product_id' LIMIT 1");
 					while($row = mysql_fetch_array($sql)){
 				$stock_level = $row["stock"];

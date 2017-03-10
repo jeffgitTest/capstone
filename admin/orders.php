@@ -136,7 +136,7 @@ $msg = "";
 if (isset($_POST['statupdate'])){
     $txn_id2 = $_POST['txnid'];
     $status = addslashes(strip_tags($_POST['status1']));
-    $status2 = addslashes(strip_tags($_POST['status2']));
+    // $status2 = addslashes(strip_tags($_POST['status2']));
     $txnquery= mysql_query("SELECT * FROM transactions WHERE txn_id='$txn_id2'");
     if (mysql_num_rows($txnquery)==0){
         echo   "No data found";
@@ -148,7 +148,7 @@ if (isset($_POST['statupdate'])){
             $payment_status = $row['payment_status'];
         }
        
-                $update = mysql_query("UPDATE transactions SET payment_status='$status', status_detail='$status2'  WHERE txn_id='$txn_id2'");
+                $update = mysql_query("UPDATE transactions SET payment_status='$status' WHERE txn_id='$txn_id2'");
                 echo "<div class='alert alert-success'>Successfully Updated</div>";
 				
 				
@@ -193,7 +193,6 @@ else{
 <th width="15%">TXN : number</th>
     <th width="20%">Customer</th>
     <th width="14%">Status</th>
-    <th width="14%">detail</th>
     <th width="22%">Date Purchased</th>
     <th width="13%">Payment</th>
     <th width="15%">Action</th>
@@ -228,7 +227,7 @@ if ($productCount > 0) {
 			  $country = $row["address_country"];
 			  $currency = $row["mc_currency"]; 
 			  $payment_status= $row["payment_status"]; 
-			  $status_detail= $row["status_detail"]; 
+			  // $status_detail= $row["status_detail"]; 
 			  $month= $row["month"];
 			   $day= $row["day"];
 			    $year= $row["year"];
@@ -236,11 +235,11 @@ if ($productCount > 0) {
 			 $datepayment = strftime("%b %d, %Y", strtotime($row["payment_date"]));
 			 if($payment_status=='Completed'){
 				 $stat=$payment_status;
-				 $dstat=$status_detail;
+				 // $dstat=$status_detail;
 				 }
 			 else{
 				 $stat=' '.$payment_status.' <a title="Update Status" href="transactions.php?transactid='.$id.'"><span class="icon-pencil"></span></a>';
-				 $dstat=' '.$status_detail.' <a title="Update Status" href="transactions.php?transactid='.$id.'"><span class="icon-pencil"></span></a>';
+				 // $dstat=' '.$status_detail.' <a title="Update Status" href="transactions.php?transactid='.$id.'"><span class="icon-pencil"></span></a>';
 				 }
 			 
 		
@@ -248,7 +247,6 @@ if ($productCount > 0) {
     <td height="29">'.$txn_id.'</td>
     <td>'.$firstname.' '. $lastname.'</td>
     <td>'.$stat.'</td>
-    <td>'.$dstat.'</td>
 	 <td>'.$datepayment .'</td>
     <td> &#8369; '.$gross.'</td>
 	<td><a  data-toggle="modal" href="#transaction'.$id.'">View</a>| <a  data-toggle="modal" href="#status'.$id.'">Update Status</a></td>
@@ -346,12 +344,12 @@ if ($productCount > 0) {
                          <option value="Cancelled">Cancelled</option>
                          <option value="Returned">Returned</option></select>
 	
-	<select name="status2"><option value="'.$status_detail.'">'.$status_detail.'</option>
+	<!--<select name="status2"><option value="'.$status_detail.'">'.$status_detail.'</option>
                          <option value="Pending">Pending</option>
                          <option value="Completed">Completed</option>
                          <option value="Shipped">Shipping</option>
                          <option value="Cancelled">Cancelled</option>
-                         <option value="Defect">Defect</option></select>
+                         <option value="Defect">Defect</option></select>-->
 						 
     </div>
     <div class="form-group">
@@ -399,7 +397,7 @@ if ($productCount > 0) {
 			  $country = $row["address_country"];
 			  $currency = $row["mc_currency"]; 
 			  $payment_status= $row["payment_status"]; 
-			  $status_detail= $row["status_detail"];
+			  // $status_detail= $row["status_detail"];
 			  $month= $row["month"];
 			   $day= $row["day"];
 			    $year= $row["year"];
@@ -416,12 +414,12 @@ if ($productCount > 0) {
 			 $datepayment = strftime("%b %d, %Y", strtotime($row["payment_date"]));
 			 if($payment_status=='Completed'){
 				 $stat=$payment_status;
-				 $dstat=$status_detail;
+				 // $dstat=$status_detail;
 				 }
 			 else{
 				 $stat=' '.$payment_status.' <a title="Update Status" href="transactions.php?transactid='.$id.'"><span class="icon-pencil"></span></a>';
 				 
-				 $dstat=' '.$status_detail.' <a title="Update Status" href="transactions.php?transactid='.$id.'"><span class="icon-pencil"></span></a>';
+				 // $dstat=' '.$status_detail.' <a title="Update Status" href="transactions.php?transactid='.$id.'"><span class="icon-pencil"></span></a>';
 				 }
 			 
 		
@@ -429,7 +427,6 @@ if ($productCount > 0) {
     <td height="29">'.$txn_id.'</td>
     <td>'.$firstname.' '. $lastname.'</td>
     <td>'.$stat.'</td>
-    <td>'.$dstat.'</td>
 	 <td>'.$datepayment .'</td>
     <td> &#8369; '.$gross.'</td>
 	<td><a  data-toggle="modal" href="#transaction'.$id.'">View</a>| <a  data-toggle="modal" href="#status'.$id.'">Update Status</a></td>
@@ -527,12 +524,12 @@ if ($productCount > 0) {
                          <option value="Cancelled">Cancelled</option>
 						 <option value="Returned">Returned</option></select>
 						 
-		<select name="status2"><option value="'.$status_detail.'">'.$status_detail.'</option>
+		<!--<select name="status2"><option value="'.$status_detail.'">'.$status_detail.'</option>
                          <option value="Pending">Pending</option>
                          <option value="Completed">Completed</option>
                          <option value="Shipped">Shipping</option>
                          <option value="Cancelled">Cancelled</option>
-						 <option value="Defect">Defect</option></select>
+						 <option value="Defect">Defect</option></select> -->
     </div>
     <div class="form-group">
     <input name="txnid" type="hidden" value="'.$txn_id.'" />
