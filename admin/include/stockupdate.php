@@ -58,6 +58,6 @@ if(isset($_POST['update'])){
       <input type="hidden" required name="pid" id="pid" class="input-xlarge" value="<?php echo $targetID ?>">
       </div>
     </fieldset>       
-<input type="submit" name="update" class="btn btn-primary btn-lg pull-left" value="Add Stock">
-<input type="submit" name="update" class="btn btn-primary btn-lg pull-left" value="Add Stock">
+<input type="submit" name="add_stock" class="btn btn-primary btn-lg pull-left" value="Add Stock">
+<input type="submit" name="update" class="btn btn-primary btn-lg pull-left" value="Deduct Stock">
 </form>
