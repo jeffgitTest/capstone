@@ -1,6 +1,12 @@
 <form action="authorbid.php" method="post">
 	
-	Name: <input type="text" name="name">
+	Title: <input type="text" name="name"> <br>
+	Details: <input type="text" name="details"> <br>
+
+	Attachment: <input type="file" name="bidform" class="form-control" required="required" id="photoimg" multiple /> <br>
+
+	Author: <input type="text" name="author"> <br>
+	Genre: <input type="text" name="genre"> <br>
 
 	<input type="submit" name="submit" value="Submit">
 	<input type="submit" name="cancel" value="Cancel">

@@ -32,6 +32,8 @@
                           $userid = @$_SESSION['user_id'];
 
                           if ($accesslevel == "author") {
+
+                            $_SESSION['author_id'] = $userid;
                             
                             echo "
                             <li>
