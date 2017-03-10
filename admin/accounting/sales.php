@@ -62,8 +62,30 @@ INNER JOIN products ON products.id = transactions.product_id_array");
 
 		      echo "
 		        <tr>
-		          <td><b>Total:</b></td>
-		          <td>$totalamount</td>
+		          <td><b>Total Sales:</b></td>
+		          <td><b>$totalamount</b></td>
+		        </tr>
+
+		      ";
+		  }
+		}
+
+	  ?>
+
+	  <?php 
+
+	 	$sql = mysql_query("SELECT SUM( transactions.mc_gross ) - SUM( expenses.amount ) AS total_income FROM transactions JOIN expenses");
+		$requestCount = mysql_num_rows($sql);
+
+		if ($requestCount > 0) {
+		     while ($row = mysql_fetch_array($sql)) {
+
+		     $totalincome = $row['total_income'];
+
+		      echo "
+		        <tr>
+		          <td><b>Total Income:</b></td>
+		          <td><b>$totalincome</b></td>
 		        </tr>
 
 		      ";
