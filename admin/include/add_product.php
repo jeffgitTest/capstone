@@ -63,8 +63,13 @@ if (isset($_FILES['image']))
 				else{
 							include ('../include/thumb.php');   
 					
-                            mysql_query("INSERT INTO products VALUES('', '$prod_title', '$price','$prod_desc','$stock', '$category','$brand','$display', now() ,now(),'$image_ext')");
+                            mysql_query("INSERT INTO products VALUES('',0, '$prod_title', '$price','$prod_desc','$stock', '$category','$brand','$display', now(), now(),'$image_ext')");
+                            
                             $imageid = mysql_insert_id();
+
+                            mysql_query("INSERT INTO product_history VALUES('', '$imageid', '$stock', now())");
+
+                            $image_file = $imageid.'.'.$image_ext;
                             $image_file = $imageid.'.'.$image_ext;
                        move_uploaded_file($image_temp, '../img/product_image/'.$image_file);
 	

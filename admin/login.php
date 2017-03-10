@@ -32,7 +32,7 @@ if (isset($_POST['login']))
 						else
 						{
 						$_SESSION['manager']=$username;
-						
+						$_SESSION['user_id']=$row['id'];
 								header("Location:index.php");
 								exit();
 								}

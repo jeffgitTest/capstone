@@ -35,9 +35,32 @@ if (isset($_POST['register']))
 							else{
 							
 							$fname = $row ['fname'];
+							$usertype = $row['user_type'];
 							 session_start();
 							$_SESSION['username']=$username;
 							$_SESSION['user_id']=$row['id'];
+
+							$accesslevel = "";
+
+							if ($usertype == 1) {
+								$accesslevel = "client";
+							}
+
+							if ($usertype == 2) {
+								$accesslevel = "author";
+							}
+
+							if ($usertype == 3) {
+								$accesslevel = "supplier";
+							}
+
+							if ($usertype == 4) {
+								$accesslevel = "admin";
+							}
+
+							$_SESSION['accesslevel'] = $accesslevel;
+
+
 							
 							//echo'<div class="alert alert-success"> Welcome '.$fname .' | <a href="'.$_SERVER['HTTP_REFERER'].'">Shop now!</a>';
 							header("Location:index.php");

@@ -1,5 +1,6 @@
 <?php 
 
+	// connect db
 	include "/include/connectdb.php";
 
 	if(isset($_POST['submitrequest'])) {
