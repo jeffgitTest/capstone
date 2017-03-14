@@ -123,7 +123,7 @@ if (isset($_FILES['image']))
                             mysql_query("INSERT INTO product_history VALUES('', '$imageid', '$stock', now())");
 
                             $image_file = $imageid.'.'.$image_ext;
-                       move_uploaded_file($image_temp, '../img/product_image/'.$image_file);
+                            move_uploaded_file($image_temp, '../img/product_image/'.$image_file);
 	
                             //create_thumb('../inc/uploads/', $image_file, '../inc/uploads/thumbs/');
                             

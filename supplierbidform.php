@@ -1,13 +1,10 @@
-<form action="authorbid.php" method="post" enctype="multipart/form-data">
+<form action="supplierbid.php" method="post" enctype="multipart/form-data">
 	
-	Title: <input type="text" name="name"> <br>
+	Product Name: <input type="text" name="name"> <br>
 	Details: <input type="text" name="details"> <br>
+	Price: <input type="text" name="price"> <br>
 
 	Attachment: <input type="file" name="file" required="required" multiple /> <br>
-
-	Author: <input type="text" name="author"> <br>
-	Genre: <input type="text" name="genre"> <br>
-	Projected Price: <input type="text" name="price"> <br>
 
 	<input type="submit" name="submit" value="Submit">
 	<input type="submit" name="cancel" value="Cancel">

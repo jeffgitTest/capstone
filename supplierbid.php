@@ -4,12 +4,10 @@
 	include 'include/connectdb.php';
 	include 'include/bid.php';
 
-	$authorid =  $_SESSION['author_id'];
+	$supplierid =  $_SESSION['supplier_id'];
 
-	$title = $_POST['name'];
+	$name = $_POST['name'];
 	$details = $_POST['details'];
-	$author = $_POST['author'];
-	$genre = $_POST['genre'];
 	$price = $_POST['price'];
 
 	$file_name = $_FILES['file']['name'];
@@ -23,15 +21,15 @@
 
 	$bidid = 0;
 
-	$sql = mysql_query("INSERT INTO author_bid (title, details, co_author, author_id, genre, projected_price) VALUES ('$title', '$details', '', '$authorid', '$genre', '$price')") or die('Error author_bid');
+	$sql = mysql_query("INSERT INTO supplier_bid (supplier_id, product_bid, details, price) VALUES ('$supplierid', '$name', '$details', '$price')");
 
 	$file_id = mysql_insert_id();
 	$file = $file_name . '.' . $file_ext;
 	move_uploaded_file($file_temp, 'bids/' . $file);
 
-	$sql = mysql_query("INSERT INTO uploaded_bid_file (author_id, file_name, ext) VALUES ('$authorid', '$file_name', '$file_ext')");
+	$sql = mysql_query("INSERT INTO uploaded_supp_bid_file (supplier_id, file_name, ext) VALUES ('$supplierid', '$file_name', '$file_ext')");
 
-	$sql = mysql_query("SELECT * FROM author_bid ORDER BY id DESC LIMIT 1") or die('Error author_bid');
+	$sql = mysql_query("SELECT * FROM supplier_bid ORDER BY id DESC LIMIT 1") or die('Error supplier_bid');
 	$requestCount = mysql_num_rows($sql);
 
 	if ($requestCount > 0) {
@@ -42,7 +40,7 @@
 		}
 	}
 
-	insert_bid($bidid, 'author');
+	insert_bid($bidid, 'supplier');
 
 
  ?>
