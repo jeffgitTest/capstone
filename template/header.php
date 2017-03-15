@@ -39,7 +39,7 @@
                             <li>
                             <a href='' class='dropdown-toggle'>Author</a>
                             <ul class='d-menu' data-role='dropdown'>
-                                <li><a href='catalog.php'>Contract</a></li>
+                                <li><a href='catalog.php'>Contract (In progress)</a></li>
                                  <li><a href='publishedbooks.php'>Published Book</a></li>
                                  <li><a href='authorbidform.php'>Bid Portal</a></li>
                               </ul>
@@ -56,7 +56,7 @@
                             <li>
                             <a href='' class='dropdown-toggle'>Supplier</a>
                             <ul class='d-menu' data-role='dropdown'>
-                                <li><a href='catalog.php'>Contract</a></li>
+                                <li><a href='catalog.php'>Contract (In progress)</a></li>
                                  <li><a href='supplierbidform.php'>Bid Portal</a></li>
                               </ul>
                             </li>

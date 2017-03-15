@@ -1,3 +1,4 @@
+
 <?php
 include '../include/connectdb.php';
   include 'include/check_login.php';
@@ -58,57 +59,68 @@ if (!isset($_SESSION["manager"])) {
     </nav>
 
     <div class="table-responsive">
+    <h4><b>List of expenses</b></h4>
       <table class="table table-striped">
         <thead>
-    <th>Username</th>
-    <th>Name</th>
-    <th>Birthday</th>
-    <th>Address</th>
-    <th>Contact</th>
-    <th>Email</th>
-    <th>Date</th>
-  </thead>
+		<th>Name</th>
+		<th>Amount</th>
+		<th>Date</th>
+	</thead>
 
-  <?php
+	<tbody>
+		
+		<?php 
 
-  $sql = mysql_query("SELECT * FROM users WHERE user_type=2");
-  $requestCount = mysql_num_rows($sql);
+		$sql = mysql_query("SELECT * FROM expenses");
+		$requestCount = mysql_num_rows($sql);
 
-  if ($requestCount > 0) {
-     while ($row = mysql_fetch_array($sql)) {
+		if ($requestCount > 0) {
+		     while ($row = mysql_fetch_array($sql)) {
 
-      $id = $row['id'];
-      $username = $row['usn']; 
-      $fname = $row['fname'];
-      $lname = $row['lname'];
-      $birthday = $row['birthday'];
-      $address = $row['address'];
-      $contact = $row['contact'];
-      $email = $row['email'];
-      $date = $row['date'];
+		     $id = $row['id'];
 
-      echo "
-        <tr>
-          <td>$username</td>
-          <td>$fname $lname</td>
-          <td>$birthday</td>
-          <td>$address</td>
-          <td>$contact</td>
-          <td>$email</td>
-          <td>$date</td>
-          
-        </tr>
+		     $name = $row['name'];
+		     $amount = $row['amount'];
+		     $date = $row['created_date'];
 
-      ";
+		      echo "
+		        <tr>
+		          <td>$name</td>
+		          <td>$amount</td>
+		          <td>$date </td>
+		        </tr>
 
-      // <td><a href='/author/authoreditform.php?id=". $id . "&type=edit&name=".$name."'>Edit</a></td>
-      //     <td><a href='/author/processauthor.php?id=" . $id . "&type=delete'>Delete</a></td>
+		      ";
 
 
-     }
-  }
+		     }
+		  }
 
-   ?>
+	 ?>
+
+	 <?php 
+
+	 	$sql = mysql_query("SELECT sum(amount) FROM expenses");
+		$requestCount = mysql_num_rows($sql);
+
+		if ($requestCount > 0) {
+		     while ($row = mysql_fetch_array($sql)) {
+
+		     $totalamount = $row['sum(amount)'];
+
+		      echo "
+		        <tr>
+		          <td><b>Total:</b></td>
+		          <td>$totalamount</td>
+		        </tr>
+
+		      ";
+		  }
+		}
+
+	  ?>
+
+	</tbody>
 
       </table>
     </div>
@@ -120,3 +132,16 @@ if (!isset($_SESSION["manager"])) {
 
 
 
+
+
+
+
+
+<!--  Add expense <br>
+ <form action="expenses.php" method="post">
+ 	
+	Name: <input type="text" name="name" > <br>
+ 	Amount <input type="text" name="amount"> <br>
+	<input type="submit" name="submit">
+
+ </form> -->

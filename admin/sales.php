@@ -59,19 +59,19 @@ if (!isset($_SESSION["manager"])) {
     </nav>
 
     <div class="table-responsive">
-    <h4>List of expenses</h4>
+    <h4><b>Sales</b></h4>
       <table class="table table-striped">
         <thead>
-		<th>Name</th>
+		<th>Product Name</th>
 		<th>Amount</th>
-		<th>Date</th>
+		<th>Quantity</th>
+		<th>Purchased Date</th>
 	</thead>
 
 	<tbody>
 		
 		<?php 
-
-		$sql = mysql_query("SELECT * FROM expenses");
+		$sql = mysql_query("SELECT products.id, products.product_name, transactions.mc_fee, transactions.qty, transactions.payment_date FROM transactions INNER JOIN products ON products.id = transactions.product_id_array");
 		$requestCount = mysql_num_rows($sql);
 
 		if ($requestCount > 0) {
@@ -79,47 +79,55 @@ if (!isset($_SESSION["manager"])) {
 
 		     $id = $row['id'];
 
-		     $name = $row['name'];
-		     $amount = $row['amount'];
-		     $date = $row['created_date'];
+		     $name = $row['product_name'];
+		     $amount = $row['mc_fee'];
+		     $quantity = $row['qty'];
+		     $date = $row['payment_date'];
 
 		      echo "
 		        <tr>
 		          <td>$name</td>
 		          <td>$amount</td>
-		          <td>$date </td>
+		          <td>$quantity </td>
+		          <td>$date</td>
 		        </tr>
-
 		      ";
-
-
 		     }
 		  }
 
-	 ?>
-
-	 <?php 
-
-	 	$sql = mysql_query("SELECT sum(amount) FROM expenses");
+	 	$sql = mysql_query("SELECT sum(mc_gross) FROM transactions");
 		$requestCount = mysql_num_rows($sql);
 
 		if ($requestCount > 0) {
 		     while ($row = mysql_fetch_array($sql)) {
-
-		     $totalamount = $row['sum(amount)'];
+		     $totalamount = $row['sum(mc_gross)'];
 
 		      echo "
 		        <tr>
-		          <td><b>Total:</b></td>
-		          <td>$totalamount</td>
+		          <td><b>Total Sales:</b></td>
+		          <td><b>$totalamount</b></td>
 		        </tr>
 
 		      ";
 		  }
 		}
+	 	$sql = mysql_query("SELECT SUM( transactions.mc_gross ) - SUM( expenses.amount ) AS total_income FROM transactions JOIN expenses");
+		$requestCount = mysql_num_rows($sql);
+		if ($requestCount > 0) {
+		     while ($row = mysql_fetch_array($sql)) {
 
+		     $totalincome = $row['total_income'];
+
+		      echo "
+		        <tr>
+		          <td><b>Total Income:</b></td>
+		          <td><b>$totalincome</b></td>
+		        </tr>
+
+		      ";
+		  }
+		}
 	  ?>
-
 	</tbody>
 
       </table>
@@ -128,20 +136,3 @@ if (!isset($_SESSION["manager"])) {
     </div>
     </body>
     </html>
-
-
-
-
-
-
-
-
-
-<!--  Add expense <br>
- <form action="expenses.php" method="post">
- 	
-	Name: <input type="text" name="name" > <br>
- 	Amount <input type="text" name="amount"> <br>
-	<input type="submit" name="submit">
-
- </form> -->

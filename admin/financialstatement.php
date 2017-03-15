@@ -59,59 +59,30 @@ if (!isset($_SESSION["manager"])) {
     </nav>
 
     <div class="table-responsive">
-    <h4>List of expenses</h4>
+    <h4 style="text-align: center;"><b>MUTYA</b></h4>
+    <h4 style="text-align: center;"><b>INCOME STATEMENT</b></h4>
+     
       <table class="table table-striped">
         <thead>
-		<th>Name</th>
-		<th>Amount</th>
-		<th>Date</th>
+		<th><b>Revenue:</b></th>
 	</thead>
 
 	<tbody>
 		
 		<?php 
 
-		$sql = mysql_query("SELECT * FROM expenses");
+	 	$sql = mysql_query("SELECT sum(mc_gross) FROM transactions");
 		$requestCount = mysql_num_rows($sql);
 
 		if ($requestCount > 0) {
 		     while ($row = mysql_fetch_array($sql)) {
 
-		     $id = $row['id'];
-
-		     $name = $row['name'];
-		     $amount = $row['amount'];
-		     $date = $row['created_date'];
+		     $totalamount = $row['sum(mc_gross)'];
 
 		      echo "
 		        <tr>
-		          <td>$name</td>
-		          <td>$amount</td>
-		          <td>$date </td>
-		        </tr>
-
-		      ";
-
-
-		     }
-		  }
-
-	 ?>
-
-	 <?php 
-
-	 	$sql = mysql_query("SELECT sum(amount) FROM expenses");
-		$requestCount = mysql_num_rows($sql);
-
-		if ($requestCount > 0) {
-		     while ($row = mysql_fetch_array($sql)) {
-
-		     $totalamount = $row['sum(amount)'];
-
-		      echo "
-		        <tr>
-		          <td><b>Total:</b></td>
-		          <td>$totalamount</td>
+		          <td ><b>Sales:</b></td>
+		          <td><b>$totalamount</b></td>
 		        </tr>
 
 		      ";
@@ -123,6 +94,89 @@ if (!isset($_SESSION["manager"])) {
 	</tbody>
 
       </table>
+
+      <table class="table table-striped">
+
+      <thead>
+		<th><b>Revenue:</b></th>
+	</thead>
+
+	<tbody>
+		
+		<?php 
+
+	 	$sql = mysql_query("SELECT sum(mc_gross) FROM transactions");
+		$requestCount = mysql_num_rows($sql);
+
+		if ($requestCount > 0) {
+		     while ($row = mysql_fetch_array($sql)) {
+
+		     $totalamount = $row['sum(mc_gross)'];
+
+		      echo "
+		        <tr>
+		          <td ><b>Sales:</b></td>
+		          <td><b>$totalamount</b></td>
+		        </tr>
+
+		      ";
+		  }
+		}
+
+	  ?>
+
+	</tbody>
+
+
+
+      </table>
+
+      <table class="table table-striped">
+
+      	<?php 
+
+		$totalsales = 0;
+		$totalexpenses = 0;
+		$netincome = 0;
+
+	 	$sql = mysql_query("SELECT SUM(mc_gross) AS total_sales FROM transactions");
+		$requestCount = mysql_num_rows($sql);
+
+		if ($requestCount > 0) {
+		     while ($row = mysql_fetch_array($sql)) {
+
+		     $totalsales = $row['total_sales'];
+
+		      
+		  }
+		}
+
+		
+		$sql2 = mysql_query("SELECT SUM(amount) AS total_expenses FROM expenses");
+		$requestCount2 = mysql_num_rows($sql2);
+
+		if ($requestCount2 > 0) {
+		     while ($row = mysql_fetch_array($sql2)) {
+
+		     $totalexpenses = $row['total_expenses'];
+
+		  }
+		}
+
+		$netincome = $totalsales - $totalexpenses;
+		
+		echo "
+		        <tr>
+		          <td><b>Net Income:</b></td>
+		          <td><b>$netincome</b></td>
+		        </tr>
+
+		      ";
+
+	  ?>
+
+      </table>
+
     </div>
 
     </div>
@@ -130,18 +184,6 @@ if (!isset($_SESSION["manager"])) {
     </html>
 
 
+ 
 
 
-
-
-
-
-
-<!--  Add expense <br>
- <form action="expenses.php" method="post">
- 	
-	Name: <input type="text" name="name" > <br>
- 	Amount <input type="text" name="amount"> <br>
-	<input type="submit" name="submit">
-
- </form> -->

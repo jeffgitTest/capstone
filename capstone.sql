@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 15, 2017 at 07:40 AM
+-- Generation Time: Mar 15, 2017 at 03:19 PM
 -- Server version: 1.0.110
 -- PHP Version: 5.3.10
 
@@ -78,7 +78,14 @@ CREATE TABLE IF NOT EXISTS `author_bid` (
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
+
+--
+-- Dumping data for table `author_bid`
+--
+
+INSERT INTO `author_bid` (`id`, `title`, `details`, `co_author`, `author_id`, `genre`, `projected_price`, `created_date`, `updated_date`) VALUES
+(15, 'Computer Vision', 'Computer Vision using Java', '', 3, 'Programming', '600', '2017-03-15 13:26:55', '2017-03-15 13:26:55');
 
 -- --------------------------------------------------------
 
@@ -93,14 +100,15 @@ CREATE TABLE IF NOT EXISTS `bids` (
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=22 ;
 
 --
 -- Dumping data for table `bids`
 --
 
 INSERT INTO `bids` (`id`, `bid_id`, `type`, `created_date`, `updated_date`) VALUES
-(19, 5, 'supplier', '2017-03-15 05:12:04', '2017-03-15 05:12:04');
+(20, 6, 'supplier', '2017-03-15 13:07:16', '2017-03-15 13:07:16'),
+(21, 15, 'author', '2017-03-15 13:26:55', '2017-03-15 13:26:55');
 
 -- --------------------------------------------------------
 
@@ -301,7 +309,7 @@ CREATE TABLE IF NOT EXISTS `products` (
 INSERT INTO `products` (`id`, `author_id`, `product_name`, `price`, `details`, `stock`, `category`, `sub_category`, `status`, `timestamp`, `date_added`, `ext`) VALUES
 (9, 1, 'Essential Statistics', '550', 'There are so many books about statistics out there written both by local and foreign authors. So why come up with yet another one? This book makes use of the same format adopted for an earlier, similar book in Algebra found useful by many students and teachers. It utilizes step-by-step procedures, includes lots of exercises, and worksheets, offers opportunities for student reflection and real-world connections, highlights the use of technology-based tools, requires student projects, presents chapter highlights, and provides students preparatory materials for major examinations.. It also has materials on integrating student portfolios and learning papers into the course.', 100, '24', ' J. Gonzales, Â R. Nocon', 'active', '2017-02-11', '2017-02-11', 'png'),
 (10, 1, 'Practical Approach to Information Communication Technology (ICT)', '123', 'SAMPLE DESCRIPTION', 115, '25', 'Erika S. Farshid Mehr,  Frederic D. Yulo', 'active', '2017-02-15', '2017-02-15', 'png'),
-(11, 0, 'Basic Marketing', '50', 'The marketing world today is very much different from it was years ago. Today, market enterprises use modem communication technologies such as email, fax machines, Internet. World Wide Web in their marketing transactions to help making them cross boundaries with ease_ With globalization and applications of quantitative tools in marketing as the trend, modern marketing managers, marketing instructors and students have to equip themselves with modem know- how of the basic principles of marketing for them to meet the challenges in this rapid changing world of marketing.', 223, '23', ' J. Gonzales, Â R. Nocon', 'unactive', '2017-02-15', '2017-02-15', 'png');
+(11, 6, 'Basic Marketing', '50', 'The marketing world today is very much different from it was years ago. Today, market enterprises use modem communication technologies such as email, fax machines, Internet. World Wide Web in their marketing transactions to help making them cross boundaries with ease_ With globalization and applications of quantitative tools in marketing as the trend, modern marketing managers, marketing instructors and students have to equip themselves with modem know- how of the basic principles of marketing for them to meet the challenges in this rapid changing world of marketing.', 223, '23', ' J. Gonzales, Â R. Nocon', 'unactive', '2017-02-15', '2017-02-15', 'png');
 
 -- --------------------------------------------------------
 
@@ -396,14 +404,14 @@ CREATE TABLE IF NOT EXISTS `supplier_bid` (
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `supplier_bid`
 --
 
 INSERT INTO `supplier_bid` (`id`, `supplier_id`, `product_bid`, `details`, `price`, `created_date`, `updated_date`) VALUES
-(5, 6, 'Papel', 'papel', '500', '2017-03-15 05:12:04', '2017-03-15 05:12:04');
+(6, 6, 'Papel', 'Papel', '150', '2017-03-15 13:07:16', '2017-03-15 13:07:16');
 
 -- --------------------------------------------------------
 
@@ -468,7 +476,14 @@ CREATE TABLE IF NOT EXISTS `uploaded_bid_file` (
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
+
+--
+-- Dumping data for table `uploaded_bid_file`
+--
+
+INSERT INTO `uploaded_bid_file` (`id`, `author_id`, `file_name`, `ext`, `created_date`, `updated_date`) VALUES
+(13, 3, 'Practical Exam.pdf', 'pdf', '2017-03-15 13:26:55', '2017-03-15 13:26:55');
 
 -- --------------------------------------------------------
 
@@ -484,14 +499,14 @@ CREATE TABLE IF NOT EXISTS `uploaded_supp_bid_file` (
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `uploaded_supp_bid_file`
 --
 
 INSERT INTO `uploaded_supp_bid_file` (`id`, `supplier_id`, `file_name`, `ext`, `created_date`, `updated_date`) VALUES
-(5, 6, 'reached-ally-condie.pdf', 'pdf', '2017-03-15 05:12:04', '2017-03-15 05:12:04');
+(6, 6, 'How_to_Clean_Install_CM13.pdf', 'pdf', '2017-03-15 13:07:16', '2017-03-15 13:07:16');
 
 -- --------------------------------------------------------
 
@@ -526,9 +541,9 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 INSERT INTO `users` (`id`, `usn`, `fname`, `lname`, `birthday`, `address`, `contact`, `email`, `password`, `activate`, `code`, `date`, `block`, `pic`, `ext`, `admin`, `user_type`) VALUES
 (1, 'rjemindo', 'Russell James', 'Mindo', '1955-10-15', 'Antipolo', 3934875, 'rje.mindo@gmail.com', '4794b24d2508fd381736b30aa4e3a886', 1, 67591688, '2013-11-28', 0, 0, '', 0, 0),
-(3, 'rr', 'Roxel', 'Mendoza', '1994-03-03', 'Tarlac', 2147483647, 'mendozalaxus@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 1, 0, '2017-03-06', 0, 0, '', 0, 2),
+(3, 'rr', 'Roxel', 'Mendoza', '1994-03-03', 'Tarlac', 2147483647, 'mendozalaxus@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 1, 0, '2017-03-06', 0, 0, '', 0, 3),
 (4, 'jeydah1231', 'Jedidiah Ysis', 'Gutierrez', '1993-06-20', '9 Agnes St., Sta. Teresita Village Marikina', 2147483647, 'jeydahgutierrez0910@gmail.com', '16f26d92e4c585a66ed58f7bb2d0f919', 1, 97629123, '2017-02-11', 0, 0, '', 0, 0),
-(6, 'rr2', 'RR', 'Mendoza', '1956-01-17', 'Mandaluyong', 2147483647, 'mendozalaxus@yahoo.com', '81dc9bdb52d04dc20036dbd8313ed055', 1, 85639105, '2017-03-09', 0, 0, '', 0, 3);
+(6, 'rr2', 'RR', 'Mendoza', '1956-01-17', 'Mandaluyong', 2147483647, 'mendozalaxus@yahoo.com', '81dc9bdb52d04dc20036dbd8313ed055', 1, 85639105, '2017-03-09', 0, 0, '', 0, 2);
 
 -- --------------------------------------------------------
 
@@ -549,7 +564,7 @@ CREATE TABLE IF NOT EXISTS `user_type` (
 INSERT INTO `user_type` (`id`, `name`) VALUES
 (1, 'client'),
 (2, 'author'),
-(3, 'aupplier'),
+(3, 'supplier'),
 (4, 'admin');
 
 -- --------------------------------------------------------

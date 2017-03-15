@@ -1,15 +1,65 @@
 <?php
 include '../include/connectdb.php';
+  include 'include/check_login.php';
+if (!isset($_SESSION["manager"])) {
+    header("location: login.php"); 
+    exit();
+  
+  
+  
+}?>
 
+<?php
+    
+    $username="";
+      if (loggedin())
+      {
+        $query = mysql_query("SELECT * FROM admin WHERE username ='$_SESSION[manager]' ");
+          while ($row = mysql_fetch_assoc($query))
+          {
+            $userid = $row ['id'];
+            $username = $row ['username'];
+            
+          
+          }
+        
+        }
+      else
+      { 
+      //header("Location:login.php");
+    //  exit();
+      }
+      ?>
 
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
+    <title>Administrator</title>
 
+    <link href="css/bootstrap.css" rel="stylesheet">
 
-?>
+    <link href="css/sb-admin.css" rel="stylesheet">-->
 
+    <link rel="stylesheet" href="css/morris-0.4.3.min.css">
+  </head>
 
-<table>
-  <thead>
+  <body>
+
+    <div id="wrapper">
+  <!-- Sidebar -->
+      <nav class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+      <?php include 'template/sidebar.php';?>
+    <?php include 'template/top.php';?>
+    </nav>
+
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
     <th>Author</th>
     <th>Co-author</th>
     <th>Title</th>
@@ -22,15 +72,19 @@ include '../include/connectdb.php';
 
   <?php
 
-  $sql = mysql_query("SELECT author_bid.*, author.*, uploaded_bid_file.* from author_bid inner join author on author_bid.author_id=author.id inner join 
-uploaded_bid_file on author.id=uploaded_bid_file.author_id");
+  $sql = mysql_query("SELECT author_bid . * , users . * , uploaded_bid_file . * 
+FROM author_bid
+INNER JOIN users ON author_bid.author_id = users.id
+INNER JOIN uploaded_bid_file ON users.id = uploaded_bid_file.author_id
+WHERE users.user_type =2");
   $requestCount = mysql_num_rows($sql);
 
   if ($requestCount > 0) {
      while ($row = mysql_fetch_array($sql)) {
 
       $id = $row['id']; 
-      $author = $row['name'];
+      $fname = $row['fname'];
+      $lname = $row['lname'];
       $coauthor = $row['co_author'];
       $title = $row['title'];
       $details = $row['details'];
@@ -42,7 +96,7 @@ uploaded_bid_file on author.id=uploaded_bid_file.author_id");
 
       echo "
         <tr>
-          <td>$author</td>
+          <td>$fname $lname</td>
           <td>$coauthor</td>
           <td>$title</td>
           <td>$details</td>
@@ -60,5 +114,11 @@ uploaded_bid_file on author.id=uploaded_bid_file.author_id");
 
    ?>
 
+      </table>
+    </div>
 
-</table>
+    </div>
+    </body>
+    </html>
+
+

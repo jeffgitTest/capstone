@@ -25,9 +25,9 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-caret-square-o-down"></i>ACCOUNTING<b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a href="./accounting/TEST.php">Sales</a></li>
-                <li><a href="./accounting/expenses.php">Expenses</a></li>
-                <li><a href="./accounting/financialstatement.php">Financial Statement</a></li>
+                <li><a href="../admin/sales.php">Sales and Income</a></li>
+                <li><a href="../admin/expenses.php">Expenses</a></li>
+                <li><a href="../admin/financialstatement.php">Financial Statement</a></li>
               </ul>
             </li>
            <li class="dropdown">
@@ -51,9 +51,9 @@
                 <li><a href="authorbidlist.php">Author Bid</a></li>
               </ul>
             </li>
-            <li><a href="../admin/supplier/supplierlist.php"><i class="fa fa-font"></i>SUPPLIER LIST</a></li>
+            <li><a href="../admin/supplierlist.php"><i class="fa fa-font"></i>SUPPLIER LIST</a></li>
+            <li><a href="../admin/authorlist.php"><i class="fa fa-font"></i>AUTHOR LIST</a></li>
             <li><a href="messaging.php"><i class="fa fa-font"></i>MESSAGE</a></li>
-            <li><a href="../admin/author/authorlist.php"><i class="fa fa-font"></i>AUTHOR LIST</a></li>
             <li><a href="backup.php"><i class="fa fa-font"></i>BACKUP DB</a></li>
             
           </ul>
