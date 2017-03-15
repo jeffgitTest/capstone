@@ -27,6 +27,8 @@
 	$address1 = addslashes(strip_tags($_POST['address']));
 	$contact = addslashes(strip_tags($_POST['contact']));
 	$date = date ("Y-m-d");
+
+	$usertype = $_POST['regtype'];
 	
 	$errors = array();
 	if($usn&&$email&&$password&&$repeat&&$fname&&$lname&&$month&&$day&&$year&&$address1&&$contact){
@@ -90,7 +92,16 @@
 							}
 									
 									$mail  = new PHPMailer();
-									$body = 'Hello '.$username.', <br/> <br/> Thank you for your registration, Please Verify your account.Just Click the Link below <br/> <a href="'.$base_url.'include/activate.php?code='.$code.'">'.$base_url.'include/activate.php?code='.$code.'</a><br/><br/>Thank You <br/><br/>Mutya';
+
+									$body = "";
+									
+									if ($usertype == '2') {
+										$body = 'Hello '.$username.', <br/> <br/> You registered for Author Account. Thank you for your registration, Please Verify your account.Just Click the Link below <br/> <a href="'.$base_url.'include/activate.php?code='.$code.'">'.$base_url.'include/activate.php?code='.$code.'</a><br/><br/>Thank You <br/><br/>Mutya';
+									} else if ($usertype == '3') {
+										$body = 'Hello '.$username.', <br/> <br/> You registered for Supplier Account. Thank you for your registration, Please Verify your account.Just Click the Link below <br/> <a href="'.$base_url.'include/activate.php?code='.$code.'">'.$base_url.'include/activate.php?code='.$code.'</a><br/><br/>Thank You <br/><br/>Mutya';
+									} else {
+										$body = 'Hello '.$username.', <br/> <br/> Thank you for your registration, Please Verify your account.Just Click the Link below <br/> <a href="'.$base_url.'include/activate.php?code='.$code.'">'.$base_url.'include/activate.php?code='.$code.'</a><br/><br/>Thank You <br/><br/>Mutya';
+									}
 
 									$mail->IsSMTP(); // telling the class to use SMTP
 									$mail->Host       = "smtp.gmail.com"; // SMTP server
@@ -144,7 +155,7 @@
 									{
 									//register into database
 
-										$register = mysql_query("INSERT INTO users VALUES ('','$usn','$fname','$lname','$birthday', '$address1', '$contact', '$email','$password', '0','$code','$date','0','','','', '1')");
+										$register = mysql_query("INSERT INTO users VALUES ('','$usn','$fname','$lname','$birthday', '$address1', '$contact', '$email','$password', '0','$code','$date','0','','','', '$usertype')");
 										if ($register) {
 											echo '<div class="alert alert-success"><span class="icon-check"></span>You have been registered succesfully!Please check your email to verify your account </div>';
 										} else {
@@ -174,6 +185,19 @@
 		 <h4>Login Information</h4>
 		 <hr class="bg-magenta">
 		 		 <br/>
+
+		 <div class="form-group">
+		 	<div class="input-control text full-size" data-role="input">
+		 		<label for="regtype">Registration Type</label>
+		 		<select id="regtype" name="regtype" class="form-control">
+				  <option value=""></option>
+				  <option value="1">Client</option>
+				  <option value="2">Author</option>
+				  <option value="3">Supplier</option>
+				</select>
+		 	</div>
+		 </div>
+		 <br/>
           <div class="form-group">
 		  <div class="input-control text full-size" data-role="input">
       	  <label for="exampleInputEmail">Username</label>
