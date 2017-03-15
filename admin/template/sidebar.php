@@ -54,6 +54,6 @@
             <li><a href="../admin/supplierlist.php"><i class="fa fa-font"></i>SUPPLIER LIST</a></li>
             <li><a href="../admin/authorlist.php"><i class="fa fa-font"></i>AUTHOR LIST</a></li>
             <li><a href="messaging.php"><i class="fa fa-font"></i>MESSAGE</a></li>
-            <li><a href="backup.php"><i class="fa fa-font"></i>BACKUP DB</a></li>
+            <li><a href="backup.php"><i class="fa fa-font"></i>BACKUP DB (In progress)</a></li>
             
           </ul>
