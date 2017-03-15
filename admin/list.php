@@ -190,21 +190,64 @@ $cQuery= mysql_query("SELECT * FROM products WHERE stock<=40 and stock>0 ORDER B
 <th width="12%">Display</th>
 <th width="14%">Status</th>
 <th width="14%">Action</th>
+<th width="8%">Logs</th>
 </tr>
 </thead>
 
 
 <tbody>
 <?php
-		if(isset($_get['critical'])){
-			$critical = $_get['critical'];
-			$sql = mysql_query("SELECT * FROM products WHERE stock < 41 ORDER BY id DESC");
-$productCount2 = mysql_num_rows($sql); // count the output amount
-if ($productCount2 > 0) 
-{
-	while($row = mysql_fetch_array($sql))
-	
-	{ 
+	if(isset($_get['critical'])){
+		$critical = $_get['critical'];
+		$sql = mysql_query("SELECT * FROM products WHERE stock < 41 ORDER BY id DESC");
+		$productCount2 = mysql_num_rows($sql); // count the output amount
+		
+		if ($productCount2 > 0) {
+			while($row = mysql_fetch_array($sql)){ 
+            	$id = $row["id"];
+		   		$prod_title = $row["product_name"];
+			 	$price = $row["price"];
+			  	$prod_desc  = $row["details"];
+			    $ext  = $row["ext"];
+			    $stock=$row['stock'];
+			    $category = $row["category"];
+				$sub_category = $row["sub_category"];
+				$display = $row["status"];
+
+				if($stock <=40 && $stock > 0){
+				 	$s_status = '<span style="color: #F00">Critical &nbsp;<a href="list.php?productid='.$id.'" title="Update Stock"><span class="icon-pencil"></a></span>';
+				}else if($stock == 0){
+					$s_status = '<span style="color: #333">0 Stock &nbsp;<a title="Update Stock" href="list.php?productid='.$id.'"><span class="icon-pencil"></a></span>';
+				}else{
+					$s_status= '<span style="color: #090">Sufficient</span>';
+				}
+			 
+			 echo'<tr>
+			 	<td><img src="../img/product_image/'.$id.'.'.$ext.'" height="50"  width="50"/></td>
+			 	<td>'.$prod_title.'</td>
+				<td>'.$sub_category.'</td>
+				<td>'. $price.'</td>
+				<td>'.$stock.'</td>
+				<td>'.$display.'</td>
+				<td>'.$s_status.' </td>
+				<td><a href="edit.php?id='.$id.'">Update</a></td>
+				<td><a href="logs.php?pname='.$prod_title.'&id='.$id.'">View</a>
+					<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+				</td>
+				</tr>';
+			}
+		}
+			
+	}
+
+	if(isset($_get['out_of_stock'])){
+		$critical = $_get['out_of_stock'];
+		$critical = $_get['critical'];
+		$sql = mysql_query("SELECT * FROM products WHERE stock > 40 ORDER BY id DESC");
+		$productCount2 = mysql_num_rows($sql); // count the output amount
+		
+		if ($productCount2 > 0){
+			while($row = mysql_fetch_array($sql)){ 
             	$id = $row["id"];
 		   		$prod_title = $row["product_name"];
 			 	$price = $row["price"];
@@ -215,44 +258,36 @@ if ($productCount2 > 0)
 				$sub_category = $row["sub_category"];
 				$display = $row["status"];
 			 
-			 
-			  
-			   if($stock <=40 && $stock > 0){
-				 $s_status = '<span style="color: #F00">Critical &nbsp;<a href="list.php?productid='.$id.'" title="Update Stock"><span class="icon-pencil"></a></span>';
-				 }
-			 else if($stock == 0){
-	$s_status = '<span style="color: #333">0 Stock &nbsp;<a title="Update Stock" href="list.php?productid='.$id.'"><span class="icon-pencil"></a></span>';
-					 }
-				else{
-						 $s_status= '<span style="color: #090">Sufficient</span>';
-					}
+			 	if($stock <=40 && $stock > 0){
+					$s_status = '<span style="color: #F00">Critical &nbsp;<a href="list.php?productid='.$id.'" title="Update Stock"><span class="icon-pencil"></a></span>';
+				}else if($stock == 40){
+					$s_status = '<span style="color: #333">0 Stock &nbsp;<a title="Update Stock" href="list.php?productid='.$id.'"><span class="icon-pencil"></a></span>';
+				}else{
+					$s_status= '<span style="color: #090">Sufficient</span>';
+				}
 			 
 			 
 			 echo'<tr>
-<td><img src="../img/product_image/'.$id.'.'.$ext.'" height="50"  width="50"/></td>
-<td>'.$prod_title.'</td>
-<td>'.$sub_category.'</td>
-<td>'. $price.'</td>
-<td>'.$stock.'</td>
-<td>'.$display.'</td>
-<td>'.$s_status.' </td>
-<td><a href="edit.php?id='.$id.'">Update</a> </td>
-</tr>';
-	}
-}
-			
+				<td><img src="../img/product_image/'.$id.'.'.$ext.'" height="50"  width="50"/></td>
+				<td>'.$prod_title.'</td>
+				<td>'. $price.'</td>
+				<td>'.$stock.'</td>
+				<td>'.$display.'</td>
+				<td>'.$s_status.' </td>
+				<td><a href="edit.php?id='.$id.'">Update</a> </td>
+				<td><a href="logs.php?pname='.$prod_title.'&id='.$id.'">View</a>
+					<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+				</td>
+				</tr>';
 			}
+		}
+	}else{
 			
-		if(isset($_get['out_of_stock'])){
-			$critical = $_get['out_of_stock'];
-			$critical = $_get['critical'];
-			$sql = mysql_query("SELECT * FROM products WHERE stock > 40 ORDER BY id DESC");
-$productCount2 = mysql_num_rows($sql); // count the output amount
-if ($productCount2 > 0) 
-{
-	while($row = mysql_fetch_array($sql))
-	
-	{ 
+		$stock='';
+		$sql = mysql_query("SELECT * FROM products ORDER BY id DESC");
+		$productCount2 = mysql_num_rows($sql); // count the output amount
+		if ($productCount2 > 0) {
+			while($row = mysql_fetch_array($sql)){ 
             	$id = $row["id"];
 		   		$prod_title = $row["product_name"];
 			 	$price = $row["price"];
@@ -260,84 +295,76 @@ if ($productCount2 > 0)
 			    $ext  = $row["ext"];
 			    $stock=$row['stock'];
 			    $category = $row["category"];
-				 $sub_category = $row["sub_category"];
-				 $display = $row["status"];
-			 
-			 
-			  
-			   if($stock <=40 && $stock > 0){
-				 $s_status = '<span style="color: #F00">Critical &nbsp;<a href="list.php?productid='.$id.'" title="Update Stock"><span class="icon-pencil"></a></span>';
-				 }
-			 else if($stock == 40){
-	$s_status = '<span style="color: #333">0 Stock &nbsp;<a title="Update Stock" href="list.php?productid='.$id.'"><span class="icon-pencil"></a></span>';
-					 }
-				else{
-						 $s_status= '<span style="color: #090">Sufficient</span>';
-					}
-			 
-			 
-			 echo'<tr>
-<td><img src="../img/product_image/'.$id.'.'.$ext.'" height="50"  width="50"/></td>
-<td>'.$prod_title.'</td>
-<td>'. $price.'</td>
-<td>'.$stock.'</td>
-<td>'.$display.'</td>
-<td>'.$s_status.' </td>
-<td><a href="edit.php?id='.$id.'">Update</a> </td>
-</tr>';
-	}
-}
-			}
-			
-		else{
-			
-			$stock='';
-	$sql = mysql_query("SELECT * FROM products ORDER BY id DESC");
-$productCount2 = mysql_num_rows($sql); // count the output amount
-if ($productCount2 > 0) 
-{
-	while($row = mysql_fetch_array($sql))
-	
-	{ 
-            	$id = $row["id"];
-		   		$prod_title = $row["product_name"];
-			 	$price = $row["price"];
-			  	$prod_desc  = $row["details"];
-			    $ext  = $row["ext"];
-			    $stock=$row['stock'];
-			    $category = $row["category"];
-				 $sub_category = $row["sub_category"];
-				 $display = $row["status"];
-				 if($display=='active')
-				 {
+				$sub_category = $row["sub_category"];
+				$display = $row["status"];
+
+				if($display=='active'){
 					$display_title='Do not Display on gallery';	 
-				 }
-				 else{
-					 $display_title='Display on Gallery';	
-					 }
-			 
-			 
-			  
-			   if($stock <=40 && $stock > 0){
-				 $s_status = '<span style="color: #F00">Critical &nbsp;<a href="list.php?productid='.$id.'" title="Update Stock"><span class="icon-pencil"></a></span>';
-				 }
-			 else if($stock == 0){
-	$s_status = '<span style="color: #333">0 Stock &nbsp;<a title="Update Stock" href="list.php?productid='.$id.'"><span class="icon-pencil"></a></span>';
-					 }
-				else{
-						 $s_status= '<span style="color: #090">Sufficient</span>';
-					}
+				}else{
+					$display_title='Display on Gallery';	
+				}
+
+				if($stock <=40 && $stock > 0){
+				 	$s_status = '<span style="color: #F00">Critical &nbsp;<a href="list.php?productid='.$id.'" title="Update Stock"><span class="icon-pencil"></a></span>';
+				}else if($stock == 0){
+					$s_status = '<span style="color: #333">0 Stock &nbsp;<a title="Update Stock" href="list.php?productid='.$id.'"><span class="icon-pencil"></a></span>';
+				}else{
+					$s_status= '<span style="color: #090">Sufficient</span>';
+				}
 			 
 			 
 			 echo'<tr>
-<td><img src="../img/product_image/'.$id.'.'.$ext.'" height="50"  width="50"/></td>
-<td>'.$prod_title.'</td>
-<td>'. $price.'</td>
-<td>'.$stock.'</td>
-<td>'.$display.' <a title="'.$display_title.'" href="list.php?activate='.$id.'" alt="Display on gallery"><span class="icon-pencil"></a></td>
-<td>'.$s_status.' </td>
-<td><a href="edit.php?id='.$id.'">Update</a> </td>
-</tr>';
+				<td><img src="../img/product_image/'.$id.'.'.$ext.'" height="50"  width="50"/></td>
+				<td>'.$prod_title.'</td>
+				<td>'. $price.'</td>
+				<td>'.$stock.'</td>
+				<td>'.$display.' <a title="'.$display_title.'" href="list.php?activate='.$id.'" alt="Display on gallery"><span class="icon-pencil"></a></				td>
+				<td>'.$s_status.' </td>
+				<td><a href="edit.php?id='.$id.'">Update</a> </td>
+				<td>
+					<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal'.$id.'">View</button>
+				</td>
+				</tr>';
+				?>
+				<!-- Modal -->
+				  <div class="modal fade" id="myModal<?php echo $id;?>" role="dialog">
+				    <div class="modal-dialog">
+				    
+				      <!-- Modal content-->
+				      <div class="modal-content">
+				        <div class="modal-header">
+				          <button type="button" class="close" data-dismiss="modal">&times;</button>
+				          <h4 class="modal-title">Inventory Logs of <?php echo $prod_title; ?></h4>
+				        </div>
+				        <div class="modal-body">
+				        	<div class="row">
+							  <div class="col-sm-4 col-md-auto">History ID</div>
+							  <div class="col-sm-4 col-md-auto">Modified Quantity</div>
+							  <div class="col-sm-4 col-md-auto">Date Modified</div>
+							</div>
+				        	<?php 
+					          	$prod_invent = mysql_query("SELECT * FROM product_history WHERE pid='$id'");
+								$prod_invent2 = mysql_num_rows($prod_invent); // count the output amount
+								if ($prod_invent2 > 0) {
+									while($rowInvet = mysql_fetch_array($prod_invent)){ 
+										echo "
+										<div class='row justify-content-md-center'>
+											<div class='col-sm-4 col-md-auto'>".$rowInvet['id']."</div>
+											<div class='col-sm-4 col-md-auto'>".$rowInvet['qty_added']."</div>
+											<div class='col-sm-4 col-md-auto'>".$rowInvet['date']."</div>
+										</div>";
+									}
+								}
+				          	?>
+				        </div>
+				        <div class="modal-footer">
+				          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				        </div>
+				      </div> 
+				      
+				    </div>
+				  </div>
+				<?php
 	}
 }
 			}	
@@ -354,6 +381,8 @@ if ($productCount2 > 0)
       </div><!-- /#page-wrapper -->
 
     </div><!-- /#wrapper -->
+
+      
 
     <!-- JavaScript -->
     <script src="js/jquery-1.10.2.js"></script>

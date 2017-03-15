@@ -3,49 +3,55 @@ if(isset($_POST['update'])){
 	$pid=$_POST['pid'];
 	$stock=$_POST['stock'];
 	  $errors = array();
-	if(!preg_replace('#[^0-9]#i', '',$stock))
-					{
-					
-					$errors[] = '<div class="alert alert-error">Please input numbers only</div>';
-				
-					}
-	if(empty($stock)){
-		
-		$errors[] = '<div class="alert alert-error">Stock Field Cannot be empty</div>';
-		}
-					if (!empty($errors)) 
-									{
-										foreach ($errors as $error) 
-										{
-											echo $error, '<br/>';
-										}
-									}
-		
-	
 
-	else{
-		$sql = mysql_query("SELECT * FROM products WHERE id='$pid' LIMIT 1");
-    $productCount = mysql_num_rows($sql); // count the output amount
-    if ($productCount > 0) {
-	    while($row = mysql_fetch_array($sql)){ 
-             $pid = $row["id"];
-			$ustock = $row["stock"];
-			$pnme=$row['product_name'];
-			$update_stock = $ustock + $stock;
-			$notice="";
-			if($stock>1){$notice='stocks';}else{$notice='stock';}
-			
-			mysql_query("UPDATE products SET stock='$update_stock' WHERE id='$pid'");
-			mysql_query("INSERT INTO product_history VALUES('', '$pid', $update_stock', now()");
-		echo '<div class="alert alert-success"> '.$stock.' Products Added to '.$pnme.' | In-Stock '.$update_stock.' <a href="list.php">View </a></div>';
-		}
+	if(!preg_replace('#[^0-9]#i', '',$stock)){
+		$errors[] = '<div class="alert alert-error">Please input numbers only</div>';
 	}
-	else{
-		echo 'Invalid id';
-		
+
+	if(empty($stock)){
+		$errors[] = '<div class="alert alert-error">Stock Field Cannot be empty</div>';
+	}
+
+	if (!empty($errors)){
+		foreach ($errors as $error){
+			echo $error, '<br/>';
+		}
+	}else{
+		$sql = mysql_query("SELECT * FROM products WHERE id='$pid' LIMIT 1");
+		$productCount = mysql_num_rows($sql); // count the output amount
+		$row = mysql_fetch_array($sql, MYSQL_ASSOC);
+		if ($productCount > 0) {
+			// while($row = mysql_fetch_array($sql)){ 
+			// 	$pid = $row["id"];
+			// 	$ustock = $row["stock"];
+			// 	$pnme=$row['product_name'];
+			// 	$update_stock = $ustock + $stock;
+			// 	$notice="";
+
+			// 	if($stock>1){$notice='stocks';}else{$notice='stock';}
+				
+				if($_POST['update'] == "Add Stock"){
+					mysql_query("UPDATE products SET stock= stock + '$stock' WHERE id='$pid'");
+					mysql_query("INSERT INTO product_history VALUES('', '$pid', '$stock', now())");
+				}
+
+				if($_POST['update'] == "Deduct Stock"){
+					mysql_query("UPDATE products SET stock= stock - '$stock' WHERE id='$pid'");
+					mysql_query("INSERT INTO product_history VALUES('', '$pid', '-$stock', now())");
+				}
+
+				header("Location: edit.php?id=$pid&success&pnm=".$row['product_name']."&stock=".$stock);
+
+				
+			// }
+		}else{
+			echo 'Invalid id';
 		}	
 	}
-		}
+}
+if(isset($_GET['success'])){
+		echo '<div class="alert alert-success"> '.$_GET['stock'].' Products Added to '.$_GET['pnm'].' | In-Stock '.$_GET['stock'].' <a href="list.php">View </a></div>';
+	}
 
 ?>
 <form action="edit.php?id=<?php echo $targetID?>" method="post" >
@@ -58,6 +64,6 @@ if(isset($_POST['update'])){
       <input type="hidden" required name="pid" id="pid" class="input-xlarge" value="<?php echo $targetID ?>">
       </div>
     </fieldset>       
-<input type="submit" name="add_stock" class="btn btn-primary btn-lg pull-left" value="Add Stock">
+<input type="submit" name="update" class="btn btn-primary btn-lg pull-left" value="Add Stock">
 <input type="submit" name="update" class="btn btn-primary btn-lg pull-left" value="Deduct Stock">
 </form>

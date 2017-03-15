@@ -24,8 +24,8 @@
 <html lang="en">
   
   <body>
-  <?php include 'template/top.php'?>
-    <?php include 'template/header.php'?>
+  <?php include 'template/top.php';?>
+    <?php include 'template/header.php';?>
 
 <div class="carousel square-bullets" data-height="480" data-role="carousel" data-direction="left">
 <div class="slide"><img src="img/car1.png" data-role="fitImage" data-format="fill"></div>
