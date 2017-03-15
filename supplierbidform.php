@@ -36,47 +36,33 @@
 
     <?php include 'template/header.php'; ?>
 	
-		<form action="authorbid.php" method="post" enctype="multipart/form-data" style="margin-top: 69px;">
+		<form action="supplierbid.php" method="post" enctype="multipart/form-data" style="margin-top: 69px;">
 		<fieldset>
 			 <div class="row cells2">
 			 	<div class="cell">
 		
-					<h4>Author Bid Portal</h4>
+					<h4>Supplier Bid Portal</h4>
 					 <hr class="bg-magenta">
 					 		 <br/>
 					
 					<div class="form-group">
 						<div class="input-control">
-							<label for="product-name">Title:</label>
-							<input type="text" id="product-name" class="input-control" name="name" required="required">
+							<label for="product-name">Product Name:</label>
+							<input type="text" id="product-name" required="required" class="input-control" name="name">
 						</div>
 					</div>
 					<br/>
 					<div class="form-group">
 						<div class="input-control">
 							<label for="details">Details:</label>
-							<input type="text" id="details" class="input-control" name="details" required="required">
+							<input type="text" id="details" required="required" class="input-control" name="details">
 						</div>
 					</div>
 					<br/>
 					<div class="form-group">
 						<div class="input-control">
-							<label for="author">Author:</label>
-							<input type="text" id="author" class="input-control" name="author" required="required">
-						</div>
-					</div>
-					<br/>
-					<div class="form-group">
-						<div class="input-control">
-							<label for="genre">Genre:</label>
-							<input type="text" id="genre" class="input-control" name="genre" required="required">
-						</div>
-					</div>
-					<br/>
-					<div class="form-group">
-						<div class="input-control">
-							<label for="price">Projected Price:</label>
-							<input type="text" id="price" class="input-control" name="price"required="required">
+							<label for="price">Price:</label>
+							<input type="text" id="price" required="required" class="input-control" name="price">
 						</div>
 					</div>
 					<br/>

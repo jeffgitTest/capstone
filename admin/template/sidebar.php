@@ -44,6 +44,13 @@
              <li><a href="cancel.php"><i class="fa fa-edit"></i>REQUEST CANCEL ORDER</a></li>
             <li><a href="reports.php"><i class="fa fa-edit"></i> REPORTS</a></li>
             <li><a href="inventory.php"><i class="fa fa-font"></i>INVENTORY</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-caret-square-o-down"></i>BID MONITORING<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="supplierbidlist.php">Supplier Bid</a></li>
+                <li><a href="authorbidlist.php">Author Bid</a></li>
+              </ul>
+            </li>
             <li><a href="messaging.php"><i class="fa fa-font"></i>MESSAGE</a></li>
             <li><a href="backup.php"><i class="fa fa-font"></i>BACKUP DB</a></li>
             <li><a href="accountrequests.php"><i class="fa fa-font"></i>ACCOUNT REQUESTS</a></li>

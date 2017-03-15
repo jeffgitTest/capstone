@@ -48,6 +48,22 @@
 
                           }
 
+                          if ($accesslevel == "supplier") {
+
+                            $_SESSION['supplier_id'] = $userid;
+                            
+                            echo "
+                            <li>
+                            <a href='' class='dropdown-toggle'>Supplier</a>
+                            <ul class='d-menu' data-role='dropdown'>
+                                <li><a href='catalog.php'>Contract</a></li>
+                                 <li><a href='supplierbidform.php'>Bid Portal</a></li>
+                              </ul>
+                            </li>
+                            ";
+
+                          }
+
                          ?>
 
                         <li><a href="about.php">About</a></li>
