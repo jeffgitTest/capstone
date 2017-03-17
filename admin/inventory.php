@@ -29,6 +29,29 @@ if (!isset($_SESSION["manager"])) {
 			//header("Location:login.php");
 		//	exit();
 			}
+
+      function isBestSeller ($productid) {
+
+        $found = 0;
+
+        $query = mysql_query("SELECT products.id, SUM( transactions.qty ) AS total_qty
+FROM transactions
+INNER JOIN products ON transactions.product_id_array = products.id
+GROUP BY products.id
+ORDER BY total_qty DESC
+LIMIT 5");
+          while ($row = mysql_fetch_assoc($query))
+          {
+          
+            if($row['id'] == $productid) {
+              $found++;
+            }
+          }
+
+          return $found > 0;
+
+      }
+
 			?>
 <!DOCTYPE html>
 <html lang="en">
@@ -86,6 +109,10 @@ if (!isset($_SESSION["manager"])) {
 //Run a select query to get my latest 3 items
 
 include ('../include/connectdb.php');  
+
+$bestSellerCritLevel = 200;
+$criticalLevel = 100;
+
 $sql = mysql_query("SELECT * FROM products ORDER BY product_name ASC");
 $productCount = mysql_num_rows($sql); // count the output amount
 if ($productCount > 0) {
@@ -117,16 +144,35 @@ if ($productCount > 0) {
 			  $current_stock = $row["stock"];
 			   // $previous_stock = $row["previous stock"];
 			    // $date = $row["date"];
+
+        if (isBestSeller($id)) {
+          
+          if($current_stock <= $bestSellerCritLevel){
+         $status = '<span style="color: #F00">Critical</span>';
+         }
+         else if($current_stock == 0){
+            $status = '<span style="color: #333">0 Stock</span>';
+           }
+           else{
+             $status = '<span style="color: #090">Sufficient</span>';
+             }
+
+
+        } else {
+
+          if($current_stock <= $criticalLevel){
+         $status = '<span style="color: #F00">Critical</span>';
+         }
+         else if($current_stock == 0){
+            $status = '<span style="color: #333">0 Stock</span>';
+           }
+           else{
+             $status = '<span style="color: #090">Sufficient</span>';
+             }
+
+        }
 			 
-	 if($current_stock < 10 && $current_stock >=40){
-				 $status = '<span style="color: #F00">Critical</span>';
-				 }
-				 else if($current_stock == 0){
-					  $status = '<span style="color: #333">0 Stock</span>';
-					 }
-					 else{
-						 $status = '<span style="color: #090">Sufficient</span>';
-						 }
+	 
    
 	echo '
   <tr>
