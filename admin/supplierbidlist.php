@@ -92,7 +92,7 @@ uploaded_supp_bid_file on users.id=uploaded_supp_bid_file.supplier_id where user
           <td>$fname $lname</td>
           <td>$product</td>
           <td>$detail</td>
-          <td>$price</td>
+          <td>".number_format($price, 2, '.', ',')."</td>
           <td>$filename</td>
           <td>$date</td>
         </tr>

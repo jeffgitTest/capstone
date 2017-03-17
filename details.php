@@ -73,7 +73,7 @@ if (isset($_GET['pid'])) {
 		 </div>
 
           <h1 class="bg-darker fg-amber block-shadow">'.$prod_title.'</h1>
-          <h2 class="block-shadow">&#8369; '.$price.'</h2>
+          <h2 class="block-shadow">&#8369; '.number_format($price, 2, '.', ',').'</h2>
 		  <hr class="bg-green" />
 		  <br/>
 		 <h4><b>DESCRIPTION:</b></h4>

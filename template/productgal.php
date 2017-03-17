@@ -27,7 +27,7 @@
 		    </div>
 	<div class="slide-over bg-emerald text-small padding10">
           <h2><a href="details.php?pid='.$pid.'" class="fg-white"><b>'.$prod_title.'</b></a></h2>
-          <h3 class="fg-grayLighter">&#8369;'.$price.'</h3>
+          <h3 class="fg-grayLighter">&#8369;'.number_format($price, 2, '.', ',').'</h3>
 	<br>
 
                            </div>
@@ -79,7 +79,7 @@ else if (isset($_POST['searchP']))
 		    </div>
 	<div class="slide-over bg-emerald text-small padding10">
           <h2><a href="details.php?pid='.$pid.'" class="fg-white"><b>'.$prod_title.'</b></a></h2>
-          <h3 class="fg-grayLighter">&#8369;'.$price.'</h3>
+          <h3 class="fg-grayLighter">&#8369;'.number_format($price, 2, '.', ',').'</h3>
 	<br>
                            </div>	
 			
@@ -117,7 +117,7 @@ else{
 		    </div>
 	<div class="slide-over bg-emerald text-small padding10">
           <h2><a href="details.php?pid='.$pid.'" class="fg-white"><b>'.$prod_title.'</b></a></h2>
-          <h3 class="fg-grayLighter">&#8369;'.$price.'</h3>
+          <h3 class="fg-grayLighter">&#8369;'.number_format($price, 2, '.', ',').'</h3>
 	<br>
                            </div>	
                 </div>				

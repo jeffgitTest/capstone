@@ -34,7 +34,7 @@ if ($productCount2 > 0)
 		    </div>
 	<div class="slide-over bg-emerald text-small padding10">
           <h2><a href="details.php?pid='.$pid.'" class="fg-white"><b>'.$prod_title.'</b></a></h2>
-          <h3 class="fg-grayLighter">&#8369;'.$price.'.00</h3>
+          <h3 class="fg-grayLighter">&#8369;'.number_format($price, 2, '.', ',').'</h3>
 	<br>
 		  <a href="details.php?pid='.$pid.'"><p align="justify" style="line-height:15px;" class="fg-white"><b>DESCRIPTION:</b><br>'.$prod_desc.'</p></a>
                            </div>	
