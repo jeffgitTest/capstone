@@ -208,7 +208,7 @@ if (!isset($_SESSION["cart_array"]) || count($_SESSION["cart_array"]) < 1) {
 		$x = $i + 1;
 		
 		$pp_checkout_btn .= '<input type="hidden" name="item_name_' . $x . '" value="' . $product_name . '">
-        <input type="hidden" name="amount_' . $x . '" value="' . $price . '">
+        <input type="hidden" name="amount_' . $x . '" value="' . number_format($price, 2, '.', ',') . '">
         <input type="hidden" name="quantity_' . $x . '" value="' . $each_item['quantity'] . '">  ';
 		// Create the product array variable
 		$cquantity = $each_item['quantity'];
@@ -217,7 +217,7 @@ $product_id_array .= "$item_id-".$each_item['quantity'].",";
 $cartOutput .= "<tr>";
 $cartOutput .= ' <td align="center" valign="middle"><img src="img/product_image/'.$id.'.'.$ext.'" width="50" height="50" /></td>';
 $cartOutput .= '<td align="center" valign="middle">'.$product_name.'</td>';
-$cartOutput .= '<td align="center" valign="middle">&#8369;'.$price.'.00</td>';
+$cartOutput .= '<td align="center" valign="middle">&#8369;'.number_format($price, 2, '.', ',').'</td>';
 $cartOutput .= '<td width="103" align="center" valign="middle">' . $each_item['quantity'] . '</td>';
 		
 $cartOutput .= '<td><form action="user.php" method="post">
@@ -227,7 +227,7 @@ $cartOutput .= '<td><form action="user.php" method="post">
 		<input name="item_to_adjust"  type="hidden" value="' . $item_id . '" />
 		</form>
 		</td>';
-$cartOutput .= '<td align="center" valign="middle">&#8369;' . $pricetotal . '.00</td>';
+$cartOutput .= '<td align="center" valign="middle">&#8369;' . number_format($pricetotal, 2, '.', ',') . '</td>';
 $cartOutput .= ' <td align="center" valign="middle"><form action="user.php" method="post"><input name="deleteBtn' . $item_id . '" type="submit" id="post2" class=" btn  btn-primary" value="X" /><input name="index_to_remove" type="hidden" value="' . $i . '" /></form></td>';
 $cartOutput .= '</tr>';
 $i++; 

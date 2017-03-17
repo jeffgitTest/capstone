@@ -525,9 +525,9 @@ if ($productCount > 0) {
 										
 										echo '<div class="row">
                <div class="col-lg-2" style="font-size: 14px">'.$prod_name2.'</div>
-                <div class="col-lg-2" style="font-size: 14px"> &#8369;'.$price2.'</div>
+                <div class="col-lg-2" style="font-size: 14px"> &#8369;'.number_format($price2, 2, '.', ',').'</div>
                  <div class="col-lg-2" style="font-size: 14px">'.$quan.'</div>
-                 <div class="col-lg-2" style="font-size: 14px">&#8369;'.$pricetotal1.'</div>
+                 <div class="col-lg-2" style="font-size: 14px">&#8369;'.number_format($pricetotal1, 2, '.', ',').'</div>
              </div>';
 										
 									}
