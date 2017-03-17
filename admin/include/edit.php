@@ -164,7 +164,7 @@ mysql_query("UPDATE products SET product_name='$product_name',price='$price',det
    <div class="row col-lg-12">
    <div class="form-group col-lg-5">
       <label for="exampleInputPassword">Price</label>
-     PHP <input type="text" class="form-control" name="price" id="price" placeholder="Price" value="<?php echo $price?>">
+     PHP <input type="text" class="form-control" name="price" id="price" placeholder="Price" value="<?php echo number_format($price, 2, '.', ',');?>">
     </div>
   </div>
      <div class="form-group col-lg-12">

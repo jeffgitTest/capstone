@@ -19,15 +19,12 @@ if (!isset($_SESSION["manager"])) {
 					{
 						$userid = $row ['id'];
 						$username = $row ['username'];
-						
-					
 					}
-				
 				}
 			else
 			{	
-			//header("Location:login.php");
-		//	exit();
+				header("Location:login.php");
+				exit();
 			}
 			?>
 <?php
@@ -226,7 +223,7 @@ $cQuery= mysql_query("SELECT * FROM products WHERE stock<=40 and stock>0 ORDER B
 			 	<td><img src="../img/product_image/'.$id.'.'.$ext.'" height="50"  width="50"/></td>
 			 	<td>'.$prod_title.'</td>
 				<td>'.$sub_category.'</td>
-				<td>'. $price.'</td>
+				<td>'.number_format($price, 2, '.', ',').'</td>
 				<td>'.$stock.'</td>
 				<td>'.$display.'</td>
 				<td>'.$s_status.' </td>
@@ -270,7 +267,7 @@ $cQuery= mysql_query("SELECT * FROM products WHERE stock<=40 and stock>0 ORDER B
 			 echo'<tr>
 				<td><img src="../img/product_image/'.$id.'.'.$ext.'" height="50"  width="50"/></td>
 				<td>'.$prod_title.'</td>
-				<td>'. $price.'</td>
+				<td>'.number_format($price, 2, '.', ',').'</td>
 				<td>'.$stock.'</td>
 				<td>'.$display.'</td>
 				<td>'.$s_status.' </td>
@@ -316,7 +313,7 @@ $cQuery= mysql_query("SELECT * FROM products WHERE stock<=40 and stock>0 ORDER B
 			 echo'<tr>
 				<td><img src="../img/product_image/'.$id.'.'.$ext.'" height="50"  width="50"/></td>
 				<td>'.$prod_title.'</td>
-				<td>'. $price.'</td>
+				<td>'.number_format($price, 2, '.', ',').'</td>
 				<td>'.$stock.'</td>
 				<td>'.$display.' <a title="'.$display_title.'" href="list.php?activate='.$id.'" alt="Display on gallery"><span class="icon-pencil"></a></				td>
 				<td>'.$s_status.' </td>

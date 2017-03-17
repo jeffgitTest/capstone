@@ -207,7 +207,7 @@ $priceout = $price * $each_item['quantity'];
 
 		$pp_checkout_btn .= '<input type="hidden" name="item_name_' . $x . '" value="' . $product_name . '">
 		<input type="hidden" name="item_number_' . $x . '" value="' . $id . '">
-        <input type="hidden" name="amount_' . $x . '" value="' . $priceout . '">
+        <input type="hidden" name="amount_' . $x . '" value="' .number_format($priceout, 2, '.', ','). '">
 		
         <input type="hidden" name="quantity_' . $x . '" value="' . $each_item['quantity'] . '">';
 		}
@@ -215,7 +215,7 @@ $priceout = $price * $each_item['quantity'];
 		{
 $out = $out + $price;
 				$pp_checkout_btn .= '<input type="hidden" name="item_name_' . $x . '" value="' . $product_name . '">
-        <input type="hidden" name="amount_' . $x . '" value="' . $price . '">
+        <input type="hidden" name="amount_' . $x . '" value="' . number_format($price, 2, '.', ',') . '">
         <input type="hidden" name="quantity_' . $x . '" value="' . $each_item['quantity'] . '">';
 			
 			
@@ -227,7 +227,7 @@ $product_id_array .= "$item_id-".$each_item['quantity'].",";
 $cartOutput .= "<tr>";
 $cartOutput .= ' <td align="center" valign="middle"><img src="img/product_image/'.$id.'.'.$ext.'" width="50" height="50" /></td>';
 $cartOutput .= '<td align="center" valign="middle">'.$product_name.'</td>';
-$cartOutput .= '<td align="center" valign="middle">&#8369;'.$price.'.00</td>';
+$cartOutput .= '<td align="center" valign="middle">&#8369;'.number_format($price, 2, '.', ',').'</td>';
 $cartOutput .= '<td width="103" align="center" valign="middle">' . $each_item['quantity'] . '</td>';
 		
 $cartOutput .= '<td><form action="user.php" method="post">
