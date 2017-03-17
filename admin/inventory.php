@@ -52,6 +52,40 @@ LIMIT 5");
 
       }
 
+      function getCritLevel($type) {
+
+        $query = ($type == 'bs') ? "SELECT * FROM critical_level where type='bs'" : "SELECT * FROM critical_level where type='nbs'";
+        $critlevelbs = "";
+        $sql = mysql_query($query);
+
+         while ($row = mysql_fetch_assoc($sql))
+          {
+          
+            $critlevel = $row['crit_level'];
+          }
+
+          return $critlevel;
+
+      }
+
+      function updateCriticalLevel($type, $value) {
+        $query = "UPDATE critical_level SET crit_level='$value' where type='$type'";
+
+        mysql_query($query);
+      }
+
+
+      if (isset($_POST['submitcrit'])) {
+        
+        $critlevel = $_POST['critlevel'];
+        $critlevel2 = $_POST['critlevel2'];
+
+        updateCriticalLevel('bs', $critlevel);
+        updateCriticalLevel('nbs', $critlevel2);
+
+      }
+
+
 			?>
 <!DOCTYPE html>
 <html lang="en">
@@ -88,6 +122,7 @@ LIMIT 5");
         <div class="row">
           <div class="col-lg-12">
             <h1>Inventory <small></small></h1>
+
            <hr>
           </div>
         </div><!-- /.row -->
@@ -110,8 +145,8 @@ LIMIT 5");
 
 include ('../include/connectdb.php');  
 
-$bestSellerCritLevel = 200;
-$criticalLevel = 100;
+$bestSellerCritLevel = getCritLevel('bs');
+$criticalLevel = getCritLevel('nbs');
 
 $sql = mysql_query("SELECT * FROM products ORDER BY product_name ASC");
 $productCount = mysql_num_rows($sql); // count the output amount
@@ -199,6 +234,39 @@ else
    	      </table>
        </div>
         </div><!-- /.row -->
+
+        <button class="btn btn-primary btn-lg pull-left" data-toggle="modal" data-target="#myModal">Update Critical Level</button>
+
+
+        <!-- Modal -->
+          <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+            
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Set Critical Level</h4>
+                </div>
+                <div class="modal-body">
+                  <div class="row">
+                    
+                  <form action="inventory.php" method="post">
+                    <label>Critical level for best sellers:</label> <input class="form-control" type="text" value="<?php echo getCritLevel('bs'); ?>" name="critlevel"> <br>
+                    <label>Critical level for non best sellers:</label> <input class="form-control" value="<?php echo getCritLevel('nbs'); ?>" type="text" name="critlevel2"> <br>
+                    <input class="btn btn-primary" type="submit" name="submitcrit" value="Submit">
+                  </form>
+
+                  </div>
+                  
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div> 
+              
+            </div>
+          </div>
      
 		
       </div><!-- /#page-wrapper -->

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 15, 2017 at 03:19 PM
+-- Generation Time: Mar 17, 2017 at 06:27 PM
 -- Server version: 1.0.110
 -- PHP Version: 5.3.10
 
@@ -176,6 +176,29 @@ INSERT INTO `category` (`cat_id`, `cat_name`) VALUES
 (25, 'Computer'),
 (26, 'Marketing'),
 (27, 'asdasdas');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `critical_level`
+--
+
+CREATE TABLE IF NOT EXISTS `critical_level` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `crit_level` int(11) NOT NULL,
+  `type` varchar(10) NOT NULL,
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `critical_level`
+--
+
+INSERT INTO `critical_level` (`id`, `crit_level`, `type`, `created_date`, `updated_date`) VALUES
+(1, 200, 'bs', '2017-03-17 18:09:24', '2017-03-17 18:27:23'),
+(2, 150, 'nbs', '2017-03-17 18:09:24', '2017-03-17 18:24:01');
 
 -- --------------------------------------------------------
 
@@ -378,7 +401,7 @@ CREATE TABLE IF NOT EXISTS `supplier` (
   `contract` varchar(10) NOT NULL,
   `valid_until` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `supplier`
@@ -555,7 +578,7 @@ CREATE TABLE IF NOT EXISTS `user_type` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `user_type`
