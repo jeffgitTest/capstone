@@ -146,8 +146,8 @@ WHERE users.user_type =2 AND users.id=" . $userid);
           <td>$details</td>
           <td>$genre</td>
           <td>$price</td>
-          <td>$status</td>
           <td>$date</td>
+          <td>$status</td>
           <td><a href='#' disabled>View Contract</a></td>
         </tr>
 

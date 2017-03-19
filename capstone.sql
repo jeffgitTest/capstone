@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 19, 2017 at 11:42 AM
+-- Generation Time: Mar 19, 2017 at 12:13 PM
 -- Server version: 1.0.110
 -- PHP Version: 5.3.10
 
@@ -79,14 +79,16 @@ CREATE TABLE IF NOT EXISTS `author_bid` (
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=33 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=35 ;
 
 --
 -- Dumping data for table `author_bid`
 --
 
 INSERT INTO `author_bid` (`id`, `title`, `details`, `co_author`, `author_id`, `genre`, `projected_price`, `status`, `created_date`, `updated_date`) VALUES
-(32, 'computer vision', 'neil book', '', 6, 'Programming', '600', '0', '2017-03-19 10:47:19', '2017-03-19 11:29:23');
+(32, 'computer vision', 'neil book', '', 6, 'Programming', '600', '0', '2017-03-19 10:47:19', '2017-03-19 11:29:23'),
+(33, 'ddasd', 'dsadasd', '', 6, 'dasdasd', '588', '0', '2017-03-19 11:48:33', '2017-03-19 11:48:33'),
+(34, '111', '1111', '', 6, '111', '1111', '0', '2017-03-19 12:00:11', '2017-03-19 12:00:11');
 
 -- --------------------------------------------------------
 
@@ -101,7 +103,15 @@ CREATE TABLE IF NOT EXISTS `bids` (
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=43 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=45 ;
+
+--
+-- Dumping data for table `bids`
+--
+
+INSERT INTO `bids` (`id`, `bid_id`, `type`, `created_date`, `updated_date`) VALUES
+(43, 33, 'author', '2017-03-19 11:48:33', '2017-03-19 11:48:33'),
+(44, 34, 'author', '2017-03-19 12:00:11', '2017-03-19 12:00:11');
 
 -- --------------------------------------------------------
 
@@ -485,14 +495,16 @@ CREATE TABLE IF NOT EXISTS `uploaded_bid_file` (
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=31 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=33 ;
 
 --
 -- Dumping data for table `uploaded_bid_file`
 --
 
 INSERT INTO `uploaded_bid_file` (`id`, `author_id`, `file_name`, `ext`, `created_date`, `updated_date`) VALUES
-(30, 6, '10266.pdf', 'pdf', '2017-03-19 10:47:20', '2017-03-19 10:47:20');
+(30, 6, '10266.pdf', 'pdf', '2017-03-19 10:47:20', '2017-03-19 10:47:20'),
+(31, 6, 'CPA1015ra_Mla_e.pdf', 'pdf', '2017-03-19 11:48:33', '2017-03-19 11:48:33'),
+(32, 6, 'Practical Exam.pdf', 'pdf', '2017-03-19 12:00:11', '2017-03-19 12:00:11');
 
 -- --------------------------------------------------------
 

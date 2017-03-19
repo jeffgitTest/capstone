@@ -10,6 +10,8 @@
 			echo "Error bids table!";
 		}
 
+		return mysql_insert_id();
+
 	}
 
  ?>
