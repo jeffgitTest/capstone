@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 17, 2017 at 06:27 PM
+-- Generation Time: Mar 19, 2017 at 11:42 AM
 -- Server version: 1.0.110
 -- PHP Version: 5.3.10
 
@@ -75,17 +75,18 @@ CREATE TABLE IF NOT EXISTS `author_bid` (
   `author_id` int(11) NOT NULL,
   `genre` varchar(255) NOT NULL,
   `projected_price` varchar(255) NOT NULL,
+  `status` varchar(19) DEFAULT NULL,
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=33 ;
 
 --
 -- Dumping data for table `author_bid`
 --
 
-INSERT INTO `author_bid` (`id`, `title`, `details`, `co_author`, `author_id`, `genre`, `projected_price`, `created_date`, `updated_date`) VALUES
-(15, 'Computer Vision', 'Computer Vision using Java', '', 3, 'Programming', '600', '2017-03-15 13:26:55', '2017-03-15 13:26:55');
+INSERT INTO `author_bid` (`id`, `title`, `details`, `co_author`, `author_id`, `genre`, `projected_price`, `status`, `created_date`, `updated_date`) VALUES
+(32, 'computer vision', 'neil book', '', 6, 'Programming', '600', '0', '2017-03-19 10:47:19', '2017-03-19 11:29:23');
 
 -- --------------------------------------------------------
 
@@ -100,15 +101,7 @@ CREATE TABLE IF NOT EXISTS `bids` (
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=22 ;
-
---
--- Dumping data for table `bids`
---
-
-INSERT INTO `bids` (`id`, `bid_id`, `type`, `created_date`, `updated_date`) VALUES
-(20, 6, 'supplier', '2017-03-15 13:07:16', '2017-03-15 13:07:16'),
-(21, 15, 'author', '2017-03-15 13:26:55', '2017-03-15 13:26:55');
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=43 ;
 
 -- --------------------------------------------------------
 
@@ -427,14 +420,7 @@ CREATE TABLE IF NOT EXISTS `supplier_bid` (
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
-
---
--- Dumping data for table `supplier_bid`
---
-
-INSERT INTO `supplier_bid` (`id`, `supplier_id`, `product_bid`, `details`, `price`, `created_date`, `updated_date`) VALUES
-(6, 6, 'Papel', 'Papel', '150', '2017-03-15 13:07:16', '2017-03-15 13:07:16');
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 -- --------------------------------------------------------
 
@@ -499,14 +485,14 @@ CREATE TABLE IF NOT EXISTS `uploaded_bid_file` (
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=31 ;
 
 --
 -- Dumping data for table `uploaded_bid_file`
 --
 
 INSERT INTO `uploaded_bid_file` (`id`, `author_id`, `file_name`, `ext`, `created_date`, `updated_date`) VALUES
-(13, 3, 'Practical Exam.pdf', 'pdf', '2017-03-15 13:26:55', '2017-03-15 13:26:55');
+(30, 6, '10266.pdf', 'pdf', '2017-03-19 10:47:20', '2017-03-19 10:47:20');
 
 -- --------------------------------------------------------
 
@@ -522,14 +508,7 @@ CREATE TABLE IF NOT EXISTS `uploaded_supp_bid_file` (
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
-
---
--- Dumping data for table `uploaded_supp_bid_file`
---
-
-INSERT INTO `uploaded_supp_bid_file` (`id`, `supplier_id`, `file_name`, `ext`, `created_date`, `updated_date`) VALUES
-(6, 6, 'How_to_Clean_Install_CM13.pdf', 'pdf', '2017-03-15 13:07:16', '2017-03-15 13:07:16');
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 -- --------------------------------------------------------
 
