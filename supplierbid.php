@@ -72,11 +72,11 @@
 
 	$bidid = 0;
 
-	$sql = mysql_query("INSERT INTO supplier_bid (supplier_id, product_bid, details, price) VALUES ('$supplierid', '$name', '$details', '$price')");
+	$sql = mysql_query("INSERT INTO supplier_bid (supplier_id, product_bid, details, price, status) VALUES ('$supplierid', '$name', '$details', '$price', '0')");
 
 	$file_id = mysql_insert_id();
-	$file = $file_name . '.' . $file_ext;
-	move_uploaded_file($file_temp, 'bids/' . $file);
+	$file = $file_name;
+	move_uploaded_file($file_temp, 'admin/bids/' . $file);
 
 	$sql = mysql_query("INSERT INTO uploaded_supp_bid_file (supplier_id, file_name, ext) VALUES ('$supplierid', '$file_name', '$file_ext')");
 

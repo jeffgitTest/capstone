@@ -69,7 +69,7 @@
 					<div class="form-group">
 						<div class="input-control">
 							<label for="product-name">Attachment (.PDF, .DOC):</label>
-							<input type="file" id="file" name="file" class="input-control" required="required" multiple />
+							<input type="file" id="file" accept=".pdf" name="file" class="input-control" required="required" multiple />
 						</div>
 					</div>
 					<br/>

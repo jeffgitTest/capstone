@@ -74,11 +74,12 @@
 
 	$bidid = 0;
 
-	$sql = mysql_query("INSERT INTO author_bid (title, details, co_author, author_id, genre, projected_price) VALUES ('$title', '$details', '', '$authorid', '$genre', '$price')") or die('Error author_bid');
+	$sql = mysql_query("INSERT INTO author_bid (title, details, co_author, author_id, genre, projected_price, status) VALUES ('$title', '$details', '', '$authorid', '$genre', '$price', '0')") or die('Error author_bid');
 
 	$file_id = mysql_insert_id();
-	$file = $file_name . '.' . $file_ext;
-	move_uploaded_file($file_temp, 'bids/' . $file);
+	// $file = $file_name . '.' . $file_ext;
+	$file = $file_name;
+	move_uploaded_file($file_temp, 'admin/bids/' . $file);
 
 	$sql = mysql_query("INSERT INTO uploaded_bid_file (author_id, file_name, ext) VALUES ('$authorid', '$file_name', '$file_ext')");
 
