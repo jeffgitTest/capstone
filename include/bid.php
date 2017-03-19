@@ -2,9 +2,9 @@
 
 	include "connectdb.php";
 
-	function insert_bid($id, $type) {
+	function insert_bid($type) {
 
-		$sql = mysql_query("INSERT INTO bids (bid_id, type) VALUES ('$id', '$type')");
+		$sql = mysql_query("INSERT INTO bids (type) VALUES ('$type')");
 
 		if (!$sql) {
 			echo "Error bids table!";

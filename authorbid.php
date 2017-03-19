@@ -72,9 +72,9 @@
 
     $file_id = 0;
 
-	$bidid = 0;
+	$bidid = insert_bid('author');;
 
-	$sql = mysql_query("INSERT INTO author_bid (title, details, co_author, author_id, genre, projected_price, status) VALUES ('$title', '$details', '', '$authorid', '$genre', '$price', '0')") or die('Error author_bid');
+	$sql = mysql_query("INSERT INTO author_bid (bid_id, title, details, co_author, author_id, genre, projected_price, status) VALUES ('$bidid', '$title', '$details', '', '$authorid', '$genre', '$price', '0')") or die('Error author_bid');
 
 	$file_id = mysql_insert_id();
 	// $file = $file_name . '.' . $file_ext;
@@ -82,19 +82,6 @@
 	move_uploaded_file($file_temp, 'admin/bids/' . $file);
 
 	$sql = mysql_query("INSERT INTO uploaded_bid_file (author_id, file_name, ext) VALUES ('$authorid', '$file_name', '$file_ext')");
-
-	$sql = mysql_query("SELECT * FROM author_bid ORDER BY id DESC LIMIT 1") or die('Error author_bid');
-	$requestCount = mysql_num_rows($sql);
-
-	if ($requestCount > 0) {
-		while ($row = mysql_fetch_array($sql)) {
-			
-			$bidid = $row['id'];
-
-		}
-	}
-
-	insert_bid($bidid, 'author');
 
 	echo "<h4>Author bid successfully sent! Please wait for admin approval.</h3>";
 
