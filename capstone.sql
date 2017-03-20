@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 20, 2017 at 10:29 AM
+-- Generation Time: Mar 20, 2017 at 04:35 PM
 -- Server version: 1.0.110
 -- PHP Version: 5.3.10
 
@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS `bids` (
   `active` int(11) NOT NULL,
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=49 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=53 ;
 
 --
 -- Dumping data for table `bids`
@@ -111,7 +111,9 @@ CREATE TABLE IF NOT EXISTS `bids` (
 INSERT INTO `bids` (`id`, `type`, `active`, `created_date`) VALUES
 (46, 'author', 0, '2017-03-20 06:50:09'),
 (47, 'author', 0, '2017-03-19 12:20:05'),
-(48, 'author', 1, '2017-03-20 03:33:19');
+(48, 'author', 1, '2017-03-20 03:33:19'),
+(51, 'supplier', 0, '2017-03-20 15:52:55'),
+(52, 'supplier', 1, '2017-03-20 16:34:12');
 
 -- --------------------------------------------------------
 
@@ -194,7 +196,7 @@ CREATE TABLE IF NOT EXISTS `contract` (
   `validity` varchar(10) NOT NULL,
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `contract`
@@ -204,7 +206,9 @@ INSERT INTO `contract` (`id`, `bid`, `user_id`, `type`, `validity`, `created_dat
 (3, 46, 6, 'author', '03/22/2017', '2017-03-20 07:00:49'),
 (4, 46, 6, 'author', '03/31/2017', '2017-03-20 07:05:34'),
 (5, 47, 6, 'author', '03/31/2017', '2017-03-20 07:26:09'),
-(6, 46, 6, 'author', '05/31/2017', '2017-03-20 09:43:24');
+(6, 46, 6, 'author', '05/31/2017', '2017-03-20 09:43:24'),
+(7, 51, 3, 'supplier', '03/31/2017', '2017-03-20 16:19:20'),
+(8, 51, 3, 'supplier', '03/31/2017', '2017-03-20 16:21:24');
 
 -- --------------------------------------------------------
 
@@ -449,13 +453,41 @@ INSERT INTO `supplier` (`id`, `name`, `product`, `contract`, `valid_until`) VALU
 
 CREATE TABLE IF NOT EXISTS `supplier_bid` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `bid_id` int(11) NOT NULL,
   `supplier_id` int(11) NOT NULL,
   `product_bid` varchar(255) NOT NULL,
   `details` varchar(255) NOT NULL,
   `price` varchar(255) NOT NULL,
+  `status` int(11) NOT NULL,
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
+
+--
+-- Dumping data for table `supplier_bid`
+--
+
+INSERT INTO `supplier_bid` (`id`, `bid_id`, `supplier_id`, `product_bid`, `details`, `price`, `status`, `created_date`) VALUES
+(13, 51, 3, '111', '111', '111', 1, '2017-03-20 15:52:55'),
+(14, 52, 3, '222', '222', '222', 0, '2017-03-20 16:34:12');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `supplies`
+--
+
+CREATE TABLE IF NOT EXISTS `supplies` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `bid_id` int(11) NOT NULL,
+  `supplier_id` int(11) NOT NULL,
+  `product_name` varchar(255) NOT NULL,
+  `details` varchar(255) NOT NULL,
+  `price` varchar(255) NOT NULL,
+  `active` int(11) NOT NULL,
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -545,7 +577,7 @@ CREATE TABLE IF NOT EXISTS `uploaded_contract_file` (
   `ext` varchar(10) NOT NULL,
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `uploaded_contract_file`
@@ -553,7 +585,8 @@ CREATE TABLE IF NOT EXISTS `uploaded_contract_file` (
 
 INSERT INTO `uploaded_contract_file` (`id`, `contract_id`, `file_name`, `ext`, `created_date`) VALUES
 (2, 47, ' 26995711901-539067804-ticket.pdf', 'pdf', '2017-03-20 07:26:09'),
-(3, 46, ' sschaub_java-fundamentals.pdf', 'pdf', '2017-03-20 09:43:24');
+(3, 46, ' sschaub_java-fundamentals.pdf', 'pdf', '2017-03-20 09:43:24'),
+(5, 51, ' 10266.pdf', 'pdf', '2017-03-20 16:21:24');
 
 -- --------------------------------------------------------
 
@@ -563,13 +596,22 @@ INSERT INTO `uploaded_contract_file` (`id`, `contract_id`, `file_name`, `ext`, `
 
 CREATE TABLE IF NOT EXISTS `uploaded_supp_bid_file` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `bid_id` int(11) NOT NULL,
   `supplier_id` int(11) NOT NULL,
   `file_name` varchar(255) NOT NULL,
   `ext` varchar(10) NOT NULL,
+  `active` int(11) NOT NULL,
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `bid_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
+
+--
+-- Dumping data for table `uploaded_supp_bid_file`
+--
+
+INSERT INTO `uploaded_supp_bid_file` (`id`, `bid_id`, `supplier_id`, `file_name`, `ext`, `active`, `created_date`) VALUES
+(13, 51, 3, 'CPA1015se.pdf', 'pdf', 0, '2017-03-20 15:52:55'),
+(14, 52, 3, 'How_to_Clean_Install_CM13.pdf', 'pdf', 1, '2017-03-20 16:34:12');
 
 -- --------------------------------------------------------
 
