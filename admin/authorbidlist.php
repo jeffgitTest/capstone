@@ -30,6 +30,69 @@ if (!isset($_SESSION["manager"])) {
     //  exit();
       }
 
+      // from uploadcontract
+      if (isset($_POST['submit'])) {
+        
+        $author_bid_id = $_POST['id'];
+        $bids_id = $_POST['id2'];
+        $uploaded_bid_file_id = $_POST['id3'];
+        $users_id = $_POST['id4'];
+
+        $expiry = $_POST['expiry'];
+
+        // Product Details
+        $initialProductStock = 50;
+        $title = "";
+        $price = "";
+
+        $file_name = $_FILES['file']['name'];
+        $file_size = $_FILES['file']['size'];
+        $file_temp = $_FILES['file']['tmp_name'];
+
+        $allowed_ext = array ('pdf', 'doc');
+        $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+
+        mysql_query("INSERT INTO contract (bid, user_id, type, validity) VALUES ('$bids_id', '$users_id', 'author', '$expiry')");
+
+        mysql_query("UPDATE bids SET active=0 WHERE id=$bids_id");
+        mysql_query("UPDATE uploaded_bid_file SET active=0 WHERE bid_id=$bids_id");
+        mysql_query("UPDATE author_bid SET status=1 WHERE bid_id=$bids_id");
+        mysql_query("INSERT INTO uploaded_contract_file (contract_id, file_name, ext) VALUES ('$bids_id', ' $file_name', '$file_ext')");
+
+        $sql = mysql_query("SELECT * FROM author_bid WHERE bid_id=$bids_id");
+        $requestCount = mysql_num_rows($sql);
+
+        if ($requestCount > 0) {
+           while ($row = mysql_fetch_array($sql)) {
+
+            $title = $row['title'];
+            $price = $row['projected_price'];
+
+           }
+         }
+
+         mysql_query("INSERT INTO products (author_id, product_name, price, details, stock, category, sub_category, status, ext) VALUES ('$users_id', '$title', '$price', '', '$initialProductStock', '', '', 'unactive', 'png')");
+
+        move_uploaded_file($file_temp, 'contracts/' . $file_name);
+
+      }
+
+      // decline bid
+      $action = @$_GET['action'];
+
+      if ($action == 'decline') {
+        
+        $author_bid_id = $_GET['id'];
+        $bids_id = $_GET['id2'];
+        $uploaded_bid_file_id = $_GET['id3'];
+        $users_id = $_GET['id4'];
+
+        mysql_query("UPDATE bids SET active=0 WHERE id=$bids_id");
+        mysql_query("UPDATE uploaded_bid_file SET active=0 WHERE bid_id=$bids_id");
+        mysql_query("UPDATE author_bid SET status=-1 WHERE bid_id=$bids_id");
+
+      }
+
       ?>
 
 <!DOCTYPE html>
@@ -44,7 +107,7 @@ if (!isset($_SESSION["manager"])) {
 
     <link href="css/bootstrap.css" rel="stylesheet">
 
-    <link href="css/sb-admin.css" rel="stylesheet">-->
+    <link href="css/sb-admin.css" rel="stylesheet">
 
     <link rel="stylesheet" href="css/morris-0.4.3.min.css">
   </head>
@@ -69,23 +132,27 @@ if (!isset($_SESSION["manager"])) {
     <th>Price</th>
     <th>Proposal file name</th>
     <th>Date</th>
-    <th>Action</th>
     <th>Status</th>
+    <th>Action</th>
   </thead>
 
   <?php
 
-  $sql = mysql_query("SELECT author_bid . * , users . * , uploaded_bid_file . * 
+  $sql = mysql_query("SELECT author_bid.id as author_bid_id, author_bid. * , bids.id as bids_id, bids . *, uploaded_bid_file.id as uploaded_bid_file_id,  uploaded_bid_file.*, users.id as users_id, users.*
 FROM author_bid
-INNER JOIN users ON author_bid.author_id = users.id
-INNER JOIN uploaded_bid_file ON users.id = uploaded_bid_file.author_id
-WHERE users.user_type =2");
+INNER JOIN bids ON bids.id = author_bid.bid_id
+INNER JOIN users ON author_bid.author_id=users.id
+INNER JOIN uploaded_bid_file ON uploaded_bid_file.bid_id=bids.id WHERE users.user_type=2 AND author_bid.status!=-1 AND author_bid.status!=1 AND uploaded_bid_file.active=1 AND bids.active=1");
   $requestCount = mysql_num_rows($sql);
 
   if ($requestCount > 0) {
      while ($row = mysql_fetch_array($sql)) {
 
-      $id = $row['id']; 
+      $author_bid_id = $row['author_bid_id'];
+      $bids_id = $row['bids_id'];
+      $uploaded_bid_file_id = $row['uploaded_bid_file_id'];
+      $users_id = $row['users_id'];
+
       $fname = $row['fname'];
       $lname = $row['lname'];
       $coauthor = $row['co_author'];
@@ -109,7 +176,7 @@ WHERE users.user_type =2");
           <td><a href='viewuploadedbid.php?filename=$filename'>$filename</a></td>
           <td>$date</td>
           <td>$status</td>
-          <td><a href=''>Accept</a> | <a href=''>Decline</a></td>
+          <td><a href='uploadcontract.php?action=accept&id=$author_bid_id&id2=$bids_id&id3=$uploaded_bid_file_id&id4=$users_id'>Accept</a> | <a href='authorbidlist.php?action=decline&id=$author_bid_id&id2=$bids_id&id3=$uploaded_bid_file_id&id4=$users_id'>Decline</a></td>
         </tr>
 
       ";
