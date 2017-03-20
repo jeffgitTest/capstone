@@ -4,8 +4,7 @@ include 'include/check_login.php';
 if (!isset($_SESSION["manager"])) {
     header("location: login.php"); 
     exit();
-	
-	
+
 	
 }?>
 
@@ -126,6 +125,11 @@ $cQuery= mysql_query("SELECT * FROM products WHERE stock<=10 and stock>0 ORDER B
             <h1>Transactions<small></small></h1>
            <hr>
           </div>
+           <div class="col-lg-6">
+              <button onclick="window.location='excel_download.php'" target="_blank">Click here to download this data in excel file</button>
+            
+          </div>
+         
         </div><!-- /.row --><!-- /.row -->
 
 			   <div class="row">
@@ -180,6 +184,8 @@ else{
 		
 		}
 	}
+
+  
 		
 		?>
 
