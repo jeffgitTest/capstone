@@ -482,6 +482,7 @@ else
  </div>  
   
        <h3>SALES REPORT OVERVIEW</h3>
+       <button onclick="window.location='excel_download.php?sales_rep=print'" target="_blank">Download</button>
        
         <div class="table-responsive">
         <table class="table table-striped">
@@ -703,6 +704,7 @@ $mail->AddAddress($address, "Clothing Line Apparel");
 								
 ?>
  <h3>USERS REPORT OVERVIEW</h3>
+ <button onclick="window.location='excel_download.php?users_rep=print'" target="_blank">Download</button>
 <div class="table-responsive">
 <table class="table table-striped">
 <thead>
