@@ -51,7 +51,7 @@ if (!isset($_SESSION["manager"])) {
         $allowed_ext = array ('pdf', 'doc');
         $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
 
-        mysql_query("INSERT INTO contract (bid, user_id, type, validity, active) VALUES ('$bids_id', '$users_id', 'supplier', '$expiry', 1)");
+        mysql_query("INSERT INTO contract (bid, user_id, type, validity) VALUES ('$bids_id', '$users_id', 'supplier', '$expiry')");
 
         mysql_query("UPDATE bids SET active=0 WHERE id=$bids_id");
         mysql_query("UPDATE uploaded_supp_bid_file SET active=0 WHERE bid_id=$bids_id");
@@ -71,7 +71,7 @@ if (!isset($_SESSION["manager"])) {
            }
          }
 
-         mysql_query("INSERT INTO supplies (bid_id, supplier_id, product_name, details, price, active) VALUES ('$bids_id', '$supplier_bid_id', '$productname', '$details', '$price', 1)");
+         mysql_query("INSERT INTO supplies (bid_id, supplier_id, product_name, details, price, active) VALUES ('$bids_id', '$supplier_bid_id', '$productname', '$details' '$price', 1)");
 
         move_uploaded_file($file_temp, 'contracts/' . $file_name);
 
@@ -124,50 +124,46 @@ if (!isset($_SESSION["manager"])) {
     <div class="table-responsive">
       <table class="table table-striped">
         <thead>
-    <th>Name</th>
+    <th>Supplier Name</th>
     <th>Product</th>
-    <th>Details</th>
-    <th>Price</th>
-    <th>Proposal file name</th>
+    <th>Validity</th>
     <th>Date</th>
+    <th>Status</th>
+    <th>Contract</th>
+    <th>Action</th>
   </thead>
 
   <?php
 
-  $sql = mysql_query("SELECT supplier_bid.id as supplier_bid_id, supplier_bid. * , bids.id as bids_id, bids . *, uploaded_supp_bid_file.id as uploaded_supp_bid_file_id,  uploaded_supp_bid_file.*, users.id as users_id, users.*
-FROM supplier_bid
-INNER JOIN bids ON bids.id = supplier_bid.bid_id
-INNER JOIN users ON supplier_bid.supplier_id=users.id
-INNER JOIN uploaded_supp_bid_file ON uploaded_supp_bid_file.bid_id=bids.id WHERE users.user_type=3 AND supplier_bid.status!=-1 AND supplier_bid.status!=1 AND uploaded_supp_bid_file.active=1 AND bids.active=1");
+  $sql = mysql_query("SELECT contract.id AS contract_id, contract.created_date AS contract_date, contract . * , users.id AS users_id, users . * , supplier_bid.id AS supplier_bid_id, supplier_bid . * 
+FROM contract
+INNER JOIN users ON contract.user_id = users.id
+INNER JOIN supplier_bid ON contract.bid = supplier_bid.bid_id WHERE users.user_type=3");
   $requestCount = mysql_num_rows($sql);
 
   if ($requestCount > 0) {
      while ($row = mysql_fetch_array($sql)) {
 
+      $contract_id = $row['contract_id'];
       $supplier_bid_id = $row['supplier_bid_id'];
-      $bids_id = $row['bids_id'];
-      $uploaded_supp_bid_file_id = $row['uploaded_supp_bid_file_id'];
       $users_id = $row['users_id'];
 
       $fname = $row['fname'];
       $lname = $row['lname'];
       $product = $row['product_bid'];
-      $detail = $row['details'];
-      $price = $row['price'];
-      $filename = $row['file_name'];
-      $date = $row['created_date'];
-      $status = ($row['status'] == '0' ? 'Pending' : 'Completed');
+      $validity = $row['validity'];
+      $date = $row['contract_date'];
+      $status = ($row['active'] == '0' ? 'Inactive' : 'Active');
       
 
       echo "
         <tr>
           <td>$fname $lname</td>
           <td>$product</td>
-          <td>$detail</td>
-          <td>".number_format($price, 2, '.', ',')."</td>
-          <td><a href='viewuploadedbid.php?filename=$filename'>$filename</a></td>
+          <td>$validity</td>
           <td>$date</td>
-          <td><a href='uploadcontract.php?type=supplier&id=$supplier_bid_id&id2=$bids_id&id3=$uploaded_supp_bid_file_id&id4=$users_id'>Accept</a> | <a href='supplierbidlist.php?action=decline&id=$supplier_bid_id&id2=$bids_id&id3=$uploaded_supp_bid_file_id&id4=$users_id'>Decline</a></td>
+          <td>$status</td>
+          
         </tr>
 
       ";

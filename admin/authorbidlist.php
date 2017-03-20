@@ -52,7 +52,7 @@ if (!isset($_SESSION["manager"])) {
         $allowed_ext = array ('pdf', 'doc');
         $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
 
-        mysql_query("INSERT INTO contract (bid, user_id, type, validity) VALUES ('$bids_id', '$users_id', 'author', '$expiry')");
+        mysql_query("INSERT INTO contract (bid, user_id, type, validity, active) VALUES ('$bids_id', '$users_id', 'author', '$expiry', 1)");
 
         mysql_query("UPDATE bids SET active=0 WHERE id=$bids_id");
         mysql_query("UPDATE uploaded_bid_file SET active=0 WHERE bid_id=$bids_id");

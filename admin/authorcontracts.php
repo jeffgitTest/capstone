@@ -51,7 +51,7 @@ if (!isset($_SESSION["manager"])) {
         $allowed_ext = array ('pdf', 'doc');
         $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
 
-        mysql_query("INSERT INTO contract (bid, user_id, type, validity, active) VALUES ('$bids_id', '$users_id', 'supplier', '$expiry', 1)");
+        mysql_query("INSERT INTO contract (bid, user_id, type, validity) VALUES ('$bids_id', '$users_id', 'supplier', '$expiry')");
 
         mysql_query("UPDATE bids SET active=0 WHERE id=$bids_id");
         mysql_query("UPDATE uploaded_supp_bid_file SET active=0 WHERE bid_id=$bids_id");
@@ -71,7 +71,7 @@ if (!isset($_SESSION["manager"])) {
            }
          }
 
-         mysql_query("INSERT INTO supplies (bid_id, supplier_id, product_name, details, price, active) VALUES ('$bids_id', '$supplier_bid_id', '$productname', '$details', '$price', 1)");
+         mysql_query("INSERT INTO supplies (bid_id, supplier_id, product_name, details, price, active) VALUES ('$bids_id', '$supplier_bid_id', '$productname', '$details' '$price', 1)");
 
         move_uploaded_file($file_temp, 'contracts/' . $file_name);
 
