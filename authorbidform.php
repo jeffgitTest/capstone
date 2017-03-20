@@ -115,17 +115,21 @@
 
   <?php
 
-  $sql = mysql_query("SELECT author_bid . * , users . * , uploaded_bid_file . * 
+  $sql = mysql_query("SELECT author_bid.id as author_bid_id, author_bid. * , bids.id as bids_id, bids . *, uploaded_bid_file.id as uploaded_bid_file_id,  uploaded_bid_file.*, users.id as users_id, users.*
 FROM author_bid
-INNER JOIN users ON author_bid.author_id = users.id
-INNER JOIN uploaded_bid_file ON users.id = uploaded_bid_file.author_id
-WHERE users.user_type =2 AND users.id=" . $userid);
+INNER JOIN bids ON bids.id = author_bid.bid_id
+INNER JOIN users ON author_bid.author_id=users.id
+INNER JOIN uploaded_bid_file ON uploaded_bid_file.bid_id=bids.id WHERE users.user_type=2 AND users.id=" . $userid);
   $requestCount = mysql_num_rows($sql);
 
   if ($requestCount > 0) {
      while ($row = mysql_fetch_array($sql)) {
 
-      $id = $row['id']; 
+      $author_bid_id = $row['author_bid_id'];
+      $bids_id = $row['bids_id'];
+      $uploaded_bid_file_id = $row['uploaded_bid_file_id'];
+      $users_id = $row['users_id'];
+
       $fname = $row['fname'];
       $lname = $row['lname'];
       $coauthor = $row['co_author'];
@@ -135,7 +139,9 @@ WHERE users.user_type =2 AND users.id=" . $userid);
       $price = $row['projected_price'];
       $filename = $row['file_name'];
       $date = $row['created_date'];
-      $status = ($row['status'] == '0' ? 'Pending' : 'Completed');
+      $status = ($row['status'] == '0' ? 'Pending' : 'Approved');
+
+      $disabled = ($status == 'Approved') ? '' : 'disabled';
       
 
       echo "
@@ -148,7 +154,11 @@ WHERE users.user_type =2 AND users.id=" . $userid);
           <td>$price</td>
           <td>$date</td>
           <td>$status</td>
-          <td><a href='#' disabled>View Contract</a></td>
+          <td>
+			<form action='showcontract.php?id=$bids_id'>
+				<input type='submit' value='View Contract' $disabled />
+			</form>
+          </td>
         </tr>
 
       ";
