@@ -19,6 +19,27 @@
 			//header("Location:login.php");
 		//	exit();
 			}
+
+			function getContractFileName($contractId) {
+
+				$filename = "";
+
+				$sql = mysql_query("SELECT * FROM  uploaded_contract_file WHERE contract_id=$contractId");
+
+				$requestCount = mysql_num_rows($sql);
+
+				  if ($requestCount > 0) {
+				     while ($row = mysql_fetch_array($sql)) {
+
+				     	$filename = $row['file_name'];
+
+				   }
+				}
+
+				return $filename;
+
+			}
+			
 ?>
 
 <!DOCTYPE html>
@@ -82,6 +103,87 @@
 			</div>
 		</fieldset>
 		</form>
+
+
+		<hr class="bg-magenta">
+
+		<div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+    <th>Name</th>
+    <th>Product</th>
+    <th>Details</th>
+    <th>Price</th>
+    <th>Date</th>
+    <th>Status</th>
+    <th>Contract</th>
+  </thead>
+
+  <?php
+
+  $sql = mysql_query("SELECT supplier_bid.id as supplier_bid_id, supplier_bid. * , bids.id as bids_id, bids . *, uploaded_supp_bid_file.id as uploaded_supp_bid_file_id,  uploaded_supp_bid_file.*, users.id as users_id, users.*
+FROM supplier_bid
+INNER JOIN bids ON bids.id = supplier_bid.bid_id
+INNER JOIN users ON supplier_bid.supplier_id=users.id
+INNER JOIN uploaded_supp_bid_file ON uploaded_supp_bid_file.bid_id=bids.id WHERE users.user_type=3 AND users.id=" . $userid);
+  $requestCount = mysql_num_rows($sql);
+
+  if ($requestCount > 0) {
+     while ($row = mysql_fetch_array($sql)) {
+
+      $author_bid_id = $row['supplier_bid_id'];
+      $bids_id = $row['bids_id'];
+      $uploaded_bid_file_id = $row['uploaded_supp_bid_file_id'];
+      $users_id = $row['users_id'];
+
+      $fname = $row['fname'];
+      $lname = $row['lname'];
+      $product = $row['product_bid'];
+      $detail = $row['details'];
+      $price = $row['price'];
+      $filename = $row['file_name'];
+      $date = $row['created_date'];
+      $status = ($row['status'] == '0' ? 'Pending' : 'Approved');
+
+      $disabled = ($status == 'Approved') ? '' : 'disabled';
+
+      $contractfilename = "";
+
+      if ($status == 'Approved') {
+      	$contractfilename = getContractFileName($bids_id);
+      }
+      
+
+      echo "
+        <tr>
+          <td>$fname $lname</td>
+          <td>$product</td>
+          <td>$detail</td>
+          <td>".number_format($price, 2, '.', ',')."</td>
+          <td>$date</td>
+          <td>$status</td>
+          <td>
+			<form action='showcontract.php' method='post'>
+
+				<input type='hidden' name='id' value='$bids_id' />
+				<input type='hidden' name='filename' value='$contractfilename' />
+
+				<input type='submit' name='submit' value='View Contract' $disabled />
+			</form>
+          </td>
+        </tr>
+
+      ";
+
+
+     }
+  }
+
+   ?>
+
+      </table>
+    </div>
+
 
 		<script type="text/javascript" src="js/jquery-2.1.3.min.js"></script>
 

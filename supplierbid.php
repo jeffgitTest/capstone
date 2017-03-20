@@ -70,28 +70,15 @@
 
     $file_id = 0;
 
-	$bidid = 0;
+	$bidid = insert_bid('supplier');
 
-	$sql = mysql_query("INSERT INTO supplier_bid (supplier_id, product_bid, details, price, status) VALUES ('$supplierid', '$name', '$details', '$price', '0')");
+	$sql = mysql_query("INSERT INTO supplier_bid (bid_id, supplier_id, product_bid, details, price, status) VALUES ('$bidid', '$supplierid', '$name', '$details', '$price', 0)");
 
 	$file_id = mysql_insert_id();
 	$file = $file_name;
 	move_uploaded_file($file_temp, 'admin/bids/' . $file);
 
-	$sql = mysql_query("INSERT INTO uploaded_supp_bid_file (supplier_id, file_name, ext) VALUES ('$supplierid', '$file_name', '$file_ext')");
-
-	$sql = mysql_query("SELECT * FROM supplier_bid ORDER BY id DESC LIMIT 1") or die('Error supplier_bid');
-	$requestCount = mysql_num_rows($sql);
-
-	if ($requestCount > 0) {
-		while ($row = mysql_fetch_array($sql)) {
-			
-			$bidid = $row['id'];
-
-		}
-	}
-
-	insert_bid($bidid, 'supplier');
+	$sql = mysql_query("INSERT INTO uploaded_supp_bid_file (bid_id, supplier_id, file_name, ext, active) VALUES ('$bidid', '$supplierid', '$file_name', '$file_ext', 1)");
 
 	echo "<h4>Supplier bid successfully sent! Please wait for admin approval.</h3>";
 
