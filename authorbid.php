@@ -72,7 +72,7 @@
 
     $file_id = 0;
 
-	$bidid = insert_bid('author');;
+	$bidid = insert_bid('author');
 
 	$sql = mysql_query("INSERT INTO author_bid (bid_id, title, details, co_author, author_id, genre, projected_price, status) VALUES ('$bidid', '$title', '$details', '', '$authorid', '$genre', '$price', '0')") or die('Error author_bid');
 
@@ -81,7 +81,7 @@
 	$file = $file_name;
 	move_uploaded_file($file_temp, 'admin/bids/' . $file);
 
-	$sql = mysql_query("INSERT INTO uploaded_bid_file (bid_id, author_id, file_name, ext) VALUES ('$bidid', '$authorid', '$file_name', '$file_ext')");
+	$sql = mysql_query("INSERT INTO uploaded_bid_file (bid_id, author_id, file_name, ext, active) VALUES ('$bidid', '$authorid', '$file_name', '$file_ext', 1)");
 
 	echo "<h4>Author bid successfully sent! Please wait for admin approval.</h3>";
 

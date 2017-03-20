@@ -176,7 +176,7 @@ INNER JOIN uploaded_bid_file ON uploaded_bid_file.bid_id=bids.id WHERE users.use
           <td><a href='viewuploadedbid.php?filename=$filename'>$filename</a></td>
           <td>$date</td>
           <td>$status</td>
-          <td><a href='uploadcontract.php?action=accept&id=$author_bid_id&id2=$bids_id&id3=$uploaded_bid_file_id&id4=$users_id'>Accept</a> | <a href='authorbidlist.php?action=decline&id=$author_bid_id&id2=$bids_id&id3=$uploaded_bid_file_id&id4=$users_id'>Decline</a></td>
+          <td><a href='uploadcontract.php?type=author&id=$author_bid_id&id2=$bids_id&id3=$uploaded_bid_file_id&id4=$users_id'>Accept</a> | <a href='authorbidlist.php?action=decline&id=$author_bid_id&id2=$bids_id&id3=$uploaded_bid_file_id&id4=$users_id'>Decline</a></td>
         </tr>
 
       ";
