@@ -50,6 +50,12 @@ if (!isset($_SESSION["manager"])) {
 
   <body>
 
+  <?php 
+
+  $filename = $_GET['filename'];
+
+   ?>
+
     <div id="wrapper">
   <!-- Sidebar -->
       <nav class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
@@ -57,58 +63,12 @@ if (!isset($_SESSION["manager"])) {
     <?php include 'template/top.php';?>
     </nav>
 
-    <div class="table-responsive">
-      <table class="table table-striped">
-        <thead>
-    <th>Name</th>
-    <th>Product</th>
-    <th>Details</th>
-    <th>Price</th>
-    <th>Proposal file name</th>
-    <th>Date</th>
-  </thead>
-
-  <?php
-
-  $sql = mysql_query("SELECT supplier_bid.*, users.*, uploaded_supp_bid_file.* from supplier_bid inner join users on supplier_bid.supplier_id=users.id inner join 
-uploaded_supp_bid_file on users.id=uploaded_supp_bid_file.supplier_id where users.user_type=3");
-  $requestCount = mysql_num_rows($sql);
-
-  if ($requestCount > 0) {
-     while ($row = mysql_fetch_array($sql)) {
-
-      $id = $row['id']; 
-      $fname = $row['fname'];
-      $lname = $row['lname'];
-      $product = $row['product_bid'];
-      $detail = $row['details'];
-      $price = $row['price'];
-      $filename = $row['file_name'];
-      $date = $row['created_date'];
-      
-
-      echo "
-        <tr>
-          <td>$fname $lname</td>
-          <td>$product</td>
-          <td>$detail</td>
-          <td>".number_format($price, 2, '.', ',')."</td>
-          <td><a href='viewuploadedbid.php?filename=$filename'>$filename</a></td>
-          <td>$date</td>
-          <td><a href=''>Accept</a> | <a href=''>Decline</a></td>
-        </tr>
-
-      ";
-
-
-     }
-  }
-
-   ?>
-
-      </table>
+    <div style="height: 700px;">
+      <embed src="loadfile.php?filename=<?php echo $filename; ?>" width="100%" height="100%"></embed>
     </div>
 
     </div>
     </body>
     </html>
+
+

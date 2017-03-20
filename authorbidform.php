@@ -83,7 +83,7 @@
 					<div class="form-group">
 						<div class="input-control">
 							<label for="product-name">Attachment (.PDF, .DOC):</label>
-							<input type="file" id="file" name="file" class="input-control" required="required" multiple />
+							<input type="file" id="file" accept=".pdf" name="file" class="input-control" required="required" multiple />
 						</div>
 					</div>
 					<br/>
@@ -96,6 +96,71 @@
 			</div>
 		</fieldset>
 		</form>
+
+		<hr class="bg-magenta">
+
+		<div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+    <th>Author</th>
+    <th>Co-author</th>
+    <th>Title</th>
+    <th>Details</th>
+    <th>Genre</th>
+    <th>Price</th>
+    <th>Date</th>
+    <th>Status</th>
+    <th>Contract</th>
+  </thead>
+
+  <?php
+
+  $sql = mysql_query("SELECT author_bid . * , users . * , uploaded_bid_file . * 
+FROM author_bid
+INNER JOIN users ON author_bid.author_id = users.id
+INNER JOIN uploaded_bid_file ON users.id = uploaded_bid_file.author_id
+WHERE users.user_type =2 AND users.id=" . $userid);
+  $requestCount = mysql_num_rows($sql);
+
+  if ($requestCount > 0) {
+     while ($row = mysql_fetch_array($sql)) {
+
+      $id = $row['id']; 
+      $fname = $row['fname'];
+      $lname = $row['lname'];
+      $coauthor = $row['co_author'];
+      $title = $row['title'];
+      $details = $row['details'];
+      $genre = $row['genre'];
+      $price = $row['projected_price'];
+      $filename = $row['file_name'];
+      $date = $row['created_date'];
+      $status = ($row['status'] == '0' ? 'Pending' : 'Completed');
+      
+
+      echo "
+        <tr>
+          <td>$fname $lname</td>
+          <td>$coauthor</td>
+          <td>$title</td>
+          <td>$details</td>
+          <td>$genre</td>
+          <td>$price</td>
+          <td>$date</td>
+          <td>$status</td>
+          <td><a href='#' disabled>View Contract</a></td>
+        </tr>
+
+      ";
+
+
+     }
+  }
+
+   ?>
+
+      </table>
+    </div>
 
 		<script type="text/javascript" src="js/jquery-2.1.3.min.js"></script>
 

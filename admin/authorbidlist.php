@@ -29,6 +29,7 @@ if (!isset($_SESSION["manager"])) {
       //header("Location:login.php");
     //  exit();
       }
+
       ?>
 
 <!DOCTYPE html>
@@ -68,6 +69,8 @@ if (!isset($_SESSION["manager"])) {
     <th>Price</th>
     <th>Proposal file name</th>
     <th>Date</th>
+    <th>Action</th>
+    <th>Status</th>
   </thead>
 
   <?php
@@ -92,6 +95,7 @@ WHERE users.user_type =2");
       $price = $row['projected_price'];
       $filename = $row['file_name'];
       $date = $row['created_date'];
+      $status = ($row['status'] == '0' ? 'Pending' : 'Completed');
       
 
       echo "
@@ -102,8 +106,10 @@ WHERE users.user_type =2");
           <td>$details</td>
           <td>$genre</td>
           <td>$price</td>
-          <td>$filename</td>
+          <td><a href='viewuploadedbid.php?filename=$filename'>$filename</a></td>
           <td>$date</td>
+          <td>$status</td>
+          <td><a href=''>Accept</a> | <a href=''>Decline</a></td>
         </tr>
 
       ";
