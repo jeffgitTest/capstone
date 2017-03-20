@@ -19,6 +19,28 @@
 			//header("Location:login.php");
 		//	exit();
 			}
+
+
+			function getContractFileName($contractId) {
+
+				$filename = "";
+
+				$sql = mysql_query("SELECT * FROM  uploaded_contract_file WHERE contract_id=$contractId");
+
+				$requestCount = mysql_num_rows($sql);
+
+				  if ($requestCount > 0) {
+				     while ($row = mysql_fetch_array($sql)) {
+
+				     	$filename = $row['file_name'];
+
+				   }
+				}
+
+				return $filename;
+
+			}
+
 ?>
 
 <!DOCTYPE html>
@@ -142,6 +164,12 @@ INNER JOIN uploaded_bid_file ON uploaded_bid_file.bid_id=bids.id WHERE users.use
       $status = ($row['status'] == '0' ? 'Pending' : 'Approved');
 
       $disabled = ($status == 'Approved') ? '' : 'disabled';
+
+      $contractfilename = "";
+
+      if ($status == 'Approved') {
+      	$contractfilename = getContractFileName($bids_id);
+      }
       
 
       echo "
@@ -155,8 +183,12 @@ INNER JOIN uploaded_bid_file ON uploaded_bid_file.bid_id=bids.id WHERE users.use
           <td>$date</td>
           <td>$status</td>
           <td>
-			<form action='showcontract.php?id=$bids_id'>
-				<input type='submit' value='View Contract' $disabled />
+			<form action='showcontract.php' method='post'>
+
+				<input type='hidden' name='id' value='$bids_id' />
+				<input type='hidden' name='filename' value='$contractfilename' />
+
+				<input type='submit' name='submit' value='View Contract' $disabled />
 			</form>
           </td>
         </tr>
