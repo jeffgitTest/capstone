@@ -35,6 +35,9 @@ if (!isset($_SESSION["manager"])) {
       $id3 = $_GET['id3'];
       $id4 = $_GET['id4'];
 
+      $type = ($_GET['type'] == 'author') ? 'Author' : 'Supplier';
+      $action = ($type == 'Author') ? 'authorbidlist.php' : 'supplierbidlist.php';
+
       ?>
 
 <!DOCTYPE html>
@@ -79,7 +82,7 @@ if (!isset($_SESSION["manager"])) {
     </nav>
 
     	
-    	<form action="authorbidlist.php" method="post" enctype="multipart/form-data" style="margin-top: 69px;">
+    	<form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" style="margin-top: 69px;">
 
 		<input type="hidden" name="id" value="<?php echo $id; ?>">
 		<input type="hidden" name="id2" value="<?php echo $id2; ?>">
@@ -90,7 +93,7 @@ if (!isset($_SESSION["manager"])) {
 			 <div class="row row2">
 			 	<div class="cell cell2">
 		
-					<h4>Author Bid Approval Form</h4>
+					<h4><?php echo $type; ?> Bid Approval Form</h4>
 					 <hr class="bg-magenta">
 					 		 <br/>
 					

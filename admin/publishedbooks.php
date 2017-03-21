@@ -1,24 +1,33 @@
 <?php
-		include 'include/check_login.php';
-	  	include 'include/connectdb.php';
-		$userid="";
-			if (loggedin())
-			{
-				$query = mysql_query("SELECT * FROM users WHERE usn='$_SESSION[username]' ");
-					while ($row = mysql_fetch_assoc($query))
-					{
-						$userid = $row ['id'];
-						$usn = $row ['usn'];
-						$fname = $row ['fname'];
-					
-					}
-				
-				}
-			else
-			{	
-			//header("Location:login.php");
-		//	exit();
-			}
+include '../include/connectdb.php';
+  include 'include/check_login.php';
+if (!isset($_SESSION["manager"])) {
+    header("location: login.php"); 
+    exit();
+  
+  
+  
+}?>
+
+<?php
+		$username="";
+      if (loggedin())
+      {
+        $query = mysql_query("SELECT * FROM admin WHERE username ='$_SESSION[manager]' ");
+          while ($row = mysql_fetch_assoc($query))
+          {
+            $userid = $row ['id'];
+            $username = $row ['username'];
+            
+          
+          }
+        
+        }
+      else
+      { 
+      //header("Location:login.php");
+    //  exit();
+      }
 ?>
 
 
@@ -27,7 +36,7 @@
 <head>
 	<meta charset="UTF-8">
 
-	<title>Bid Portal</title>
+	<title>Administrator</title>
 
 	<link href="css/bootstrap.css" rel="stylesheet">
 
@@ -38,9 +47,12 @@
 </head>
 <body>
 
-	<?php include 'template/top.php'; ?>
-
-    <?php include 'template/header.php'; ?>
+	<div id="wrapper">
+	<!-- Sidebar -->
+      <nav class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+      <?php include 'template/sidebar.php';?>
+    <?php include 'template/top.php';?>
+    </nav>
 	
 		<div class="table-responsive">
     <h4><b>Published Books</b></h4>
@@ -60,7 +72,7 @@
 			$sql = mysql_query("SELECT products.product_name, users . * , LEFT(products.details, 20) AS details, products.date_added
 FROM products
 INNER JOIN users ON products.author_id = users.id
-AND users.user_type =2 AND users.id =" . $_SESSION['user_id']);
+AND users.user_type =2");
 		  $requestCount = mysql_num_rows($sql);
 
 		  if ($requestCount > 0) {
@@ -91,6 +103,7 @@ AND users.user_type =2 AND users.id =" . $_SESSION['user_id']);
 	</tbody>
 
       </table>
+    </div>
     </div>
 
 		<script type="text/javascript" src="js/jquery-2.1.3.min.js"></script>

@@ -52,7 +52,7 @@ if (!isset($_SESSION["manager"])) {
         $allowed_ext = array ('pdf', 'doc');
         $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
 
-        mysql_query("INSERT INTO contract (bid, user_id, type, validity) VALUES ('$bids_id', '$users_id', 'author', '$expiry')");
+        mysql_query("INSERT INTO contract (bid, user_id, type, validity, active) VALUES ('$bids_id', '$users_id', 'author', '$expiry', 1)");
 
         mysql_query("UPDATE bids SET active=0 WHERE id=$bids_id");
         mysql_query("UPDATE uploaded_bid_file SET active=0 WHERE bid_id=$bids_id");
@@ -72,6 +72,10 @@ if (!isset($_SESSION["manager"])) {
          }
 
          mysql_query("INSERT INTO products (author_id, product_name, price, details, stock, category, sub_category, status, ext) VALUES ('$users_id', '$title', '$price', '', '$initialProductStock', '', '', 'unactive', 'png')");
+
+         $imageid = mysql_insert_id();
+
+         mysql_query("INSERT INTO product_history VALUES('', '$imageid', '$initialProductStock', now())");
 
         move_uploaded_file($file_temp, 'contracts/' . $file_name);
 
@@ -176,7 +180,7 @@ INNER JOIN uploaded_bid_file ON uploaded_bid_file.bid_id=bids.id WHERE users.use
           <td><a href='viewuploadedbid.php?filename=$filename'>$filename</a></td>
           <td>$date</td>
           <td>$status</td>
-          <td><a href='uploadcontract.php?action=accept&id=$author_bid_id&id2=$bids_id&id3=$uploaded_bid_file_id&id4=$users_id'>Accept</a> | <a href='authorbidlist.php?action=decline&id=$author_bid_id&id2=$bids_id&id3=$uploaded_bid_file_id&id4=$users_id'>Decline</a></td>
+          <td><a href='uploadcontract.php?type=author&id=$author_bid_id&id2=$bids_id&id3=$uploaded_bid_file_id&id4=$users_id'>Accept</a> | <a href='authorbidlist.php?action=decline&id=$author_bid_id&id2=$bids_id&id3=$uploaded_bid_file_id&id4=$users_id'>Decline</a></td>
         </tr>
 
       ";

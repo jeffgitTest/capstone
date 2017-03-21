@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 20, 2017 at 10:29 AM
+-- Generation Time: Mar 21, 2017 at 07:18 AM
 -- Server version: 1.0.110
 -- PHP Version: 5.3.10
 
@@ -79,16 +79,14 @@ CREATE TABLE IF NOT EXISTS `author_bid` (
   `status` varchar(19) DEFAULT NULL,
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=39 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `author_bid`
 --
 
 INSERT INTO `author_bid` (`id`, `bid_id`, `title`, `details`, `co_author`, `author_id`, `genre`, `projected_price`, `status`, `created_date`) VALUES
-(36, 46, '1111', '111', '', 6, '11', '1111', '1', '2017-03-19 12:19:44'),
-(37, 47, '2222', '222', '', 6, '222', '2222', '1', '2017-03-19 12:20:05'),
-(38, 48, '333', '333', '', 6, '333', '333', '0', '2017-03-20 03:33:20');
+(1, 1, 'Neil Life', 'Life of neil', '', 6, 'Comedy', '500', '1', '2017-03-21 07:16:08');
 
 -- --------------------------------------------------------
 
@@ -102,16 +100,14 @@ CREATE TABLE IF NOT EXISTS `bids` (
   `active` int(11) NOT NULL,
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=49 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `bids`
 --
 
 INSERT INTO `bids` (`id`, `type`, `active`, `created_date`) VALUES
-(46, 'author', 0, '2017-03-20 06:50:09'),
-(47, 'author', 0, '2017-03-19 12:20:05'),
-(48, 'author', 1, '2017-03-20 03:33:19');
+(1, 'author', 0, '2017-03-21 07:16:07');
 
 -- --------------------------------------------------------
 
@@ -192,19 +188,17 @@ CREATE TABLE IF NOT EXISTS `contract` (
   `user_id` int(11) NOT NULL,
   `type` varchar(20) NOT NULL,
   `validity` varchar(10) NOT NULL,
+  `active` int(11) NOT NULL,
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `contract`
 --
 
-INSERT INTO `contract` (`id`, `bid`, `user_id`, `type`, `validity`, `created_date`) VALUES
-(3, 46, 6, 'author', '03/22/2017', '2017-03-20 07:00:49'),
-(4, 46, 6, 'author', '03/31/2017', '2017-03-20 07:05:34'),
-(5, 47, 6, 'author', '03/31/2017', '2017-03-20 07:26:09'),
-(6, 46, 6, 'author', '05/31/2017', '2017-03-20 09:43:24');
+INSERT INTO `contract` (`id`, `bid`, `user_id`, `type`, `validity`, `active`, `created_date`) VALUES
+(1, 1, 6, 'author', '03/31/2017', 1, '2017-03-21 07:16:32');
 
 -- --------------------------------------------------------
 
@@ -350,18 +344,14 @@ CREATE TABLE IF NOT EXISTS `products` (
   `date_added` date NOT NULL,
   `ext` varchar(4) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `products`
 --
 
 INSERT INTO `products` (`id`, `author_id`, `product_name`, `price`, `details`, `stock`, `category`, `sub_category`, `status`, `timestamp`, `date_added`, `ext`) VALUES
-(9, 1, 'Essential Statistics', '550', 'There are so many books about statistics out there written both by local and foreign authors. So why come up with yet another one? This book makes use of the same format adopted for an earlier, similar book in Algebra found useful by many students and teachers. It utilizes step-by-step procedures, includes lots of exercises, and worksheets, offers opportunities for student reflection and real-world connections, highlights the use of technology-based tools, requires student projects, presents chapter highlights, and provides students preparatory materials for major examinations.. It also has materials on integrating student portfolios and learning papers into the course.', 100, '24', ' J. Gonzales, Â R. Nocon', 'active', '2017-02-11', '2017-02-11', 'png'),
-(10, 1, 'Practical Approach to Information Communication Technology (ICT)', '123', 'SAMPLE DESCRIPTION', 115, '25', 'Erika S. Farshid Mehr,  Frederic D. Yulo', 'active', '2017-02-15', '2017-02-15', 'png'),
-(11, 6, 'Basic Marketing', '50', 'The marketing world today is very much different from it was years ago. Today, market enterprises use modem communication technologies such as email, fax machines, Internet. World Wide Web in their marketing transactions to help making them cross boundaries with ease_ With globalization and applications of quantitative tools in marketing as the trend, modern marketing managers, marketing instructors and students have to equip themselves with modem know- how of the basic principles of marketing for them to meet the challenges in this rapid changing world of marketing.', 223, '23', ' J. Gonzales, Â R. Nocon', 'unactive', '2017-02-15', '2017-02-15', 'png'),
-(12, 6, '2222', '2222', '', 50, '', '', 'unactive', '', '0000-00-00', 'png'),
-(13, 6, '1111', '1111', '', 50, '', '', 'unactive', '', '0000-00-00', 'png');
+(1, 6, 'Neil Life', '500.00', '', 50, '26', ' J. Gonzales, Â R. Nocon', 'active', '2017-03-21', '0000-00-00', 'png');
 
 -- --------------------------------------------------------
 
@@ -375,17 +365,14 @@ CREATE TABLE IF NOT EXISTS `product_history` (
   `qty_added` int(11) NOT NULL,
   `date` date NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `product_history`
 --
 
 INSERT INTO `product_history` (`id`, `pid`, `qty_added`, `date`) VALUES
-(1, 13, 100, '2017-03-10'),
-(2, 13, 20, '2017-03-15'),
-(3, 13, -5, '2017-03-15'),
-(4, 13, -20, '2017-03-15');
+(1, 1, 50, '2017-03-21');
 
 -- --------------------------------------------------------
 
@@ -449,13 +436,33 @@ INSERT INTO `supplier` (`id`, `name`, `product`, `contract`, `valid_until`) VALU
 
 CREATE TABLE IF NOT EXISTS `supplier_bid` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `bid_id` int(11) NOT NULL,
   `supplier_id` int(11) NOT NULL,
   `product_bid` varchar(255) NOT NULL,
   `details` varchar(255) NOT NULL,
   `price` varchar(255) NOT NULL,
+  `status` int(11) NOT NULL,
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `supplies`
+--
+
+CREATE TABLE IF NOT EXISTS `supplies` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `bid_id` int(11) NOT NULL,
+  `supplier_id` int(11) NOT NULL,
+  `product_name` varchar(255) NOT NULL,
+  `details` varchar(255) NOT NULL,
+  `price` varchar(255) NOT NULL,
+  `active` int(11) NOT NULL,
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -521,16 +528,14 @@ CREATE TABLE IF NOT EXISTS `uploaded_bid_file` (
   `active` int(11) NOT NULL,
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=37 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `uploaded_bid_file`
 --
 
 INSERT INTO `uploaded_bid_file` (`id`, `bid_id`, `author_id`, `file_name`, `ext`, `active`, `created_date`) VALUES
-(34, 46, 6, 'Practical Exam.pdf', 'pdf', 0, '2017-03-20 06:52:53'),
-(35, 47, 6, '10266.pdf', 'pdf', 0, '2017-03-19 12:20:05'),
-(36, 48, 6, '26995711901-539067804-ticket.pdf', 'pdf', 1, '2017-03-20 03:33:20');
+(1, 1, 6, '26995711901-539067804-ticket.pdf', 'pdf', 0, '2017-03-21 07:16:08');
 
 -- --------------------------------------------------------
 
@@ -545,15 +550,14 @@ CREATE TABLE IF NOT EXISTS `uploaded_contract_file` (
   `ext` varchar(10) NOT NULL,
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `uploaded_contract_file`
 --
 
 INSERT INTO `uploaded_contract_file` (`id`, `contract_id`, `file_name`, `ext`, `created_date`) VALUES
-(2, 47, ' 26995711901-539067804-ticket.pdf', 'pdf', '2017-03-20 07:26:09'),
-(3, 46, ' sschaub_java-fundamentals.pdf', 'pdf', '2017-03-20 09:43:24');
+(1, 1, ' sschaub_java-fundamentals.pdf', 'pdf', '2017-03-21 07:16:33');
 
 -- --------------------------------------------------------
 
@@ -563,13 +567,14 @@ INSERT INTO `uploaded_contract_file` (`id`, `contract_id`, `file_name`, `ext`, `
 
 CREATE TABLE IF NOT EXISTS `uploaded_supp_bid_file` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `bid_id` int(11) NOT NULL,
   `supplier_id` int(11) NOT NULL,
   `file_name` varchar(255) NOT NULL,
   `ext` varchar(10) NOT NULL,
+  `active` int(11) NOT NULL,
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `bid_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
