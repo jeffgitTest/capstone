@@ -150,7 +150,7 @@
 $dbhost = 'localhost';
 $dbuser = 'root';
 $dbpass = '';
-$dbname = 'capstone504db';
+$dbname = 'capstone';
 
 function backup_tables($host,$user,$pass,$name,$tables = '*')
 {

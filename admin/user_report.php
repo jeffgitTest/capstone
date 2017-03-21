@@ -81,28 +81,22 @@ if (!isset($_SESSION["manager"])) {
 
       <!-- Sidebar -->
       <nav class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
-      <?php include 'template/sidebar.php'?>
-		<?php include 'template/top.php'?>
+      <?php include 'template/sidebar.php';?>
+		<?php include 'template/top.php';?>
       </nav>
 
       <div id="page-wrapper">
 
         <div class="row">
           <div class="col-lg-12">
-            <h1>Reports <small></small></h1>
-            <div class="col-lg-10 pull-right" style="margin-top:-40px;">
-            <form action="" method="post"><label for="from">From</label>
-			<input type="text" id="from" name="date2" />
-			<label for="to">To</label>
-			<input type="text" id="to" name="date1" /> 
-			<input type="submit" name="submit" class="btn btn-primary" value="filter"/> </form>
-
-
-
-
-
-
-</div>
+            <h1>SALES REPORT OVERVIEW <small></small></h1>
+            <div class="col-lg-6 pull-right" style="margin-top:-40px;">
+              <form action="" method="post"><label for="from">From</label>
+			         <input type="text" id="from" name="date2" />
+			         <label for="to">To</label>
+			         <input type="text" id="to" name="date1" /> 
+			         <input type="submit" name="submit" class="btn btn-primary" value="filter"/> </form>
+            </div>
 
 
            <hr>
@@ -110,7 +104,6 @@ if (!isset($_SESSION["manager"])) {
         </div><!-- /.row -->
 
        <div class="row">
-       <h3>SALES REPORT SUMMARY</h3>
 	   <!------------------------------------------------------------------------------------>
 <?php
 //For end date
@@ -248,116 +241,6 @@ else {
 	$outofstock = mysql_num_rows($sql); // Counting the database product out of stock
 	
 	?>
-	    <div class="row">
-          <div class="col-lg-3">
-            <div class="panel panel-info">
-              <div class="panel-heading">
-                <div class="row">
-                  <div class="col-xs-6">
-                    <i class="fa fa-comments fa-5x"></i>
-                  </div>
-                  <div class="col-xs-6 text-right">
-                    <p class="announcement-heading">&#8369;<?php echo $todaySales?></p>
-                    <p class="announcement-text">Today  Sales</p>
-                  </div>
-                </div>
-              </div>
-              <a href="#">
-                <div class="panel-footer announcement-bottom">
-                  <div class="row">
-                    <div class="col-xs-6">
-                      Transactions <?php echo $tCount2?>
-                    </div>
-                    <div class="col-xs-6 text-right">
-                      <i class="fa fa-arrow-circle-right"></i>
-                    </div>
-                  </div>
-                </div>
-              </a>
-            </div>
-          </div>
-          <div class="col-lg-3">
-            <div class="panel panel-warning">
-              <div class="panel-heading">
-                <div class="row">
-                  <div class="col-xs-6">
-                    <i class="fa fa-check fa-5x"></i>
-                  </div>
-                  <div class="col-xs-6 text-right">
-                    <p class="announcement-heading">&#8369;<?php echo $weekSales?></p>
-                    <p class="announcement-text">Week  Sales</p>
-                  </div>
-                </div>
-              </div>
-              <a href="#">
-                <div class="panel-footer announcement-bottom">
-                  <div class="row">
-                    <div class="col-xs-6">
-                      Transactions <?php echo $weekely?>
-                    </div>
-                    <div class="col-xs-6 text-right">
-                      <i class="fa fa-arrow-circle-right"></i>
-                    </div>
-                  </div>
-                </div>
-              </a>
-            </div>
-          </div>
-          <div class="col-lg-3">
-            <div class="panel panel-danger">
-              <div class="panel-heading">
-                <div class="row">
-                  <div class="col-xs-6">
-                    <i class="fa fa-tasks fa-5x"></i>
-                  </div>
-                  <div class="col-xs-6 text-right">
-                    <p class="announcement-heading">&#8369;<?php echo $msales?></p>
-                    <p class="announcement-text">Month  Sales</p>
-                  </div>
-                </div>
-              </div>
-              <a href="#">
-                <div class="panel-footer announcement-bottom">
-                  <div class="row">
-                    <div class="col-xs-6">
-                     Transactions <?php echo $tmonth  ?>                   </div>
-                    <div class="col-xs-6 text-right">
-                      <i class="fa fa-arrow-circle-right"></i>
-                    </div>
-                  </div>
-                </div>
-              </a>
-            </div>
-          </div>
-          <div class="col-lg-3">
-            <div class="panel panel-success">
-              <div class="panel-heading">
-                <div class="row">
-                  <div class="col-xs-6">
-                    <i class="fa fa-comments fa-5x"></i>
-                  </div>
-                  <div class="col-xs-6 text-right">
-                    <p class="announcement-heading">&#8369;<?php echo $msales?></p>
-                    <p class="announcement-text">Total Sales!</p>
-                  </div>
-                </div>
-              </div>
-              <a href="#">
-                <div class="panel-footer announcement-bottom">
-                  <div class="row">
-                    <div class="col-xs-6">
-                     Transactions <?php echo $transactions ?>
-                    </div>
-                    <div class="col-xs-6 text-right">
-                      <i class="fa fa-arrow-circle-right"></i>
-                    </div>
-                  </div>
-                </div>
-              </a>
-            </div>
-          </div>
-        </div><!-- /.row -->
-	   <!------------------------------------------------------------------------------------>
        <?php
 $output = '';
 $dialog = "";
@@ -431,7 +314,7 @@ else
     //Initial output pag vinisit ang report page
     //Generates report grouped by day
     $perday= mysql_query("SELECT sum(mc_gross), sum(mc_fee), day, month, year, product_id_array, COUNT(day) FROM transactions   WHERE (month>='$smonth' and month<='$emonth') and (year>='$syear' and year<='$eyear') 
-            and (day>=$sday or day<=$eday)GROUP BY day ORDER BY id DESC limit 5");
+            and (day>=$sday or day<=$eday)GROUP BY day ORDER BY id DESC");
 
     if (mysql_num_rows($perday)==0){
         $dialog = '<div class="alert alert-error">No data found</div>';
@@ -464,92 +347,8 @@ else
     }
 }
 ?>
-<div class="table-responsive">
-<table class="table table-striped">
-          <thead>
-  <tr>
-    <th>Date</th>
-   <th>Number of Orders</th>
-   <th>Payment Gross</th>
-   <th>Paypal Fee</th>
-   <th>Total Payment</th>
-    
-  </tr>
-  </thead>
- <?php echo $output; ?>
-
-</table>
- </div>  
-  
-       <h3>SALES REPORT OVERVIEW</h3>
-       <div class="row">
-            <div class="col-lg-10">
-              <button onclick="window.location='excel_download.php?sales_rep=print'" target="_blank" class="btn btn-default">Download</button>
-           </div>
-           <div class="col-lg-2 pull-right">
-              <button onclick="window.location='sales_report.php'" class="btn btn-info">View All</button>
-           </div>
-       </div>
+       
         <div class="table-responsive">
-        <table class="table table-striped">
-          <thead>
-                  
-     <th>Date</th>
-  <th>Customer name</th>
-    <th>Email</th>
-    <th>Amount PAID</th>
-	 		    </thead>
-          <tbody>
-     <?php
-
-// For Friendly printing
-$today = date("M d, Y");
-
-
-$month = date('m');
-$day = date('d');
-$year = date('Y');
-$today = date('M j, Y');
-$output = "";
-$todayQuery= mysql_query("SELECT * FROM transactions ORDER BY id");
-			
-			if (mysql_num_rows($todayQuery)==0){
-         $output .= "<tr ><td colspan='5'><div class='alert alert-warning'>No order for this date ($month/$day/$year)</div></td></tr>";
-}
-else {
-        while($row = mysql_fetch_array($todayQuery)){
-          $id = $row['id'];
-          $first_name = $row['first_name'];
-		  $last_name = $row['last_name'];
-		  $payer_email = $row['payer_email'];
-		  $mc_gross = $row['mc_gross'];
-		  $mc_fee = $row['mc_fee'];
-		  $day = $row['day'];
-          $month = $row['month'];
-          $year = $row['year'];
-		   if($mc_fee==''){
-			    $fee=3;
-			}
-			else
-			{
-				 $fee=$mc_fee;
-			}
-		  
-		   $output .= "<tr>";
-          $output .= '<td>'.$month.'/'.$day.'/'.$year.'</td>';
-          $output .= '<td>'.$first_name.' '.$last_name.'</td>';
-         $output .=   '<td> '.$payer_email.'</td>';
-         $output .= '<td> &#8369;'.$mc_gross.'</td>';
-          
- 
-        }
-}
-
- ?>
- <?php echo $output ?>
-      </tbody>
-      </table>
-      <hr />
       <?php 
  include ('../include/connectdb.php'); 
  //echo $error_dialog;
@@ -710,12 +509,12 @@ $mail->AddAddress($address, "Clothing Line Apparel");
 								
 ?>
  <h3>USERS REPORT OVERVIEW</h3>
-      <div class="row">
+        <div class="row">
             <div class="col-lg-10">
               <button onclick="window.location='excel_download.php?users_rep=print'" target="_blank" class="btn btn-default">Download</button>
            </div>
            <div class="col-lg-2 pull-right">
-              <button onclick="window.location='user_report.php'" class="btn btn-info">View All</button>
+              <button onclick="window.location='reports.php'" class="btn btn-info">BACK</button>
            </div>
        </div>
 <div class="table-responsive">
@@ -738,7 +537,7 @@ include ('../include/connectdb.php');
 ?>
   				<?php
 			
-			 $psql = mysql_query("SELECT * FROM users ORDER BY id DESC limit 5");
+			 $psql = mysql_query("SELECT * FROM users ORDER BY id DESC");
 $productCount = mysql_num_rows($psql); // count the output amount
 if ($productCount > 0) {
 	while($row = mysql_fetch_array($psql)){ 
