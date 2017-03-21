@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 20, 2017 at 05:41 PM
+-- Generation Time: Mar 21, 2017 at 02:28 AM
 -- Server version: 1.0.110
 -- PHP Version: 5.3.10
 
@@ -199,8 +199,8 @@ CREATE TABLE IF NOT EXISTS `contract` (
 --
 
 INSERT INTO `contract` (`id`, `bid`, `user_id`, `type`, `validity`, `active`, `created_date`) VALUES
-(13, 53, 6, 'author', '03/31/2017', 1, '2017-03-20 17:21:32'),
-(14, 54, 3, 'supplier', '03/31/2017', 1, '2017-03-20 17:23:24');
+(13, 53, 6, 'author', '03/31/2017', 0, '2017-03-20 17:21:32'),
+(14, 54, 3, 'supplier', '03/31/2017', 0, '2017-03-20 17:23:24');
 
 -- --------------------------------------------------------
 

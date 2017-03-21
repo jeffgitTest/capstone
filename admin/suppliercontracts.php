@@ -30,66 +30,14 @@ if (!isset($_SESSION["manager"])) {
     //  exit();
       }
 
-      // from uploadcontract
-      if (isset($_POST['submit'])) {
-        
-        $supplier_bid_id = $_POST['id'];
-        $bids_id = $_POST['id2'];
-        $uploaded_supp_bid_file_id = $_POST['id3'];
-        $users_id = $_POST['id4'];
-
-        $expiry = $_POST['expiry'];
-
-        $file_name = $_FILES['file']['name'];
-        $file_size = $_FILES['file']['size'];
-        $file_temp = $_FILES['file']['tmp_name'];
-
-        $productname = "";
-        $details = "";
-        $price = "";
-
-        $allowed_ext = array ('pdf', 'doc');
-        $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
-
-        mysql_query("INSERT INTO contract (bid, user_id, type, validity) VALUES ('$bids_id', '$users_id', 'supplier', '$expiry')");
-
-        mysql_query("UPDATE bids SET active=0 WHERE id=$bids_id");
-        mysql_query("UPDATE uploaded_supp_bid_file SET active=0 WHERE bid_id=$bids_id");
-        mysql_query("UPDATE supplier_bid SET status=1 WHERE bid_id=$bids_id");
-        mysql_query("INSERT INTO uploaded_contract_file (contract_id, file_name, ext) VALUES ('$bids_id', ' $file_name', '$file_ext')");
-
-        $sql = mysql_query("SELECT * FROM supplier_bid WHERE bid_id=$bids_id");
-        $requestCount = mysql_num_rows($sql);
-
-        if ($requestCount > 0) {
-           while ($row = mysql_fetch_array($sql)) {
-
-            $productname = $row['product_bid'];
-            $details = $row['details'];
-            $price = $row['price'];
-
-           }
-         }
-
-         mysql_query("INSERT INTO supplies (bid_id, supplier_id, product_name, details, price, active) VALUES ('$bids_id', '$supplier_bid_id', '$productname', '$details' '$price', 1)");
-
-        move_uploaded_file($file_temp, 'contracts/' . $file_name);
-
-      }
-
-      // decline bid
+      // for supplier contract termination
       $action = @$_GET['action'];
 
-      if ($action == 'decline') {
-        
-        $supplier_bid_id = $_GET['id'];
-        $bids_id = $_GET['id2'];
-        $uploaded_supp_bid_file_id = $_GET['id3'];
-        $users_id = $_GET['id4'];
+      if ($action == 'terminate') {
 
-        mysql_query("UPDATE bids SET active=0 WHERE id=$bids_id");
-        mysql_query("UPDATE uploaded_supp_bid_file SET active=0 WHERE bid_id=$bids_id");
-        mysql_query("UPDATE asupplier_bid SET status=-1 WHERE bid_id=$bids_id");
+        $contract_id = $_GET['id'];
+        
+        mysql_query("UPDATE contract SET active=0 WHERE bid=$contract_id");
 
       }
 
@@ -135,10 +83,12 @@ if (!isset($_SESSION["manager"])) {
 
   <?php
 
-  $sql = mysql_query("SELECT contract.id AS contract_id, contract.created_date AS contract_date, contract . * , users.id AS users_id, users . * , supplier_bid.id AS supplier_bid_id, supplier_bid . * 
+  $sql = mysql_query("SELECT contract.id AS contract_id, contract.created_date AS contract_date, contract. * , users.id AS users_id, users. * , supplier_bid.id AS supplier_bid_id, supplier_bid. * , uploaded_contract_file.id AS uploaded_contract_file_id, uploaded_contract_file . * 
 FROM contract
 INNER JOIN users ON contract.user_id = users.id
-INNER JOIN supplier_bid ON contract.bid = supplier_bid.bid_id WHERE users.user_type=3");
+INNER JOIN supplier_bid ON contract.bid = supplier_bid.bid_id
+INNER JOIN uploaded_contract_file ON uploaded_contract_file.contract_id = contract.bid
+WHERE users.user_type =3 AND contract.active=1");
   $requestCount = mysql_num_rows($sql);
 
   if ($requestCount > 0) {
@@ -154,6 +104,7 @@ INNER JOIN supplier_bid ON contract.bid = supplier_bid.bid_id WHERE users.user_t
       $validity = $row['validity'];
       $date = $row['contract_date'];
       $status = ($row['active'] == '0' ? 'Inactive' : 'Active');
+      $filename = $row['file_name'];
       
 
       echo "
@@ -163,6 +114,16 @@ INNER JOIN supplier_bid ON contract.bid = supplier_bid.bid_id WHERE users.user_t
           <td>$validity</td>
           <td>$date</td>
           <td>$status</td>
+          <td>
+            <form action='showcontract.php' method='post'>
+
+              <input type='hidden' name='id' value='$contract_id' />
+              <input type='hidden' name='filename' value='$filename' />
+
+              <input type='submit' class='btn btn-default' name='submit' value='View Contract' />
+            </form>
+          </td>
+          <td><a href='suppliercontracts.php?action=terminate&id=$contract_id'>Terminate Contract</a></td>
           
         </tr>
 
