@@ -75,7 +75,7 @@
 										}
 							}
 						else{
-								echo '<div class="alert alert-error">No Products for '.$categorylink.'</div>';
+								echo '<div class="alert alert-error">No Available Products!</div>';
 							}
 				
 		

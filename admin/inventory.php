@@ -150,6 +150,7 @@ $criticalLevel = getCritLevel('nbs');
 
 $sql = mysql_query("SELECT * FROM products ORDER BY product_name ASC");
 $productCount = mysql_num_rows($sql); // count the output amount
+$count = 0;
 if ($productCount > 0) {
 	while($row = mysql_fetch_array($sql)){ 
 			$id = $row['id'];
@@ -217,9 +218,53 @@ if ($productCount > 0) {
     <td>'.$current_stock.'</td>
      <td >'.$previous_stock.'</td>
 	  <td>'.$status.'</td>
-	 <td>'.$date='empty'.'</td>
+	 <td><button class="btn btn-info btn-lg pull-left" data-toggle="modal" data-target="#myModal'.$count.'">View History</button></td>
   </tr>
   ';
+
+  ?>
+    <!-- Modal -->
+          <div class="modal fade" id="<?php echo 'myModal'.$count;?>" role="dialog">
+            <div class="modal-dialog">
+            
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Log History of <?php echo ucfirst($pname);?></h4>
+                </div>
+                <div class="modal-body">
+                  <div class="row">
+                    <div class="col-sm-4 col-md-auto">History ID</div>
+                    <div class="col-sm-4 col-md-auto">Modified Quantity</div>
+                    <div class="col-sm-4 col-md-auto">Date Modified</div>
+                  </div>
+                      <?php 
+                          $prod_invent = mysql_query("SELECT * FROM product_history WHERE pid='$id'");
+                          $prod_invent2 = mysql_num_rows($prod_invent); // count the output amount
+                          if ($prod_invent2 > 0) {
+                            while($rowInvet = mysql_fetch_array($prod_invent)){ 
+                            echo "
+                            <div class='row justify-content-md-center'>
+                              <div class='col-sm-4 col-md-auto'>".$rowInvet['id']."</div>
+                              <div class='col-sm-4 col-md-auto'>".$rowInvet['qty_added']."</div>
+                              <div class='col-sm-4 col-md-auto'>".$rowInvet['date']."</div>
+                            </div>";
+                      }
+                    }
+                        ?>
+                  
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div> 
+              
+            </div>
+          </div>
+          <!-- End of Modal -->
+  <?php
+  $count++;
     }
 } 
 else 
@@ -235,7 +280,7 @@ else
        </div>
         </div><!-- /.row -->
 
-        <button class="btn btn-primary btn-lg pull-left" data-toggle="modal" data-target="#myModal">Update Critical Level</button>
+        <button class="btn btn-warning btn-lg pull-left" data-toggle="modal" data-target="#myModal">Update Critical Level</button>
 
 
         <!-- Modal -->
