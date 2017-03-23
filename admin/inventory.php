@@ -145,16 +145,24 @@ LIMIT 5");
 
 include ('../include/connectdb.php');  
 
-$bestSellerCritLevel = getCritLevel('bs');
-$criticalLevel = getCritLevel('nbs');
+// $bestSellerCritLevel = getCritLevel('bs');
+// $criticalLevel = getCritLevel('nbs');
 
-$sql = mysql_query("SELECT * FROM products ORDER BY product_name ASC");
+$sql = mysql_query("SELECT products.*, critical_level.product_id, critical_level.crit_level FROM products INNER JOIN critical_level ON products.id=critical_level.product_id ORDER BY product_name ASC");
 $productCount = mysql_num_rows($sql); // count the output amount
 $count = 0;
+
+$productid = "";
+$critLevel = "";
+
 if ($productCount > 0) {
 	while($row = mysql_fetch_array($sql)){ 
 			$id = $row['id'];
-             $pname = $row["product_name"];
+      $pname = $row["product_name"];
+
+      $productid = $row['product_id'];
+      $critLevel = $row['crit_level'];
+
 			$stock_query = mysql_query("SELECT qty_added as stock, SUM(qty_added) as sold FROM product_history WHERE pid = $id ORDER BY Date asc limit 1");
       $stock_query_count = mysql_num_rows($stock_query); // count the output amount
 		  $previous_stock='empty';
@@ -181,9 +189,8 @@ if ($productCount > 0) {
 			   // $previous_stock = $row["previous stock"];
 			    // $date = $row["date"];
 
-        if (isBestSeller($id)) {
-          
-          if($current_stock <= $bestSellerCritLevel){
+      
+          if($current_stock <= $critLevel){
          $status = '<span style="color: #F00">Critical</span>';
          }
          else if($current_stock == 0){
@@ -193,21 +200,7 @@ if ($productCount > 0) {
              $status = '<span style="color: #090">Sufficient</span>';
              }
 
-
-        } else {
-
-          if($current_stock <= $criticalLevel){
-         $status = '<span style="color: #F00">Critical</span>';
-         }
-         else if($current_stock == 0){
-            $status = '<span style="color: #333">0 Stock</span>';
-           }
-           else{
-             $status = '<span style="color: #090">Sufficient</span>';
-             }
-
-        }
-			 
+			
 	 
    
 	echo '
@@ -280,7 +273,7 @@ else
        </div>
         </div><!-- /.row -->
 
-        <button class="btn btn-warning btn-lg pull-left" data-toggle="modal" data-target="#myModal">Update Critical Level</button>
+        <!-- <button class="btn btn-warning btn-lg pull-left" data-toggle="modal" data-target="#myModal">Update Critical Level</button> -->
 
 
         <!-- Modal -->

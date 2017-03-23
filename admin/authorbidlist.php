@@ -42,6 +42,7 @@ if (!isset($_SESSION["manager"])) {
 
         // Product Details
         $initialProductStock = 50;
+        $initialCriticalLevel = 100;
         $title = "";
         $price = "";
 
@@ -74,6 +75,8 @@ if (!isset($_SESSION["manager"])) {
          mysql_query("INSERT INTO products (author_id, product_name, price, details, stock, category, sub_category, status, ext) VALUES ('$users_id', '$title', '$price', '', '$initialProductStock', '', '', 'unactive', 'png')");
 
          $imageid = mysql_insert_id();
+
+         mysql_query("INSERT INTO critical_level (product_id, crit_level) VALUES ('$imageid', '$initialCriticalLevel')");
 
          mysql_query("INSERT INTO product_history VALUES('', '$imageid', '$initialProductStock', now())");
 

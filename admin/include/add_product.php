@@ -13,6 +13,8 @@ if (isset($_FILES['image']))
 		//$category2= addslashes(strip_tags($_POST['category2']));
 		$brand= addslashes(strip_tags($_POST['brandname']));
 		$display= 'unactive';
+
+    $critLevel = addslashes(strip_tags($_POST['critlevel']));
         
 	$image_name = $_FILES['image']['name'];
 	$image_size = $_FILES['image']['size'];
@@ -66,6 +68,8 @@ if (isset($_FILES['image']))
                             mysql_query("INSERT INTO products VALUES('',0, '$prod_title', '$price','$prod_desc','$stock', '$category','$brand','$display', now(), now(),'$image_ext')");
                             
                             $imageid = mysql_insert_id();
+
+                            mysql_query("INSERT INTO critical_level (product_id, crit_level) VALUES ('$imageid', '$critLevel')");
 
                             mysql_query("INSERT INTO product_history VALUES('', '$imageid', '$stock', now())");
 
@@ -143,6 +147,12 @@ if (isset($_FILES['image']))
     <div class="form-group col-lg-5">
       <label for="exampleInputPassword">Stock</label>
       <input type="number" class="form-control" name="stock" id="stock" placeholder="Stock">
+    </div>
+     </div>
+     <div class="row col-lg-12">
+    <div class="form-group col-lg-5">
+      <label for="exampleInputPassword">Critical Level</label>
+      <input type="number" class="form-control" name="critlevel" id="stock" placeholder="Critical Level">
     </div>
      </div>
     <hr />
