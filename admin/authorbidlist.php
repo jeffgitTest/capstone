@@ -75,7 +75,7 @@ if (!isset($_SESSION["manager"])) {
 
          $imageid = mysql_insert_id();
 
-         mysql_query("INSERT INTO product_history VALUES('', '$imageid', '$initialProductStock', now())");
+         mysql_query("INSERT INTO product_history(`pid`, `qty_added`) VALUES('$imageid', '$initialProductStock')");
 
         move_uploaded_file($file_temp, 'contracts/' . $file_name);
 

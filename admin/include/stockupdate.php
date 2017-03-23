@@ -29,15 +29,14 @@ if(isset($_POST['update'])){
 			// 	$notice="";
 
 			// 	if($stock>1){$notice='stocks';}else{$notice='stock';}
-				
 				if($_POST['update'] == "Add Stock"){
 					mysql_query("UPDATE products SET stock= stock + '$stock' WHERE id='$pid'");
-					mysql_query("INSERT INTO product_history VALUES('', '$pid', '$stock', now())");
+					mysql_query("INSERT INTO product_history(pid,qty_added) VALUES('$pid','$stock')");
 				}
 
 				if($_POST['update'] == "Deduct Stock"){
 					mysql_query("UPDATE products SET stock= stock - '$stock' WHERE id='$pid'");
-					mysql_query("INSERT INTO product_history VALUES('', '$pid', '-$stock', now())");
+					mysql_query("INSERT INTO product_history(`pid`,`qty_added`) VALUES('$pid', '-$stock')");
 				}
 
 				header("Location: edit.php?id=$pid&success&pnm=".$row['product_name']."&stock=".$stock);
@@ -65,5 +64,18 @@ if(isset($_GET['success'])){
       </div>
     </fieldset>       
 <input type="submit" name="update" class="btn btn-primary btn-lg pull-left" value="Add Stock">
-<input type="submit" name="update" class="btn btn-primary btn-lg pull-left" value="Deduct Stock">
+	
+
 </form>
+	
+	 <!-- JavaScript -->
+    <script src="js/jquery-1.10.2.js"></script>
+    <script src="js/bootstrap.js"></script>
+
+    <!-- Page Specific Plugins -->
+    <script src="js/raphael-min.js"></script>
+    <script src="js/morris-0.4.3.min.js"></script>
+    <script src="js/morris/chart-data-morris.js"></script>
+    <script src="js/tablesorter/jquery.tablesorter.js"></script>
+    <script src="js/tablesorter/tables.js"></script>
+<!-- <input type="submit" name="update" class="btn btn-primary btn-lg pull-left" value="Deduct Stock"> -->

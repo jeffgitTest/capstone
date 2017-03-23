@@ -84,7 +84,7 @@ if (isset($_POST['contactus']))
 	if ($fname&&$lname&&$email&&$message)
 	{
 		//send email		
-            $register = mysql_query("INSERT INTO inbox VALUES ('','$fname','$lname', '$email','$message', now())");
+            $register = mysql_query("INSERT INTO inbox(`name`, `subject`, `email`, `message`) VALUES ('$fname','$lname', '$email','$message'");
             
                echo '  <div class="alert alert-success"> Message sent thank you  </div>';
                             				

@@ -9,7 +9,7 @@ if (isset($_POST['memail'])&&($_POST['message'])&&($_POST['subject']))
 	$subject = addslashes(strip_tags($_POST['subject']));
 	if ($memail&&$message)
 	{
-		mysql_query("INSERT INTO outbox VALUES ('','$memail', '$subject', '$message', now())");
+		mysql_query("INSERT INTO outbox(`email`, `subject`, `message`) VALUES ('$memail', '$subject', '$message')");
 		
 		
 		echo "<div class='alert alert-success'>Message Sent</div>";
