@@ -1,3 +1,9 @@
+<?php 
+    
+    include '../include/connectdb.php';
+
+ ?>
+
 <!DOCTYPE html>
 
 <html>
@@ -9,10 +15,14 @@
                 $(".restoreFile").hide();
             });
             function checkParameters(){
+                var host = $.trim($("#host").val());
                 var username = $.trim($("#username").val());
                 var password = $.trim($("#password").val());
                 var databasename = $.trim($("#databasename").val());
-                if (username == ""){
+                if (host == ""){
+                    alert("Plsease enter mysql host.");return false;
+                }
+                else if (username == ""){
                     alert("Plsease enter mysql username.");return false;
                 }
                 else if (databasename == ""){
@@ -54,6 +64,11 @@
                 <td colspan="3" align="center"><b>Please enter the following parameters</b></td>
             </tr>
             <tr>
+                <td>MySQL host*</td>
+                <td>:</td>
+                <td><input type="text" id="host" name="host" value="localhost"/></td>
+            </tr>
+            <tr>
                 <td>MySQL username*</td>
                 <td>:</td>
                 <td><input type="text" id="username" name="username" value="root"/></td>
@@ -61,7 +76,7 @@
             <tr>
                 <td>MySQL password*</td>
                 <td>:</td>
-                <td><input type="text" id="password" name="password" value="root"/></td>
+                <td><input type="text" id="password" name="password" value=""/></td>
             </tr>
             <tr>
                 <td>MySQL database name*</td>
@@ -91,6 +106,7 @@
 		<?php
 
 if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['databasename'])) {
+        $host = trim($_POST['host']);
         $username = trim($_POST['username']);
         $password = trim($_POST['password']);
         $databasename = trim($_POST['databasename']);
@@ -113,7 +129,7 @@ if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['datab
                 exec('mysqldump --no-data  -u '. $username .' -p'. $password .' '. $databasename .' > '. $outputfilename);
             }   
  
-            
+            backup_tables($host,$username,$password,$databasename, $outputfilename);
          
             //After download remove the file from server
             exec('rm ' . $outputfilename);  
@@ -123,12 +139,18 @@ if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['datab
  
             $target_path = getcwd();
             $databasefilename = $_FILES["databasefile"]["name"];
+
+
  
             //Upload the database file to current working directory
             move_uploaded_file($_FILES["databasefile"]["tmp_name"], $target_path . '/' . $databasefilename);
+
+            $sqlFile = fopen($databasefilename, "r");
  
             //Restore the database          
-            exec('mysql -u '. $username .' -p'. $password .' '. $databasename .' < '. $databasefilename);
+            // exec('mysql -u '. $username .' -p'. $password .' '. $databasename .' < '. $file);
+
+            mysql_query(fread($sqlFile, filesize($databasefilename)));
              
             
         }
@@ -137,8 +159,10 @@ if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['datab
     }
 
 
-function backup_tables($host,$user,$pass,$name,$tables = '*')
+function backup_tables($host,$user,$pass,$name,$outputfilename)
 {
+
+    $tables = '*';
 
     $link = mysql_connect($host,$user,$pass);
     mysql_select_db($name,$link);
@@ -187,9 +211,6 @@ function backup_tables($host,$user,$pass,$name,$tables = '*')
         $return.="\n\n\n";
     }
 
-    $now = str_replace(":", "", date("Y-m-d H:i:s"));
-    $outputfilename = $name . '-' . $now . '.sql';
-    $outputfilename = str_replace(" ", "-", $outputfilename);
 
     //save file
     $handle = fopen($outputfilename,'w+');
@@ -217,11 +238,9 @@ function backup_tables($host,$user,$pass,$name,$tables = '*')
     $handle = fopen('backup_temp/db-backup-'.time().'-'.(md5(implode(',',$tables))).'.sql','w+');
     fwrite($handle,$return);
     fclose($handle);
-
-    return $return;
 }
 
-backup_tables($dbhost,$dbuser,$dbpass,$dbname);
+//backup_tables($dbhost,$dbuser,$dbpass,$dbname);
 	?>	
     </body>   
 </html>
