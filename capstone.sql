@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 23, 2017 at 10:21 AM
+-- Generation Time: Mar 23, 2017 at 10:28 AM
 -- Server version: 1.0.110
 -- PHP Version: 5.3.10
 
@@ -144,7 +144,7 @@ CREATE TABLE IF NOT EXISTS `cacel_order` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `txn_id` varchar(50) NOT NULL,
   `payer_email` varchar(50) NOT NULL,
-  `now` date NOT NULL,
+  `now` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
@@ -153,7 +153,7 @@ CREATE TABLE IF NOT EXISTS `cacel_order` (
 --
 
 INSERT INTO `cacel_order` (`id`, `txn_id`, `payer_email`, `now`) VALUES
-(1, '053621837E670284T', 'capstoneTest@gmail.com', '2017-03-10');
+(1, '053621837E670284T', 'capstoneTest@gmail.com', '2017-03-09 16:00:00');
 
 -- --------------------------------------------------------
 
@@ -261,7 +261,7 @@ CREATE TABLE IF NOT EXISTS `inbox` (
   `subject` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `message` text NOT NULL,
-  `date` date NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
@@ -270,7 +270,7 @@ CREATE TABLE IF NOT EXISTS `inbox` (
 --
 
 INSERT INTO `inbox` (`id`, `name`, `subject`, `email`, `message`, `date`) VALUES
-(1, 'Russell James', 'sample subject', 'rje.mindo@gmail.com', 'sample message', '2017-02-15');
+(1, 'Russell James', 'sample subject', 'rje.mindo@gmail.com', 'sample message', '2017-02-14 16:00:00');
 
 -- --------------------------------------------------------
 
@@ -285,7 +285,7 @@ CREATE TABLE IF NOT EXISTS `inventory` (
   `lessted_value` int(11) NOT NULL,
   `current_stock` int(11) NOT NULL,
   `previous stock` int(11) NOT NULL,
-  `date` date NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
@@ -300,7 +300,7 @@ CREATE TABLE IF NOT EXISTS `outbox` (
   `email` varchar(60) NOT NULL,
   `subject` varchar(60) NOT NULL,
   `message` longtext NOT NULL,
-  `date` date NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
@@ -343,7 +343,7 @@ CREATE TABLE IF NOT EXISTS `products` (
   `sub_category` varchar(50) NOT NULL,
   `status` varchar(50) NOT NULL,
   `timestamp` varchar(10) NOT NULL,
-  `date_added` date NOT NULL,
+  `date_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `ext` varchar(4) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
@@ -353,7 +353,7 @@ CREATE TABLE IF NOT EXISTS `products` (
 --
 
 INSERT INTO `products` (`id`, `author_id`, `product_name`, `price`, `details`, `stock`, `category`, `sub_category`, `status`, `timestamp`, `date_added`, `ext`) VALUES
-(1, 6, 'Neil Life', '500.00', '', 49, '23', ' J. Gonzales, Â R. Nocon', 'active', '2017-03-23', '0000-00-00', 'jpg');
+(1, 6, 'Neil Life', '500.00', '', 49, '23', ' J. Gonzales, Â R. Nocon', 'active', '2017-03-23', '0000-00-00 00:00:00', 'jpg');
 
 -- --------------------------------------------------------
 
@@ -365,7 +365,7 @@ CREATE TABLE IF NOT EXISTS `product_history` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pid` int(11) NOT NULL,
   `qty_added` int(11) NOT NULL,
-  `date` date NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
@@ -374,7 +374,7 @@ CREATE TABLE IF NOT EXISTS `product_history` (
 --
 
 INSERT INTO `product_history` (`id`, `pid`, `qty_added`, `date`) VALUES
-(1, 1, 50, '2017-03-21');
+(1, 1, 50, '2017-03-20 16:00:00');
 
 -- --------------------------------------------------------
 
