@@ -81,11 +81,13 @@ if (!isset($_SESSION["manager"])) {
 		  
 		  include 'include/stockupdate.php';
 		  ?>  
-          <button class="btn btn-info btn-lg pull-left" data-toggle="modal" data-target="#ModalDeduct'">Deduct</button>
+
+      <!-- this is to be continued -->
+        <!--   <button class="btn btn-info btn-lg pull-left" data-toggle="modal" data-target="#ModalDeduct'">Deduct</button>
           <div class="modal fade" id="ModalDeduct" role="dialog">
-              <div class="modal-dialog">
+              <div class="modal-dialog"> -->
                 <!-- Modal content-->
-                <div class="modal-content">
+        <!--         <div class="modal-content">
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Log History of</h4>
@@ -104,7 +106,9 @@ if (!isset($_SESSION["manager"])) {
                 </div> 
               </div>
             </div>
-          </div>
+ -->
+<!-- end of to be edit -->
+
         </div><!-- /.row -->
      
 		
