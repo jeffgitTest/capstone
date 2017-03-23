@@ -98,7 +98,7 @@ if (isset($_FILES['edit']))
 										}
 									}
 				else{
-							// unlink('../img/product_image/'.$pid.'.'.$image_ext);
+							unlink('../img/product_image/'.$pid.'.'.$image_ext);
 							//unlink('inc/uploads/thumbs/'.$pid.'.'.$image_ext);
 							include ('../include/thumb.php');   
 					
