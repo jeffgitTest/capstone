@@ -42,6 +42,7 @@ if (!isset($_SESSION["manager"])) {
 
         // Product Details
         $initialProductStock = 50;
+        $initialCriticalLevel = 100;
         $title = "";
         $price = "";
 
@@ -76,6 +77,7 @@ if (!isset($_SESSION["manager"])) {
          $imageid = mysql_insert_id();
 
          mysql_query("INSERT INTO product_history(`pid`, `qty_added`) VALUES('$imageid', '$initialProductStock')");
+         mysql_query("INSERT INTO critical_level (product_id, crit_level) VALUES ('$imageid', '$initialCriticalLevel')");
 
         move_uploaded_file($file_temp, 'contracts/' . $file_name);
 

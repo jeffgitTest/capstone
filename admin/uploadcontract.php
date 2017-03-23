@@ -105,13 +105,6 @@ if (!isset($_SESSION["manager"])) {
 					</div>
 					<br/>
 					<div class="form-group">
-						<div class="input-control">
-							<label for="product-name">Contact File (.PDF):</label>
-							<input type="file" id="file" accept=".pdf" name="file" class="form-control" required="required" multiple />
-						</div>
-					</div>
-					<br/>
-					<div class="form-group">
 						<input type="submit" name="submit" class="btn btn-primary" value="Submit">
 					</div>
 

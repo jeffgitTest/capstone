@@ -24,6 +24,18 @@ if (isset($_GET['id'])) {
 	    echo "<div id='error'>Invalid Id</div>";
 		
     }
+
+    $targetID = $_GET['id'];
+    $sql = mysql_query("SELECT * FROM critical_level WHERE product_id='$targetID' LIMIT 1");
+    $productCount = mysql_num_rows($sql); // count the output amount
+
+    if ($productCount > 0) {
+	    while($row = mysql_fetch_array($sql)){ 
+             
+			$critlevel1 = $row['crit_level'];
+        }
+    }
+
 }
 
 ?>
@@ -41,6 +53,7 @@ if (isset($_FILES['edit']))
 		$entity_elm1 = mysql_real_escape_string($entity_elm1);
 		$price = addslashes(strip_tags($_POST['price']));
 		$category1= addslashes(strip_tags($_POST['category1']));
+		$critlevel = addslashes(strip_tags($_POST['critlevel']));
         //$category2= addslashes(strip_tags($_POST['category2']));
 		$brand= addslashes(strip_tags($_POST['brandname']));
 	$image_name = $_FILES['edit']['name'];
@@ -90,6 +103,8 @@ if (isset($_FILES['edit']))
 							include ('../include/thumb.php');   
 					
 mysql_query("UPDATE products SET product_name='$product_name',price='$price',details='$prod_desc',category='$category1',sub_category='$brand',timestamp=now(),ext='$image_ext' WHERE id='$pid'");
+
+mysql_query("UPDATE critical_level SET crit_level='$critlevel' WHERE product_id='$pid'");
                            
 	
                             if ($image_name&&$image_size&&$image_temp!= "") { 
@@ -159,6 +174,12 @@ mysql_query("UPDATE products SET product_name='$product_name',price='$price',det
     <div class="form-group col-lg-5">
       <label for="exampleInputPassword">In Stock</label>
      <input type="number" class="form-control" readonly="readonly" name="price" id="price" placeholder="Price" value="<?php echo $stock1?>">
+    </div>
+     </div>
+     <div class="row col-lg-12">
+     	<div class="form-group col-lg-5">
+      <label for="exampleInputPassword">Critical Level</label>
+     <input type="text" class="form-control" name="critlevel" id="price" placeholder="Price" value="<?php echo $critlevel1?>">
     </div>
      </div>
    <div class="row col-lg-12">
