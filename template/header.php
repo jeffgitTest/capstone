@@ -37,7 +37,7 @@
                             
                             echo "
                             <li>
-                            <a href='' class='dropdown-toggle'>Author</a>
+                            <a href='' class='dropdown-toggle'>Author$userid</a>
                             <ul class='d-menu' data-role='dropdown'>
                                  <li><a href='publishedbooks.php'>Published Book</a></li>
                                  <li><a href='authorbidform.php'>Bid Portal</a></li>
@@ -53,7 +53,7 @@
                             
                             echo "
                             <li>
-                            <a href='' class='dropdown-toggle'>Supplier</a>
+                            <a href='' class='dropdown-toggle'>Supplier$userid</a>
                             <ul class='d-menu' data-role='dropdown'>
                                  <li><a href='supplierbidform.php'>Bid Portal</a></li>
                               </ul>

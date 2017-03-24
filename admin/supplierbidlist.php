@@ -40,10 +40,6 @@ if (!isset($_SESSION["manager"])) {
 
         $expiry = $_POST['expiry'];
 
-        $file_name = $_FILES['file']['name'];
-        $file_size = $_FILES['file']['size'];
-        $file_temp = $_FILES['file']['tmp_name'];
-
         $productname = "";
         $details = "";
         $price = "";
@@ -56,7 +52,6 @@ if (!isset($_SESSION["manager"])) {
         mysql_query("UPDATE bids SET active=0 WHERE id=$bids_id");
         mysql_query("UPDATE uploaded_supp_bid_file SET active=0 WHERE bid_id=$bids_id");
         mysql_query("UPDATE supplier_bid SET status=1 WHERE bid_id=$bids_id");
-        mysql_query("INSERT INTO uploaded_contract_file (contract_id, file_name, ext) VALUES ('$bids_id', ' $file_name', '$file_ext')");
 
         $sql = mysql_query("SELECT * FROM supplier_bid WHERE bid_id=$bids_id");
         $requestCount = mysql_num_rows($sql);
@@ -72,8 +67,6 @@ if (!isset($_SESSION["manager"])) {
          }
 
          mysql_query("INSERT INTO supplies (bid_id, supplier_id, product_name, details, price, active) VALUES ('$bids_id', '$supplier_bid_id', '$productname', '$details', '$price', 1)");
-
-        move_uploaded_file($file_temp, 'contracts/' . $file_name);
 
       }
 

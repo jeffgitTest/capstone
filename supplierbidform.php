@@ -39,6 +39,24 @@
 				return $filename;
 
 			}
+
+			if (isset($_POST['submit'])) {
+				
+				$bid_id = $_POST['id'];
+
+				$file_name = $_FILES['file']['name'];
+		        $file_size = $_FILES['file']['size'];
+		        $file_temp = $_FILES['file']['tmp_name'];
+
+		        $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+
+		        $fileName = "$bid_id-supplier-contract.pdf";
+
+		        mysql_query("INSERT INTO uploaded_contract_file (contract_id, file_name, ext) VALUES ('$bid_id', '$fileName', '$file_ext')");
+
+		        move_uploaded_file($file_temp, 'admin/contracts/' . $fileName);
+
+			}
 			
 ?>
 
@@ -169,6 +187,15 @@ INNER JOIN uploaded_supp_bid_file ON uploaded_supp_bid_file.bid_id=bids.id WHERE
 				<input type='hidden' name='filename' value='$contractfilename' />
 
 				<input type='submit' name='submit' value='View Contract' $disabled />
+			</form>
+          </td>
+          <td>
+			<form action='suppliersignedcontract.php' method='post'>
+
+				<input type='hidden' name='id' value='$bids_id' />
+				<input type='hidden' name='type' value='supplier' />
+
+				<input type='submit' name='submit1' value='Signed Contract' $disabled />
 			</form>
           </td>
         </tr>

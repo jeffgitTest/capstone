@@ -46,10 +46,6 @@ if (!isset($_SESSION["manager"])) {
         $title = "";
         $price = "";
 
-        $file_name = $_FILES['file']['name'];
-        $file_size = $_FILES['file']['size'];
-        $file_temp = $_FILES['file']['tmp_name'];
-
         $allowed_ext = array ('pdf', 'doc');
         $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
 
@@ -58,7 +54,6 @@ if (!isset($_SESSION["manager"])) {
         mysql_query("UPDATE bids SET active=0 WHERE id=$bids_id");
         mysql_query("UPDATE uploaded_bid_file SET active=0 WHERE bid_id=$bids_id");
         mysql_query("UPDATE author_bid SET status=1 WHERE bid_id=$bids_id");
-        mysql_query("INSERT INTO uploaded_contract_file (contract_id, file_name, ext) VALUES ('$bids_id', ' $file_name', '$file_ext')");
 
         $sql = mysql_query("SELECT * FROM author_bid WHERE bid_id=$bids_id");
         $requestCount = mysql_num_rows($sql);
@@ -78,8 +73,6 @@ if (!isset($_SESSION["manager"])) {
 
          mysql_query("INSERT INTO product_history(`pid`, `qty_added`) VALUES('$imageid', '$initialProductStock')");
          mysql_query("INSERT INTO critical_level (product_id, crit_level) VALUES ('$imageid', '$initialCriticalLevel')");
-
-        move_uploaded_file($file_temp, 'contracts/' . $file_name);
 
       }
 

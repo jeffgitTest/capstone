@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 23, 2017 at 10:28 AM
+-- Generation Time: Mar 24, 2017 at 01:29 AM
 -- Server version: 1.0.110
 -- PHP Version: 5.3.10
 
@@ -79,15 +79,14 @@ CREATE TABLE IF NOT EXISTS `author_bid` (
   `status` varchar(19) DEFAULT NULL,
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=40 ;
 
 --
 -- Dumping data for table `author_bid`
 --
 
 INSERT INTO `author_bid` (`id`, `bid_id`, `title`, `details`, `co_author`, `author_id`, `genre`, `projected_price`, `status`, `created_date`) VALUES
-(1, 1, 'Neil Life', 'Life of neil', '', 6, 'Comedy', '500', '1', '2017-03-21 07:16:08'),
-(2, 2, '333', '333', '', 6, '33', '333', '0', '2017-03-23 06:17:09');
+(39, 53, '111', '111', '', 6, '111', '1111', '1', '2017-03-20 17:20:46');
 
 -- --------------------------------------------------------
 
@@ -101,15 +100,15 @@ CREATE TABLE IF NOT EXISTS `bids` (
   `active` int(11) NOT NULL,
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=55 ;
 
 --
 -- Dumping data for table `bids`
 --
 
 INSERT INTO `bids` (`id`, `type`, `active`, `created_date`) VALUES
-(1, 'author', 0, '2017-03-21 07:16:07'),
-(2, 'author', 1, '2017-03-23 06:17:09');
+(53, 'author', 0, '2017-03-20 17:20:46'),
+(54, 'supplier', 0, '2017-03-20 17:22:53');
 
 -- --------------------------------------------------------
 
@@ -144,7 +143,7 @@ CREATE TABLE IF NOT EXISTS `cacel_order` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `txn_id` varchar(50) NOT NULL,
   `payer_email` varchar(50) NOT NULL,
-  `now` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `now` date NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
@@ -153,7 +152,7 @@ CREATE TABLE IF NOT EXISTS `cacel_order` (
 --
 
 INSERT INTO `cacel_order` (`id`, `txn_id`, `payer_email`, `now`) VALUES
-(1, '053621837E670284T', 'capstoneTest@gmail.com', '2017-03-09 16:00:00');
+(1, '053621837E670284T', 'capstoneTest@gmail.com', '2017-03-10');
 
 -- --------------------------------------------------------
 
@@ -193,14 +192,15 @@ CREATE TABLE IF NOT EXISTS `contract` (
   `active` int(11) NOT NULL,
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
 
 --
 -- Dumping data for table `contract`
 --
 
 INSERT INTO `contract` (`id`, `bid`, `user_id`, `type`, `validity`, `active`, `created_date`) VALUES
-(1, 1, 6, 'author', '03/31/2017', 1, '2017-03-21 07:16:32');
+(13, 53, 6, 'author', '03/31/2017', 0, '2017-03-20 17:21:32'),
+(14, 54, 3, 'supplier', '03/31/2017', 0, '2017-03-20 17:23:24');
 
 -- --------------------------------------------------------
 
@@ -210,19 +210,19 @@ INSERT INTO `contract` (`id`, `bid`, `user_id`, `type`, `validity`, `active`, `c
 
 CREATE TABLE IF NOT EXISTS `critical_level` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `product_id` int(11) NOT NULL,
   `crit_level` int(11) NOT NULL,
-  `type` varchar(10) DEFAULT NULL,
+  `type` varchar(10) NOT NULL,
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `critical_level`
 --
 
-INSERT INTO `critical_level` (`id`, `product_id`, `crit_level`, `type`, `created_date`) VALUES
-(3, 1, 100, NULL, '2017-03-23 09:07:15');
+INSERT INTO `critical_level` (`id`, `crit_level`, `type`, `created_date`) VALUES
+(1, 200, 'bs', '2017-03-17 18:09:24'),
+(2, 150, 'nbs', '2017-03-17 18:09:24');
 
 -- --------------------------------------------------------
 
@@ -261,7 +261,7 @@ CREATE TABLE IF NOT EXISTS `inbox` (
   `subject` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `message` text NOT NULL,
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date` date NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
@@ -270,7 +270,7 @@ CREATE TABLE IF NOT EXISTS `inbox` (
 --
 
 INSERT INTO `inbox` (`id`, `name`, `subject`, `email`, `message`, `date`) VALUES
-(1, 'Russell James', 'sample subject', 'rje.mindo@gmail.com', 'sample message', '2017-02-14 16:00:00');
+(1, 'Russell James', 'sample subject', 'rje.mindo@gmail.com', 'sample message', '2017-02-15');
 
 -- --------------------------------------------------------
 
@@ -285,7 +285,7 @@ CREATE TABLE IF NOT EXISTS `inventory` (
   `lessted_value` int(11) NOT NULL,
   `current_stock` int(11) NOT NULL,
   `previous stock` int(11) NOT NULL,
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date` date NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
@@ -300,7 +300,7 @@ CREATE TABLE IF NOT EXISTS `outbox` (
   `email` varchar(60) NOT NULL,
   `subject` varchar(60) NOT NULL,
   `message` longtext NOT NULL,
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date` date NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
@@ -343,17 +343,22 @@ CREATE TABLE IF NOT EXISTS `products` (
   `sub_category` varchar(50) NOT NULL,
   `status` varchar(50) NOT NULL,
   `timestamp` varchar(10) NOT NULL,
-  `date_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date_added` date NOT NULL,
   `ext` varchar(4) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
 
 --
 -- Dumping data for table `products`
 --
 
 INSERT INTO `products` (`id`, `author_id`, `product_name`, `price`, `details`, `stock`, `category`, `sub_category`, `status`, `timestamp`, `date_added`, `ext`) VALUES
-(1, 6, 'Neil Life', '500.00', '', 49, '23', ' J. Gonzales, Â R. Nocon', 'active', '2017-03-23', '0000-00-00 00:00:00', 'jpg');
+(9, 1, 'Essential Statistics', '550', 'There are so many books about statistics out there written both by local and foreign authors. So why come up with yet another one? This book makes use of the same format adopted for an earlier, similar book in Algebra found useful by many students and teachers. It utilizes step-by-step procedures, includes lots of exercises, and worksheets, offers opportunities for student reflection and real-world connections, highlights the use of technology-based tools, requires student projects, presents chapter highlights, and provides students preparatory materials for major examinations.. It also has materials on integrating student portfolios and learning papers into the course.', 100, '24', ' J. Gonzales, Â R. Nocon', 'active', '2017-02-11', '2017-02-11', 'png'),
+(10, 1, 'Practical Approach to Information Communication Technology (ICT)', '123', 'SAMPLE DESCRIPTION', 115, '25', 'Erika S. Farshid Mehr,  Frederic D. Yulo', 'active', '2017-02-15', '2017-02-15', 'png'),
+(11, 6, 'Basic Marketing', '50', 'The marketing world today is very much different from it was years ago. Today, market enterprises use modem communication technologies such as email, fax machines, Internet. World Wide Web in their marketing transactions to help making them cross boundaries with ease_ With globalization and applications of quantitative tools in marketing as the trend, modern marketing managers, marketing instructors and students have to equip themselves with modem know- how of the basic principles of marketing for them to meet the challenges in this rapid changing world of marketing.', 223, '23', ' J. Gonzales, Â R. Nocon', 'unactive', '2017-02-15', '2017-02-15', 'png'),
+(12, 6, '2222', '2222', '', 50, '', '', 'unactive', '', '0000-00-00', 'png'),
+(13, 6, '1111', '1111', '', 50, '', '', 'unactive', '', '0000-00-00', 'png'),
+(14, 6, '111', '1111', '', 50, '', '', 'unactive', '', '0000-00-00', 'png');
 
 -- --------------------------------------------------------
 
@@ -365,16 +370,19 @@ CREATE TABLE IF NOT EXISTS `product_history` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pid` int(11) NOT NULL,
   `qty_added` int(11) NOT NULL,
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `date` date NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `product_history`
 --
 
 INSERT INTO `product_history` (`id`, `pid`, `qty_added`, `date`) VALUES
-(1, 1, 50, '2017-03-20 16:00:00');
+(1, 13, 100, '2017-03-10'),
+(2, 13, 20, '2017-03-15'),
+(3, 13, -5, '2017-03-15'),
+(4, 13, -20, '2017-03-15');
 
 -- --------------------------------------------------------
 
@@ -401,10 +409,10 @@ CREATE TABLE IF NOT EXISTS `requests` (
 INSERT INTO `requests` (`id`, `request_type`, `email`, `full_name`, `contact_num`, `reason`, `product`, `status`) VALUES
 (1, 'supplier', 'mendozalaxus@gmail.com', '0', '09067224096', 'Wala lang!', 'Wala lang!', 'accepted'),
 (2, 'supplier', 'roxelrollmendoza@gmail.com', 'Roxel Roll Mendoza', '09067224096', 'wala lang ulit!', 'Papel de liha', 'accepted'),
-(3, 'author', 'natsumendoza@gmail.com', 'natsu', '09078463744', 'asdasdasdsad', '', 'accepted'),
-(4, 'author', 'sdasd', 'aadasdas', '21312312312', 'asdasdasd', '', 'pending'),
-(5, 'author', 'sdasd', 'aadasdas', '21312312312', 'asdasdasd', '', 'pending'),
-(6, 'author', 'mendozalaxus@gmail.com', 'roro', '123456778', 'reason 3', '', 'pending');
+(3, 'author', 'natsumendoza@gmail.com', 'natsu', '09078463744', 'asdasdasdsad', NULL, 'accepted'),
+(4, 'author', 'sdasd', 'aadasdas', '21312312312', 'asdasdasd', NULL, 'pending'),
+(5, 'author', 'sdasd', 'aadasdas', '21312312312', 'asdasdasd', NULL, 'pending'),
+(6, 'author', 'mendozalaxus@gmail.com', 'roro', '123456778', 'reason 3', NULL, 'pending');
 
 -- --------------------------------------------------------
 
@@ -446,7 +454,14 @@ CREATE TABLE IF NOT EXISTS `supplier_bid` (
   `status` int(11) NOT NULL,
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
+
+--
+-- Dumping data for table `supplier_bid`
+--
+
+INSERT INTO `supplier_bid` (`id`, `bid_id`, `supplier_id`, `product_bid`, `details`, `price`, `status`, `created_date`) VALUES
+(15, 54, 3, '222', '222', '222', 1, '2017-03-20 17:22:54');
 
 -- --------------------------------------------------------
 
@@ -464,7 +479,14 @@ CREATE TABLE IF NOT EXISTS `supplies` (
   `active` int(11) NOT NULL,
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `supplies`
+--
+
+INSERT INTO `supplies` (`id`, `bid_id`, `supplier_id`, `product_name`, `details`, `price`, `active`, `created_date`) VALUES
+(3, 54, 15, '222', '222', '222', 1, '2017-03-20 17:23:25');
 
 -- --------------------------------------------------------
 
@@ -504,7 +526,7 @@ CREATE TABLE IF NOT EXISTS `transactions` (
   `txn_id` varchar(255) NOT NULL,
   `qty` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `transactions`
@@ -513,8 +535,7 @@ CREATE TABLE IF NOT EXISTS `transactions` (
 INSERT INTO `transactions` (`id`, `user_id`, `product_id_array`, `payer_email`, `first_name`, `last_name`, `month`, `day`, `year`, `payment_date`, `mc_gross`, `payment_currency`, `receiver_email`, `payment_type`, `payment_status`, `txn_type`, `payer_status`, `address_street`, `address_city`, `address_state`, `address_zip`, `address_country`, `address_status`, `notify_version`, `verify_sign`, `payer_id`, `mc_currency`, `mc_fee`, `txn_id`, `qty`) VALUES
 (3, 3, '10', 'capstoneTest@gmail.com', 'test', 'account', '03', '08', '2017', '2017-03-07 18:23:04', '123.00', '', 'capstoneTest-facilitator@gmail.com', 'instant', 'Pending', 'cart', 'VERIFIED', '001', 'San Jose', 'CA', '50002', 'US', '', 'UNVERSIONED', 'AFcWxV21C7fd0v3bYYYRCpSSRl31AYdzMHdxcQ0MoBjUi6eo5yguAf-v', 'TUZBW7N55UVH2', 'PHP', '123.00', '62N38974UP192673H', 1),
 (4, 3, '10', 'capstoneTest@gmail.com', 'test', 'account', '03', '08', '2017', '2017-03-10 03:31:02', '2460.00', '', 'capstoneTest-facilitator@gmail.com', 'instant', 'Cancelled', 'cart', 'VERIFIED', '001', 'San Jose', 'CA', '50002', 'US', '', 'UNVERSIONED', 'AFcWxV21C7fd0v3bYYYRCpSSRl31AZlJVDgbTHTA5oO7m1Ef8rCKIWkG', 'TUZBW7N55UVH2', 'PHP', '123.00', '9TJ22836RR194715C', 20),
-(6, 3, '9', 'capstoneTest@gmail.com', 'test', 'account', '03', '09', '2017', '2017-03-10 03:34:28', '1100.00', '', 'capstoneTest-facilitator@gmail.com', 'instant', 'Cancelled', 'cart', 'VERIFIED', '001', 'San Jose', 'CA', '50002', 'US', '', 'UNVERSIONED', 'AiPC9BjkCyDFQXbSkoZcgqH3hpacAa7r78Sn4-tqV5l1GoHXpw9X0XSk', 'TUZBW7N55UVH2', 'PHP', '550.00', '053621837E670284T', 2),
-(7, 6, '1', 'capstoneTest@gmail.com', 'test', 'account', '03', '23', '2017', '2017-03-22 23:23:58', '500.00', '', 'capstoneTest-facilitator@gmail.com', 'instant', 'Completed', 'cart', 'verified', '001', 'San Jose', 'CA', '50002', 'US', '', '3.8', 'AFcWxV21C7fd0v3bYYYRCpSSRl31AQFqdqL9jFOgOZA-Blzb1fSQ7l4p', 'TUZBW7N55UVH2', 'PHP', '500.00', '3SV56006YR6015943', 1);
+(6, 3, '9', 'capstoneTest@gmail.com', 'test', 'account', '03', '09', '2017', '2017-03-10 03:34:28', '1100.00', '', 'capstoneTest-facilitator@gmail.com', 'instant', 'Cancelled', 'cart', 'VERIFIED', '001', 'San Jose', 'CA', '50002', 'US', '', 'UNVERSIONED', 'AiPC9BjkCyDFQXbSkoZcgqH3hpacAa7r78Sn4-tqV5l1GoHXpw9X0XSk', 'TUZBW7N55UVH2', 'PHP', '550.00', '053621837E670284T', 2);
 
 -- --------------------------------------------------------
 
@@ -531,15 +552,17 @@ CREATE TABLE IF NOT EXISTS `uploaded_bid_file` (
   `active` int(11) NOT NULL,
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=38 ;
 
 --
 -- Dumping data for table `uploaded_bid_file`
 --
 
 INSERT INTO `uploaded_bid_file` (`id`, `bid_id`, `author_id`, `file_name`, `ext`, `active`, `created_date`) VALUES
-(1, 1, 6, '26995711901-539067804-ticket.pdf', 'pdf', 0, '2017-03-21 07:16:08'),
-(2, 2, 2, '26995711901-539067804-ticket.pdf', 'pdf', 1, '2017-03-23 06:17:09');
+(34, 46, 6, 'Practical Exam.pdf', 'pdf', 0, '2017-03-20 06:52:53'),
+(35, 47, 6, '10266.pdf', 'pdf', 0, '2017-03-19 12:20:05'),
+(36, 48, 6, '26995711901-539067804-ticket.pdf', 'pdf', 1, '2017-03-20 03:33:20'),
+(37, 53, 6, '10266.pdf', 'pdf', 0, '2017-03-20 17:20:46');
 
 -- --------------------------------------------------------
 
@@ -554,14 +577,39 @@ CREATE TABLE IF NOT EXISTS `uploaded_contract_file` (
   `ext` varchar(10) NOT NULL,
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
 
 --
 -- Dumping data for table `uploaded_contract_file`
 --
 
 INSERT INTO `uploaded_contract_file` (`id`, `contract_id`, `file_name`, `ext`, `created_date`) VALUES
-(1, 1, ' sschaub_java-fundamentals.pdf', 'pdf', '2017-03-21 07:16:33');
+(10, 53, ' CPA1015ra_Mla_e.pdf', 'pdf', '2017-03-20 17:21:32'),
+(11, 54, ' How_to_Clean_Install_CM13.pdf', 'pdf', '2017-03-20 17:23:25'),
+(14, 53, '53-author-contract.pdf', 'pdf', '2017-03-23 18:04:16'),
+(18, 54, '54-supplier-contract.pdf', 'pdf', '2017-03-23 18:18:43');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `uploaded_contract_template_file`
+--
+
+CREATE TABLE IF NOT EXISTS `uploaded_contract_template_file` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `file_name` varchar(255) NOT NULL,
+  `type` varchar(30) NOT NULL,
+  `ext` varchar(10) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+
+--
+-- Dumping data for table `uploaded_contract_template_file`
+--
+
+INSERT INTO `uploaded_contract_template_file` (`id`, `file_name`, `type`, `ext`) VALUES
+(7, 'author-contract.pdf', 'author', 'pdf'),
+(8, 'supplier-contract.pdf', 'supplier', 'pdf');
 
 -- --------------------------------------------------------
 
@@ -578,7 +626,14 @@ CREATE TABLE IF NOT EXISTS `uploaded_supp_bid_file` (
   `active` int(11) NOT NULL,
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
+
+--
+-- Dumping data for table `uploaded_supp_bid_file`
+--
+
+INSERT INTO `uploaded_supp_bid_file` (`id`, `bid_id`, `supplier_id`, `file_name`, `ext`, `active`, `created_date`) VALUES
+(15, 54, 3, 'Practical Exam.pdf', 'pdf', 0, '2017-03-20 17:22:54');
 
 -- --------------------------------------------------------
 
