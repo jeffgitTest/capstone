@@ -197,6 +197,7 @@ else{
     <th width="14%">Status</th>
     <th width="22%">Date Purchased</th>
     <th width="13%">Payment</th>
+    <th width="13%">Payment Type</th>
     <th width="15%">Action</th>
 </tr>
 </thead>
@@ -235,6 +236,16 @@ else{
 				$cartTotal2="";
         $datepayment = strftime("%b %d, %Y", strtotime($row["payment_date"]));
 
+        $payment_type = ($row['payment_type'] == 'cod') ? 'COD' : 'Paypal';
+
+        $updatestat = "";
+
+        if ($payment_status == 'Cancelled' || $payment_status == 'Completed') {
+          $updatestat = '';
+        } else {
+          $updatestat = ' <a  data-toggle="modal" href="#status'.$id.'">Update Status</a>';
+        }
+
         if($payment_status=='Completed'){
           $stat=$payment_status;
 				 // $dstat=$status_detail;
@@ -244,14 +255,16 @@ else{
         }
 
 
+
         echo'<tr>
           <td height="29">'.$txn_id.'</td>
           <td>'.$firstname.' '. $lastname.'</td>
           <td>'.$stat.'</td>
           <td>'.$datepayment .'</td>
           <td> &#8369; '.$gross.'</td>
+          <td>'.$payment_type.'</td>
 
-          <td><a  data-toggle="modal" href="#transaction'.$id.'">View</a>| <a  data-toggle="modal" href="#status'.$id.'">Update Status</a></td>
+          <td><a  data-toggle="modal" href="#transaction'.$id.'">View</a>'.$updatestat.'</td>
 	         <td><!-- Modal -->
             <div class="modal fade" id="transaction'.$id.'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -377,7 +390,7 @@ if ($productCount > 0) {
         $grossF=$row["mc_gross"];
 				
 			
-
+        $payment_type = ($row['payment_type'] == 'cod') ? 'COD' : 'Paypal';
 				
 				
 				
@@ -400,8 +413,9 @@ if ($productCount > 0) {
     <td height="29">'.$txn_id.'</td>
     <td>'.$firstname.' '. $lastname.'</td>
     <td>'.$stat.'</td>
-	 <td>'.$datepayment .'</td>
+	 <td>'.$datepayment .'</td> 
     <td> &#8369; '.$gross.'</td>
+    <td>'.$payment_type.'</td>
 	<td><a  data-toggle="modal" href="#transaction'.$id.'">View</a>| <a  data-toggle="modal" href="#status'.$id.'">Update Status</a></td>
 	<td><!-- Modal -->
 <div class="modal fade" id="transaction'.$id.'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

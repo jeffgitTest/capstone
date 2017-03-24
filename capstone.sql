@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 24, 2017 at 01:29 AM
+-- Generation Time: Mar 24, 2017 at 04:14 AM
 -- Server version: 1.0.110
 -- PHP Version: 5.3.10
 
@@ -176,6 +176,31 @@ INSERT INTO `category` (`cat_id`, `cat_name`) VALUES
 (25, 'Computer'),
 (26, 'Marketing'),
 (27, 'asdasdas');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cod_details`
+--
+
+CREATE TABLE IF NOT EXISTS `cod_details` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `province` varchar(255) NOT NULL,
+  `city_municipality` varchar(255) NOT NULL,
+  `zip_code` varchar(255) NOT NULL,
+  `mobile_number` varchar(255) NOT NULL,
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `cod_details`
+--
+
+INSERT INTO `cod_details` (`id`, `user_id`, `address`, `province`, `city_municipality`, `zip_code`, `mobile_number`, `created_date`) VALUES
+(1, 6, 'Mandaluyong', 'NCR', 'Mandaluyong', '2305', '09067224095', '2017-03-24 03:32:03');
 
 -- --------------------------------------------------------
 
@@ -526,7 +551,7 @@ CREATE TABLE IF NOT EXISTS `transactions` (
   `txn_id` varchar(255) NOT NULL,
   `qty` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
 
 --
 -- Dumping data for table `transactions`
@@ -535,7 +560,10 @@ CREATE TABLE IF NOT EXISTS `transactions` (
 INSERT INTO `transactions` (`id`, `user_id`, `product_id_array`, `payer_email`, `first_name`, `last_name`, `month`, `day`, `year`, `payment_date`, `mc_gross`, `payment_currency`, `receiver_email`, `payment_type`, `payment_status`, `txn_type`, `payer_status`, `address_street`, `address_city`, `address_state`, `address_zip`, `address_country`, `address_status`, `notify_version`, `verify_sign`, `payer_id`, `mc_currency`, `mc_fee`, `txn_id`, `qty`) VALUES
 (3, 3, '10', 'capstoneTest@gmail.com', 'test', 'account', '03', '08', '2017', '2017-03-07 18:23:04', '123.00', '', 'capstoneTest-facilitator@gmail.com', 'instant', 'Pending', 'cart', 'VERIFIED', '001', 'San Jose', 'CA', '50002', 'US', '', 'UNVERSIONED', 'AFcWxV21C7fd0v3bYYYRCpSSRl31AYdzMHdxcQ0MoBjUi6eo5yguAf-v', 'TUZBW7N55UVH2', 'PHP', '123.00', '62N38974UP192673H', 1),
 (4, 3, '10', 'capstoneTest@gmail.com', 'test', 'account', '03', '08', '2017', '2017-03-10 03:31:02', '2460.00', '', 'capstoneTest-facilitator@gmail.com', 'instant', 'Cancelled', 'cart', 'VERIFIED', '001', 'San Jose', 'CA', '50002', 'US', '', 'UNVERSIONED', 'AFcWxV21C7fd0v3bYYYRCpSSRl31AZlJVDgbTHTA5oO7m1Ef8rCKIWkG', 'TUZBW7N55UVH2', 'PHP', '123.00', '9TJ22836RR194715C', 20),
-(6, 3, '9', 'capstoneTest@gmail.com', 'test', 'account', '03', '09', '2017', '2017-03-10 03:34:28', '1100.00', '', 'capstoneTest-facilitator@gmail.com', 'instant', 'Cancelled', 'cart', 'VERIFIED', '001', 'San Jose', 'CA', '50002', 'US', '', 'UNVERSIONED', 'AiPC9BjkCyDFQXbSkoZcgqH3hpacAa7r78Sn4-tqV5l1GoHXpw9X0XSk', 'TUZBW7N55UVH2', 'PHP', '550.00', '053621837E670284T', 2);
+(6, 3, '9', 'capstoneTest@gmail.com', 'test', 'account', '03', '09', '2017', '2017-03-10 03:34:28', '1100.00', '', 'capstoneTest-facilitator@gmail.com', 'instant', 'Cancelled', 'cart', 'VERIFIED', '001', 'San Jose', 'CA', '50002', 'US', '', 'UNVERSIONED', 'AiPC9BjkCyDFQXbSkoZcgqH3hpacAa7r78Sn4-tqV5l1GoHXpw9X0XSk', 'TUZBW7N55UVH2', 'PHP', '550.00', '053621837E670284T', 2),
+(11, 6, '10', 'mendozalaxus@yahoo.com', 'RR', 'Mendoza', '', '', '', '2017-03-24 03:32:03', '123', '', '', 'cod', 'Pending', '', '', '', '', '', '', '', '', '', '', '', 'PHP', '123', '1773052396', 1),
+(12, 6, '10', 'mendozalaxus@yahoo.com', 'RR', 'Mendoza', '', '', '', '2017-03-24 03:46:55', '123', '', '', 'cod', 'Pending', '', '', '', '', '', '', '', '', '', '', '', 'PHP', '123', '1112809937', 1),
+(13, 6, '9', 'mendozalaxus@yahoo.com', 'RR', 'Mendoza', '', '', '', '2017-03-24 04:13:17', '550', '', '', 'cod', 'Completed', '', '', '', '', '', '', '', '', '', '', '', 'PHP', '550', '2002881133', 1);
 
 -- --------------------------------------------------------
 
@@ -577,7 +605,7 @@ CREATE TABLE IF NOT EXISTS `uploaded_contract_file` (
   `ext` varchar(10) NOT NULL,
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=22 ;
 
 --
 -- Dumping data for table `uploaded_contract_file`
@@ -587,7 +615,10 @@ INSERT INTO `uploaded_contract_file` (`id`, `contract_id`, `file_name`, `ext`, `
 (10, 53, ' CPA1015ra_Mla_e.pdf', 'pdf', '2017-03-20 17:21:32'),
 (11, 54, ' How_to_Clean_Install_CM13.pdf', 'pdf', '2017-03-20 17:23:25'),
 (14, 53, '53-author-contract.pdf', 'pdf', '2017-03-23 18:04:16'),
-(18, 54, '54-supplier-contract.pdf', 'pdf', '2017-03-23 18:18:43');
+(18, 54, '54-supplier-contract.pdf', 'pdf', '2017-03-23 18:18:43'),
+(19, 0, '-author-contract.pdf', '', '2017-03-24 02:14:17'),
+(20, 0, '-author-contract.pdf', '', '2017-03-24 02:14:54'),
+(21, 0, '-author-contract.pdf', '', '2017-03-24 02:15:09');
 
 -- --------------------------------------------------------
 

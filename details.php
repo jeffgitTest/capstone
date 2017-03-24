@@ -89,7 +89,12 @@ if (isset($_GET['pid'])) {
 	   <button class="button helper-button clear"><span class="mif-cross"></span></button>
 	   </div>   
         <input name="pid" type="hidden" value="'.$pid.'" />
-	    <button type="submit" class="button success" name="addcart">Add to Cart <span class="mif-opencart"></span></button>		
+	    <button type="submit" class="button success" name="addcart">Add to Cart <span class="mif-opencart"></span></button>
+	    <br>
+	    Mode of payment: <select class="" name="modepayment">
+	    	<option value="shipping">Paypal</option>
+	    	<option value="cod">Cash On Delivery</option>
+	    <select>		
 		 </form>
 		 </div>
 		</div>	

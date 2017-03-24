@@ -58,6 +58,7 @@
 	
 		<form action="authorbidform.php" method="post" enctype="multipart/form-data">
 
+		<input type="hidden" name="id" value="<?php echo $bids_id; ?>">
 
 		<fieldset>
 			 <div class="row cells2">
