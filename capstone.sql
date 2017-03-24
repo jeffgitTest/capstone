@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 24, 2017 at 04:14 AM
+-- Generation Time: Mar 24, 2017 at 06:02 AM
 -- Server version: 1.0.110
 -- PHP Version: 5.3.10
 
@@ -30,16 +30,18 @@ CREATE TABLE IF NOT EXISTS `admin` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
+  `type` varchar(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`id`, `username`, `password`) VALUES
-(1, 'admin', '5f4dcc3b5aa765d61d8327deb882cf99'),
-(2, 'admin2', '81dc9bdb52d04dc20036dbd8313ed055');
+INSERT INTO `admin` (`id`, `username`, `password`, `type`) VALUES
+(1, 'admin', '5f4dcc3b5aa765d61d8327deb882cf99', 'admin'),
+(2, 'admin2', '81dc9bdb52d04dc20036dbd8313ed055', 'admin'),
+(3, 'accounting', '81dc9bdb52d04dc20036dbd8313ed055', 'accountant');
 
 -- --------------------------------------------------------
 
@@ -442,6 +444,28 @@ INSERT INTO `requests` (`id`, `request_type`, `email`, `full_name`, `contact_num
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `security_qa`
+--
+
+CREATE TABLE IF NOT EXISTS `security_qa` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `question` varchar(255) NOT NULL,
+  `answer` varchar(255) NOT NULL,
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `security_qa`
+--
+
+INSERT INTO `security_qa` (`id`, `user_id`, `question`, `answer`, `created_date`) VALUES
+(4, 23, 'What is your mother''s maiden name?', 'orog', '2017-03-24 05:31:34');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `supplier`
 --
 
@@ -690,18 +714,19 @@ CREATE TABLE IF NOT EXISTS `users` (
   `ext` varchar(5) NOT NULL,
   `admin` int(11) NOT NULL,
   `user_type` int(10) NOT NULL,
+  `retrieve_code` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=24 ;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `usn`, `fname`, `lname`, `birthday`, `address`, `contact`, `email`, `password`, `activate`, `code`, `date`, `block`, `pic`, `ext`, `admin`, `user_type`) VALUES
-(1, 'rjemindo', 'Russell James', 'Mindo', '1955-10-15', 'Antipolo', 3934875, 'rje.mindo@gmail.com', '4794b24d2508fd381736b30aa4e3a886', 1, 67591688, '2013-11-28', 0, 0, '', 0, 0),
-(3, 'rr', 'Roxel', 'Mendoza', '1994-03-03', 'Tarlac', 2147483647, 'mendozalaxus@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 1, 0, '2017-03-06', 0, 0, '', 0, 3),
-(4, 'jeydah1231', 'Jedidiah Ysis', 'Gutierrez', '1993-06-20', '9 Agnes St., Sta. Teresita Village Marikina', 2147483647, 'jeydahgutierrez0910@gmail.com', '16f26d92e4c585a66ed58f7bb2d0f919', 1, 97629123, '2017-02-11', 0, 0, '', 0, 0),
-(6, 'rr2', 'RR', 'Mendoza', '1956-01-17', 'Mandaluyong', 2147483647, 'mendozalaxus@yahoo.com', '81dc9bdb52d04dc20036dbd8313ed055', 1, 85639105, '2017-03-09', 0, 0, '', 0, 2);
+INSERT INTO `users` (`id`, `usn`, `fname`, `lname`, `birthday`, `address`, `contact`, `email`, `password`, `activate`, `code`, `date`, `block`, `pic`, `ext`, `admin`, `user_type`, `retrieve_code`) VALUES
+(1, 'rjemindo', 'Russell James', 'Mindo', '1955-10-15', 'Antipolo', 3934875, 'rje.mindo@gmail.com', '4794b24d2508fd381736b30aa4e3a886', 1, 67591688, '2013-11-28', 0, 0, '', 0, 0, ''),
+(3, 'rr', 'Roxel', 'Mendoza', '1994-03-03', 'Tarlac', 2147483647, 'mendozalaxus@gmail.com', '3b5e13941ae2b58ed925c4b69396af02', 1, 0, '2017-03-06', 0, 0, '', 0, 3, ''),
+(4, 'jeydah1231', 'Jedidiah Ysis', 'Gutierrez', '1993-06-20', '9 Agnes St., Sta. Teresita Village Marikina', 2147483647, 'jeydahgutierrez0910@gmail.com', '16f26d92e4c585a66ed58f7bb2d0f919', 1, 97629123, '2017-02-11', 0, 0, '', 0, 0, ''),
+(6, 'rr2', 'RR', 'Mendoza', '1956-01-17', 'Mandaluyong', 2147483647, 'mendozalaxus@yahoo.com', '81dc9bdb52d04dc20036dbd8313ed055', 1, 85639105, '2017-03-09', 0, 0, '', 0, 2, '');
 
 -- --------------------------------------------------------
 

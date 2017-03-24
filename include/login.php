@@ -57,6 +57,7 @@ if (isset($_POST['register']))
 							if ($usertype == 4) {
 								$accesslevel = "admin";
 							}
+							
 
 							$_SESSION['accesslevel'] = $accesslevel;
 

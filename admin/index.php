@@ -19,7 +19,7 @@ if (!isset($_SESSION["manager"])) {
 					{
 						$userid = $row ['id'];
 						$username = $row ['username'];
-						
+						$type = @$row['type'];
 					
 					}
 				
@@ -240,13 +240,21 @@ $cQuery= mysql_query("SELECT * FROM products WHERE stock<=10 and stock>0 ORDER B
 
   <body>
 
-    <div id="wrapper">
-	<!-- Sidebar -->
+  <div id="wrapper">
+  <!-- Sidebar -->
       <nav class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
-      <?php include 'template/sidebar.php'?>
-		<?php include 'template/top.php'?>
+      <?php include 'template/sidebar.php';?>
+    <?php include 'template/top.php';?>
          
       </nav>
+
+    <?php 
+
+      if ($type == 'admin') {
+        
+        ?>
+
+
 
       <div id="page-wrapper">
 
@@ -417,7 +425,7 @@ $cQuery= mysql_query("SELECT * FROM products WHERE stock<=10 and stock>0 ORDER B
           </div>
         </div><!-- /.row -->
 
-			   <div class="row">
+         <div class="row">
             <h2>Orders</h2>
             <div class="table-responsive">
             
@@ -439,50 +447,50 @@ $cQuery= mysql_query("SELECT * FROM products WHERE stock<=10 and stock>0 ORDER B
   <?php
 include ('../include/connectdb.php');  
 ?>
-  				 <?php 
-	
+           <?php 
+  
 //Run a select query to get my latest 5 items
 
 $sql = mysql_query("SELECT * FROM transactions ORDER BY id DESC");
 $productCount = mysql_num_rows($sql); // count the output amount
 if ($productCount > 0) {
-	while($row = mysql_fetch_array($sql)){ 
-			 $id = $row['id'];
-			 $date = $row['payment_date'];
-			  $gross = $row["mc_gross"];
-			  $txn_id = $row["txn_id"];
-			  $txn_type = $row["txn_type"];
-			 $firstname = $row["first_name"];
-			 $lastname = $row["last_name"];
-			 $email= $row["payer_email"];
-			 $payer_status = $row["payer_status"];
-			 $street = $row["address_street"];
-			 $city = $row["address_city"];
-			 $state = $row["address_state"];
-			  $country = $row["address_country"];
-			  $currency = $row["mc_currency"]; 
-			  $payment_status= $row["payment_status"]; 
-			  $month= $row["month"];
-			   $day= $row["day"];
-			    $year= $row["year"];
-				$cartTotal2="";
-			 $datepayment = strftime("%b %d, %Y", strtotime($row["payment_date"]));
-			 if($payment_status=='Completed'){
-				 $stat=$payment_status;
-				 }
-			 else{
-				 $stat=' '.$payment_status.' <a title="Update Status" href="transactions.php?transactid='.$id.'"><span class="icon-pencil"></span></a>';
-				 }
-			 
-		
+  while($row = mysql_fetch_array($sql)){ 
+       $id = $row['id'];
+       $date = $row['payment_date'];
+        $gross = $row["mc_gross"];
+        $txn_id = $row["txn_id"];
+        $txn_type = $row["txn_type"];
+       $firstname = $row["first_name"];
+       $lastname = $row["last_name"];
+       $email= $row["payer_email"];
+       $payer_status = $row["payer_status"];
+       $street = $row["address_street"];
+       $city = $row["address_city"];
+       $state = $row["address_state"];
+        $country = $row["address_country"];
+        $currency = $row["mc_currency"]; 
+        $payment_status= $row["payment_status"]; 
+        $month= $row["month"];
+         $day= $row["day"];
+          $year= $row["year"];
+        $cartTotal2="";
+       $datepayment = strftime("%b %d, %Y", strtotime($row["payment_date"]));
+       if($payment_status=='Completed'){
+         $stat=$payment_status;
+         }
+       else{
+         $stat=' '.$payment_status.' <a title="Update Status" href="transactions.php?transactid='.$id.'"><span class="icon-pencil"></span></a>';
+         }
+       
+    
  echo'<tr>
     <td height="29">'.$txn_id.'</td>
     <td>'.$firstname.' '. $lastname.'</td>
     <td>'.$stat.'</td>
-	 <td>'.$datepayment .'</td>
+   <td>'.$datepayment .'</td>
     <td> &#8369; '.$gross.'</td>
-	<td><a  data-toggle="modal" href="#transaction'.$id.'">View</a></td>
-	<td><!-- Modal -->
+  <td><a  data-toggle="modal" href="#transaction'.$id.'">View</a></td>
+  <td><!-- Modal -->
 <div class="modal fade" id="transaction'.$id.'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -492,56 +500,56 @@ if ($productCount > 0) {
       </div>
       <div class="modal-body">
     
-				 Billing Address :<span style="font-size: 14px">'.$street.' '.$city.' '.$state.' '.$country.'</span><br/>
-     			 Status : <span style="font-size: 14px">'.$payment_status.'</span><br/>
-				 Payer Status : <span style="font-size: 14px">'.$payer_status.'</span><br/>
-				 Date of Transaction : <span style="font-size: 14px">'.$datepayment.'</span><br/>
-     			 Orders:
+         Billing Address :<span style="font-size: 14px">'.$street.' '.$city.' '.$state.' '.$country.'</span><br/>
+           Status : <span style="font-size: 14px">'.$payment_status.'</span><br/>
+         Payer Status : <span style="font-size: 14px">'.$payer_status.'</span><br/>
+         Date of Transaction : <span style="font-size: 14px">'.$datepayment.'</span><br/>
+           Orders:
       <hr /> <div class="row thead">
                <div class="col-lg-2">Item name</div>
                 <div class="col-lg-2">Price</div>
                  <div class="col-lg-2">Quantity</div>
                  <div class="col-lg-2">TPrice</div>
              </div>';
-	  
-	$product_array = $row["product_id_array"];
-  				$product_id_string = rtrim($product_array, ",");
+    
+  $product_array = $row["product_id_array"];
+          $product_id_string = rtrim($product_array, ",");
                 $pieces = explode(",", $product_id_string);
                 $result = count($pieces);
                 $fullAmount = 0;
-			    for ($i=0; $i<$result; $i++){
+          for ($i=0; $i<$result; $i++){
                        
                                     list($cat, $quan) = explode("-", $pieces[$i]);
                                       
                                     $prod = mysql_query("SELECT * FROM products WHERE id='$cat'");
                                     while($row = mysql_fetch_array($prod)){
-										$productid1 = $row['id'];
+                    $productid1 = $row['id'];
                                          $prod_name2 = $row['product_name'];
-										 $price2 = $row['price'];
-										 $ext = $row['ext'];
-										 
-										$pricetotal1 = $price2 * $quan;
-										$cartTotal2 = $pricetotal1 + $cartTotal2;
-										
-										echo '<div class="row">
+                     $price2 = $row['price'];
+                     $ext = $row['ext'];
+                     
+                    $pricetotal1 = $price2 * $quan;
+                    $cartTotal2 = $pricetotal1 + $cartTotal2;
+                    
+                    echo '<div class="row">
                <div class="col-lg-2" style="font-size: 14px">'.$prod_name2.'</div>
                 <div class="col-lg-2" style="font-size: 14px"> &#8369;'.number_format($price2, 2, '.', ',').'</div>
                  <div class="col-lg-2" style="font-size: 14px">'.$quan.'</div>
                  <div class="col-lg-2" style="font-size: 14px">&#8369;'.number_format($pricetotal1, 2, '.', ',').'</div>
              </div>';
-										
-									}
-				}
-	  
-	  
-	  echo'
-				
+                    
+                  }
+        }
+    
+    
+    echo'
+        
                <hr />
               <div class="row">
-			 
+       
                <div class="span2 pull-right">Total Order: &#8369;'.$cartTotal2.'</div>
              </div>
-		</div>
+    </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
@@ -550,25 +558,33 @@ if ($productCount > 0) {
 </div><!-- /.modal --></td>
   </tr>';
     }
-	
+  
 } 
 else {
-	
-	echo  '<tr>
+  
+  echo  '<tr>
     <td height="29" colspan="6"><h4 class=" alert alert_warning">No transactions are being made yet!</h4>  </tr>';
-	}
+  }
 ?>
 
 </tbody>
 <?php //include 'template/transaction.php';?>
 </table>
-    			</div>
+          </div>
          
         </div><!-- /.row -->
-		
+    
       </div><!-- /#page-wrapper -->
 
     </div><!-- /#wrapper -->
+
+
+        <?php
+
+
+      }
+
+     ?>
 
     <!-- JavaScript -->
     <script src="js/jquery-1.10.2.js"></script>
