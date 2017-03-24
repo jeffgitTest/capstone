@@ -28,6 +28,9 @@
 	$contact = addslashes(strip_tags($_POST['contact']));
 	$date = date ("Y-m-d");
 
+	$secquestion = mysql_real_escape_string($_POST['secquestion']);
+	$secanswer = $_POST['secanswer'];
+
 	$usertype = $_POST['regtype'];
 	
 	$errors = array();
@@ -156,7 +159,13 @@
 									//register into database
 
 										$register = mysql_query("INSERT INTO users VALUES ('','$usn','$fname','$lname','$birthday', '$address1', '$contact', '$email','$password', '0','$code','$date','0','','','', '$usertype')");
-										if ($register) {
+
+										$user_id = mysql_insert_id();
+
+
+										$sql2 = mysql_query("INSERT INTO security_qa (user_id, question, answer) VALUES ('$user_id', '$secquestion', '$secanswer')");
+
+										if ($register && $sql2) {
 											echo '<div class="alert alert-success"><span class="icon-check"></span>You have been registered succesfully!Please check your email to verify your account </div>';
 										} else {
 											echo "Error!";
@@ -217,7 +226,7 @@
     <div class="form-group">
 	<div class="input-control password full-size" data-role="input">
       <label for="exampleInputEmail">Password</label>
-      <input type="password" name="password" class="form-control"  id="password" placeholder="Enter password">
+      <input type="password" name="password" maxlength="12" class="form-control"  id="password" placeholder="Enter password">
 	  <button class="button helper-button reveal"><span class="mif-looks"></span></button>
     </div>
     </div>
@@ -225,8 +234,33 @@
     <div class="form-group">
 	<div class="input-control password full-size" data-role="input">
       <label for="exampleInputEmail">Repeat Password</label>
-      <input type="password" name="repeat" class="form-control"  id="repeat" placeholder="Repeat password">
+      <input type="password" name="repeat" maxlength="12" class="form-control"  id="repeat" placeholder="Repeat password">
 	  <button class="button helper-button reveal"><span class="mif-looks"></span></button>
+    </div>
+    </div>
+    <br/>
+    <div class="form-group">
+	<div class="input-control password full-size" data-role="input">
+      <label for="exampleInputEmail">Security Question</label>
+      <select class="form-control" name="secquestion">
+      	<option value="What is the first and last name of your first boyfriend or girlfriend?">What is the first and last name of your first boyfriend or girlfriend?</option>
+      	<option value="Which phone number do you remember most from your childhood?">Which phone number do you remember most from your childhood?</option>
+      	<option value="What was your favorite place to visit as a child?">What was your favorite place to visit as a child?</option>
+      	<option value="Who is your favorite actor, musician, or artist?">Who is your favorite actor, musician, or artist?</option>
+      	<option value="What is the name of your favorite pet?">What is the name of your favorite pet?</option>
+      	<option value="In what city were you born?">In what city were you born?</option>
+      	<option value="What high school did you attend?">What high school did you attend?</option>
+      	<option value="What is the name of your first school?">What is the name of your first school?</option>
+      	<option value="What is your favorite movie?">What is your favorite movie?</option>
+      	<option value="What is your mother's maiden name?">What is your mother's maiden name?</option>
+      </select>
+    </div>
+    </div>
+	<br/>
+    <div class="form-group">
+	<div class="input-control password full-size" data-role="input">
+      <label for="exampleInputEmail">Security Answer</label>
+      <input type="text" class="form-control" name="secanswer" id="repeat" placeholder="Security Answer">
     </div>
     </div>
 	<!----------Recaptcha---------------------->
